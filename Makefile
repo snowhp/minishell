@@ -1,4 +1,4 @@
-SRCS = minishell.c\
+SRCS = src/minishell.c\
 		get_next_line/get_next_line.c \
 		get_next_line/get_next_line_utils.c \
 
