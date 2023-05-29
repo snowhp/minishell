@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/05/29 14:48:25 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:16:40 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,16 @@ void	ft_loop(void)
 	while (line)
 	{
 		ft_printf("> ");
+		free(line);
 		line = get_next_line(STDIN_FILENO);
+		if (ft_strncmp(line, "exit\n", ft_strlen(line)) == 0)
+		{
+			free (line);
+			return ;
+		}
 		args = ft_joinsplit(line, ' ', '\'');//Need improve for better parsing
 		//Execute args
-
-		free(line);
-		free(args);
+		ft_freearray(args);
 	}
+	free(line);
 }
