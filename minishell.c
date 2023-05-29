@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/05/29 14:33:57 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/05/29 14:48:25 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **env)
 
 void	ft_loop(void)
 {
-	char	**line;
+	char	*line;
 	char	**args;
 
 	line = ft_strdup("");
