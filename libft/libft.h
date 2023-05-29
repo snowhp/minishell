@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 18:31:54 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/05/26 08:52:49 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:16:18 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,6 @@ char	**ft_joinsplit(char *s, char c, char cj);
 int		ft_countchar(const char *str, char c);
 long	ft_atol(const char *nptr);
 void	ft_stderprint(char *str);
+void	ft_freearray(char **str);
 
 #endif
