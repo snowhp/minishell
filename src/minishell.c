@@ -22,7 +22,7 @@ int	main(int argc, char **argv, char **env)
 	return (0);
 }
 
-//Testing simple commmands ls only atm
+//Testing simple commmands ls only 
 void	ft_test(char **args)
 {
 	char *test[] = {"ls", "-l", NULL};
