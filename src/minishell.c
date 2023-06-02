@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/05/29 15:21:40 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/02 16:24:50 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include	<sys/wait.h>
 
 int	main(int argc, char **argv, char **env)
 {
@@ -19,6 +20,26 @@ int	main(int argc, char **argv, char **env)
 	(void) env;
 	ft_loop();
 	return (0);
+}
+
+//Testing simple commmands ls only atm
+void	ft_test(char **args)
+{
+	char *test[] = {"ls", "-l", NULL};
+	pid_t	pid = fork();
+	
+	if (pid == -1)
+		return ;
+	else if (pid == 0)
+	{
+		execvp(args[0], test);
+		exit(0);
+	}
+	else
+	{
+		wait(NULL);
+		return ;
+	}
 }
 
 void	ft_loop(void)
@@ -37,8 +58,8 @@ void	ft_loop(void)
 			free (line);
 			return ;
 		}
-		args = ft_joinsplit(line, ' ', '\'');//Need improve for better parsing
-		//Execute args
+		args = ft_joinsplit(line, '\n', '\'');//Need improve for better parsing
+		ft_test(args);
 		ft_freearray(args);
 	}
 	free(line);
