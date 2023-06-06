@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/02 16:24:50 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/05 18:12:23 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	main(int argc, char **argv, char **env)
 	return (0);
 }
 
-//Testing simple commmands ls only 
+//Testing simple commmands ls only
 void	ft_test(char **args)
 {
 	char *test[] = {"ls", "-l", NULL};
 	pid_t	pid = fork();
-	
+
 	if (pid == -1)
 		return ;
 	else if (pid == 0)
@@ -47,6 +47,7 @@ void	ft_loop(void)
 	char	*line;
 	char	**args;
 
+	ft_signals();
 	line = ft_strdup("");
 	while (line)
 	{
