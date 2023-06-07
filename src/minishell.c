@@ -3,65 +3,146 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/05 18:12:23 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/07 12:26:344 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-#include	<sys/wait.h>
+
+void	ft_addenv(char **env, t_data **info)
+{
+	t_data	*new;
+	char	**temp;
+	int	i;
+
+	i = 0;
+	while(env[i])
+	{
+		new = malloc(sizeof(t_data));
+		temp = ft_split(env[i], '=');
+		new->key = temp[0];
+		new->value = temp[1];
+		new->next = *info;
+		*info = new;
+		i++;
+	}
+}
+
+void	ft_printenv(t_data **info)
+{
+	t_data *current;
+
+	current = *info;
+	while (current->next != NULL)
+	{
+		printf("%s=",current->key);
+		printf("%s\n",current->value);
+		current = current->next;
+	}
+}
 
 int	main(int argc, char **argv, char **env)
 {
+	t_data *info;
+
+	info = NULL;
 	(void) argc;
 	(void) argv;
 	(void) env;
-	ft_loop();
+	ft_addenv(env, &info);
+	ft_loop(env, &info);
 	return (0);
 }
 
-//Testing simple commmands ls only
-void	ft_test(char **args)
+void	ft_printcwd()
 {
-	char *test[] = {"ls", "-l", NULL};
-	pid_t	pid = fork();
+	char cwd[200];
 
-	if (pid == -1)
-		return ;
-	else if (pid == 0)
-	{
-		execvp(args[0], test);
-		exit(0);
-	}
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+		printf("%s\n", cwd);
 	else
 	{
-		wait(NULL);
-		return ;
+	printf("getcwd() error\n");
+	return ;
 	}
 }
 
-void	ft_loop(void)
+void	ft_changedir(char *path)
+{
+	char	currentdir[200];
+
+	getcwd(currentdir ,sizeof(currentdir));
+	ft_strlcat(currentdir, "/",ft_strlen(currentdir) + 2);
+	ft_strlcat(currentdir,path,(ft_strlen(currentdir) + ft_strlen(path)) + 1);
+	chdir(currentdir);
+}
+
+void	ft_check_test(char **args, char **env, t_data **info)
+{
+	int	pid;
+
+	if(!ft_strncmp(args[0], "echo", ft_strlen(args[0])) && args[1] == 0)// -n option
+		printf("echo\n");
+	else if(!ft_strncmp(args[0], "cd", ft_strlen(args[0])))//relative/absolute paths
+		ft_changedir(args[1]);
+	else if(!ft_strncmp(args[0], "pwd", ft_strlen(args[0])) && args[1] == 0)
+		ft_printcwd();
+	else if(!ft_strncmp(args[0], "export", ft_strlen(args[0])) && args[1] == 0)
+		printf("export\n");
+	else if(!ft_strncmp(args[0], "unset", ft_strlen(args[0])) && args[1] == 0)
+		printf("unset\n");
+	else if(!ft_strncmp(args[0], "env", ft_strlen(args[0])) && args[1] == 0)
+		ft_printenv(info);
+	else
+	{
+		pid = fork();
+		if (pid == -1)
+			printf("Error");
+		else if (pid == 0)
+			ft_execute(args, env);
+		else
+			wait(NULL);
+	}
+}
+
+void	ft_loop(char **env, t_data **info)
 {
 	char	*line;
 	char	**args;
+	int		i = 0;
 
 	ft_signals();
 	line = ft_strdup("");
 	while (line)
 	{
-		ft_printf("> ");
 		free(line);
-		line = get_next_line(STDIN_FILENO);
-		if (ft_strncmp(line, "exit\n", ft_strlen(line)) == 0)
+		printf("> ");
+		line = readline(NULL);
+		if (!line[0])
 		{
-			free (line);
-			return ;
+			printf("\n");
+			continue ;
 		}
-		args = ft_joinsplit(line, '\n', '\'');//Need improve for better parsing
-		ft_test(args);
+		add_history(line);
+		args = ft_split(line, ' ');
+		while(args[i])
+		{
+			printf("|%s|\n",args[i]);
+			i++;
+		}
+		//args = ft_args(line, env);
+		if(!ft_strncmp(args[0], "exit", ft_strlen(args[0])) && !args[1])
+		{
+			free(line);
+			ft_freearray(args);
+			exit(0);
+		}
+		ft_check_test(args, env, info);
 		ft_freearray(args);
 	}
 	free(line);
+	rl_clear_history();
 }

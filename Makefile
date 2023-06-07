@@ -1,7 +1,7 @@
-SRCS = src/minishell.c \
+SRCS =  src/minishell.c \
 		src/signals/signals.c \
-		get_next_line/get_next_line.c \
-		get_next_line/get_next_line_utils.c \
+		src/commands/commands.c \
+		src/commands/args.c \
 
 OBJS = $(SRCS:.c=.o)
 
@@ -16,7 +16,7 @@ RM = rm -f
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT_LIB)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) -lreadline $(LIBFT_LIB) -o $(NAME)
 
 %.o: %.c
 	$(CC) $(FLAGS) -c $< -o $@
