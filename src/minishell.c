@@ -12,7 +12,7 @@
 
 #include "../inc/minishell.h"
 
-void	ft_addenv(char **env, t_data **info)
+void	ft_addenv(char **env, t_data **info)//needs fixing on order
 {
 	t_data	*new;
 	char	**temp;
