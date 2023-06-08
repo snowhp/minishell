@@ -54,14 +54,15 @@ void	ft_loop(char **env, t_data **info)
 		args = ft_split(line, ' ');
 		
 
-		//For testing the recieved input while we improve parsing
+		/*
+		For testing the recieved input while we improve parsing
 		int		i = 0;
 		while(args[i])
 		{
 			printf("|%s|\n",args[i]);
 			i++;
 		}
-
+		*/
 
 
 		//args = ft_args(line, env);

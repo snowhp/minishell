@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/08 17:24:11 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:19:24 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,38 @@ void	ft_printenv(t_data **info)
 		if (current->value)
 			printf("%s",current->value);
 		printf("\n");
+		current = current->next;
+	}
+}
+
+char	*ft_find_env(t_data **info, char *find)
+{
+	t_data	*current;
+
+	current = *info;
+	while (current->next != NULL)
+	{
+		if (!ft_strncmp(current->key, find, ft_strlen(current->key)))
+			return (current->value);
+		current = current->next;
+	}
+	return (NULL);
+}
+
+void	ft_update_env(t_data **info, char *key, char *update)
+{
+	t_data	*current;
+
+	current = *info;
+	while (current->next != NULL)
+	{
+		if (!ft_strncmp(current->key, key, ft_strlen(current->key)))
+		{
+			//printf("OLDPWD %s\n\n",current->value);
+			current->value = ft_strdup(update);
+			//printf("CURR_OLD_PWD %s\n\n",current->value);
+			break;
+		}
 		current = current->next;
 	}
 }

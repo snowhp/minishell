@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/08 17:13:42 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/08 18:00:00 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,19 @@ void	ft_check_test(char **args, char **env, t_data **info);
 void	ft_printcwd(void);
 
 //Changes current dir ('-' not implemented yet)
-void	ft_changedir(char *path);
+void	ft_changedir(char *path, t_data **info);
 
 //Prints stored env var
 void	ft_printenv(t_data **info);
 
 //Makes copy of passed env vars and stores them in linked list
 void	ft_addenv(char **env, t_data **info);
+
+//Finds a key and returns its value
+char	*ft_find_env(t_data **info, char *find);
+
+//Finds a key and updates its value
+void	ft_update_env(t_data **info, char *key, char *update);
 
 
 

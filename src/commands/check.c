@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:41:39 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/08 16:42:18 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/08 17:46:32 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_check_test(char **args, char **env, t_data **info)
 	if(!ft_strncmp(args[0], "echo", ft_strlen(args[0])) && args[1] == 0)// -n option
 		printf("echo\n");
 	else if(!ft_strncmp(args[0], "cd", ft_strlen(args[0])))//relative/absolute paths
-		ft_changedir(args[1]);
+		ft_changedir(args[1], info);
 	else if(!ft_strncmp(args[0], "pwd", ft_strlen(args[0])) && args[1] == 0)
 		ft_printcwd();
 	else if(!ft_strncmp(args[0], "export", ft_strlen(args[0])) && args[1] == 0)
