@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/07 16:08:48 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/08 17:13:42 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,43 @@ typedef struct s_mini
 
 /* 	This function start the loop to listen to the input */
 void	ft_loop(char **env, t_data **info);
+
 /*	This function will iniciate the SIGNAL handling */
 void	ft_signals(void);
+
 /*	This function replicates the SIGINT */
 void	handle_ctrlc(int sig);
+
 /*	This function replicates the SIGABRT */
 void	handle_ctrlslash(int sig);
+
 /*	This function replicates the SIGQUIT */
 void	handle_ctrld(int sig);
+
+//Executes commands (needs more work)
 void	ft_execute(char **cmd, char **env);
 char	*ft_path(char *cmd, char **env);
-char	**ft_args(char *arg, char **env);
-//void	ft_initmini(s_mini *struct);
 
+// Temp function to check if command is built in or to execute
+void	ft_check_test(char **args, char **env, t_data **info);
+
+// Prints current dir
+void	ft_printcwd(void);
+
+//Changes current dir ('-' not implemented yet)
+void	ft_changedir(char *path);
+
+//Prints stored env var
+void	ft_printenv(t_data **info);
+
+//Makes copy of passed env vars and stores them in linked list
+void	ft_addenv(char **env, t_data **info);
+
+
+
+/* Needs fixing
+char	**ft_args(char *arg, char **env);
+void	ft_initmini(s_mini *struct);
+*/
 
 #endif

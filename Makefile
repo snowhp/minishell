@@ -2,7 +2,10 @@ SRCS =  src/minishell.c \
 		src/signals/signals.c \
 		src/commands/commands.c \
 		src/commands/args.c \
-
+		src/commands/check.c \
+		src/builtins/builtins.c \
+		src/builtins/env.c \
+		
 OBJS = $(SRCS:.c=.o)
 
 NAME = minishell
