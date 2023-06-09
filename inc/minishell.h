@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/08 18:00:00 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:23:29 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	ft_changedir(char *path, t_data **info);
 
 //Prints stored env var
 void	ft_printenv(t_data **info);
+
+//Prints var to export
+void	ft_printexport(t_data **info);
 
 //Makes copy of passed env vars and stores them in linked list
 void	ft_addenv(char **env, t_data **info);

@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:43:35 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/08 18:19:03 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/09 17:23:05 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,25 @@ void	ft_changedir(char *path, t_data **info)
 		}
 		//printf("OLD DIR WILL BE %s\n",old_dir);
 		ft_update_env(info, "OLDPWD", old_dir);
+	}
+}
+
+void	ft_printexport(t_data **info)
+{
+	t_data *current;
+
+	current = *info;
+	while (current->next != NULL)
+	{
+		if (current->key)
+		{
+			printf("declare -x ");
+			printf("%s",current->key);
+		}
+		printf("=");
+		if (current->value)
+			printf("%s",current->value);
+		printf("\n");
+		current = current->next;
 	}
 }
