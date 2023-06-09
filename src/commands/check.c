@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:41:39 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/09 18:08:14 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/09 19:14:41 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,15 @@ void	ft_check_test(char **args, char **env, t_data **info)
 {
 	int	pid;
 
-	if(!ft_strncmp(args[0], "echo", ft_strlen(args[0])) && args[1] == 0)// -n option
-		printf("echo\n");
+	if(!ft_strncmp(args[0], "echo", ft_strlen(args[0])))// -n option needs better parsing "testing $dfadf" only recieves "testing 
+	{
+		if (!args[1])
+			printf("\n");
+		else if (!ft_strncmp("-n", args[1], 2))
+			ft_echo_n(info, args[1], args[2]);
+		else
+			ft_echo(info, args[1]);
+	}
 	else if(!ft_strncmp(args[0], "cd", ft_strlen(args[0])))//relative/absolute paths
 		ft_changedir(args[1], info);
 	else if(!ft_strncmp(args[0], "pwd", ft_strlen(args[0])) && args[1] == 0)

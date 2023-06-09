@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/09 18:08:29 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:56:52 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ void	ft_update_env(t_data **info, char *key, char *update);
 //Unset a var
 void    ft_unset(t_data **info, char *var);
 
+//echoes in terminal
+void    ft_echo(t_data **info, char *str);
+void    ft_echo_n(t_data **info, char *option, char *str);
 
 /* Needs fixing
 char	**ft_args(char *arg, char **env);

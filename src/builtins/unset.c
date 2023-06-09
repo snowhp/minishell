@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:07:18 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/09 18:23:05 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:41:45 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void    ft_unset(t_data **info, char *var)
 	{
 		if (!ft_strncmp(current->key, var, ft_strlen(current->key)))
 		{
-			printf("key %s\n",current->key);
-		    printf("var %s\n",var);
             ft_remove_node(info, var);
 			break;
 		}
