@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/09 17:23:29 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:08:29 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ char	*ft_find_env(t_data **info, char *find);
 //Finds a key and updates its value
 void	ft_update_env(t_data **info, char *key, char *update);
 
+//Unset a var
+void    ft_unset(t_data **info, char *var);
 
 
 /* Needs fixing

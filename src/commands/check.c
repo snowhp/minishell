@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:41:39 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/09 17:23:48 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/09 18:08:14 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	ft_check_test(char **args, char **env, t_data **info)
 		ft_changedir(args[1], info);
 	else if(!ft_strncmp(args[0], "pwd", ft_strlen(args[0])) && args[1] == 0)
 		ft_printcwd();
-	else if(!ft_strncmp(args[0], "export", ft_strlen(args[0])) && args[1] == 0)
+	else if(!ft_strncmp(args[0], "export", ft_strlen(args[0])) && args[1] == 0)//incomplete
 		ft_printexport(info);
-	else if(!ft_strncmp(args[0], "unset", ft_strlen(args[0])) && args[1] == 0)
-		printf("unset\n");
+	else if(!ft_strncmp(args[0], "unset", ft_strlen(args[0])))
+		ft_unset(info, args[1]);
 	else if(!ft_strncmp(args[0], "env", ft_strlen(args[0])) && args[1] == 0)
 		ft_printenv(info);
 	else

@@ -5,6 +5,7 @@ SRCS =  src/minishell.c \
 		src/commands/check.c \
 		src/builtins/builtins.c \
 		src/builtins/env.c \
+		src/builtins/unset.c \
 		
 OBJS = $(SRCS:.c=.o)
 
