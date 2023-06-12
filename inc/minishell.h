@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/09 18:56:52 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:14:39 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,20 @@ typedef struct s_data
 
 typedef struct s_mini
 {
+	t_simplecommand **simplecommands;
+	int	nbargs;
 	int	tmpin;
 	int	tmpout;
 	int	stdin;
 	int	stdout;
-
 }	t_mini;
+
+typedef struct s_simplecommand
+{
+	char	**arguments;
+	int	output;
+	int	input;
+}	t_simplecommand;
 
 /* 	This function start the loop to listen to the input */
 void	ft_loop(char **env, t_data **info);
