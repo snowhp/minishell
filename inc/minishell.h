@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/12 15:14:39 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/12 15:28:14 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_data
 
 typedef struct s_mini
 {
-	t_simplecommand **simplecommands;
+	t_simplecommand *simplecommands;
 	int	nbargs;
 	int	tmpin;
 	int	tmpout;
