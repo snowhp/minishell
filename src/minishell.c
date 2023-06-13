@@ -14,8 +14,10 @@
 
 int	main(int argc, char **argv, char **env)
 {
-	t_data *info;
+	t_data	*info;
+	t_data	*export;
 
+	export = NULL;
 	info = NULL;
 	(void) argc;
 	(void) argv;
@@ -28,12 +30,13 @@ int	main(int argc, char **argv, char **env)
 		i++;
 	}
 	*/
+	ft_addenv(env, &export);
 	ft_addenv(env, &info);
-	ft_loop(env, &info);
+	ft_loop(env, &info, &export);
 	return (0);
 }
 
-void	ft_loop(char **env, t_data **info)
+void	ft_loop(char **env, t_data **info, t_data **export)
 {
 	char	*line;
 	char	**args;
@@ -74,7 +77,7 @@ void	ft_loop(char **env, t_data **info)
 			exit(0);
 		}
 		ft_parse(args, &complex);
-		ft_check_test(args, env, info);
+		ft_check_test(args, env, info, export);
 		ft_freearray(args);
 	}
 	free(line);
@@ -87,6 +90,8 @@ void	ft_parse(char** args, t_mini *complex)
 	int	infile;
 	int	i;
 
+	(void)complex;
+	i = 0;
 	while (args[i])
 	{
 		if (!ft_strncmp(args[i], ">", ft_strlen(args[i])))
