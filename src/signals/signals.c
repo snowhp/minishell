@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 18:11:54 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/05 18:33:26 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/14 18:34:31 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	ft_signals(void)
 void	handle_ctrlc(int sig)
 {
 	(void) sig;
-	exit(0);
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
 void	handle_ctrlslash(int sig)
@@ -34,7 +37,6 @@ void	handle_ctrlslash(int sig)
 void	handle_ctrld(int sig)
 {
 	(void) sig;
-	write(1, "1", 1);
-	close(STDIN_FILENO);
+	write(1, "\n", 1);
 }
 

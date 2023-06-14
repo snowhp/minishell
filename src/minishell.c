@@ -43,12 +43,14 @@ void	ft_loop(char **env, t_data **info, t_data **export)
 	t_mini	complex;
 
 	ft_signals();
-	line = ft_strdup("");
-	while (line)
+	while (1)
 	{
-		free(line);
-		printf("> ");
-		line = readline(NULL);
+		line = readline("> ");
+		if(line == NULL)
+		{
+			free(line);
+			exit(0);
+		}
 		if (!line[0])
 		{
 			printf("\n");

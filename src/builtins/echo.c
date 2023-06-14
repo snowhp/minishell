@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:47:30 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/13 13:16:14 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:59:44 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_remove_quotes(char **args)
 		j = 0;
 		k = 0;
 		temp = ft_strdup(args[i]);
-		while (args[i][j])
+		while (temp[j])
 		{
 			if (temp[j] == '"')
 				k++;
@@ -33,6 +33,8 @@ void	ft_remove_quotes(char **args)
 			j++;
 			k++;
 		}
+		if (temp[j] - 1 == '"')
+			args[i][j] = '\0';
 		args[i][j] = '\0';
 		free(temp);
 		i++;
