@@ -81,12 +81,6 @@ void	ft_loop(char **env, t_data **info, t_data **export)
 			ft_freearray(args);
 			exit(0);
 		}
-		if (ft_countchar(line, '\'') % 2 != 0 || ft_countchar(line, '\"') % 2 != 0)
-		{
-			free(line);
-			ft_freearray(args);
-			exit(0);
-		}
 		ft_initstruct(&complex);
 		ft_parse(args, &complex);
 		ft_check_test(args, env, info, export);
