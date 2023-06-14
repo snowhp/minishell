@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/13 13:47:43 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:18:11 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,9 @@ void    ft_echo_n(t_data **info, char *option, char **args);
 
 
 void	ft_parse(char** args, t_mini *complex);
+
+/* Check if a double quotes and quotes are closed, ignoring the content inside including all types of quotes */
+int	ft_isquoteclose(char *str);
 void	ft_initstruct(t_mini *complex);
 /* Needs fixing
 char	**ft_args(char *arg, char **env);

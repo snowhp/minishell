@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:41:39 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/13 12:30:17 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/14 14:17:26 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,33 @@ void	ft_check_test(char **args, char **env, t_data **info, t_data **export)
 		else
 			wait(NULL);
 	}
+}
+
+int	ft_isquoteclose(char *str)
+{
+	int	i;
+	int	isdquote;
+	int	issquote;
+
+	i = 0;
+	isdquote = 0;
+	issquote = 0;
+	while (str[i])
+	{
+		if ((str[i] == '\'' || str[i] == '\"') && !isdquote && !issquote)
+		{
+			if (str[i] == '\'')
+				issquote = 1;
+			else
+				isdquote = 1;
+		}
+		else if (str[i] == '\"' && isdquote)
+			isdquote = 0;
+		else if (str[i] == '\'' && issquote)
+			issquote = 0;
+		i++;
+	}
+	if (isdquote || issquote)
+		return (1);
+	return (0);
 }

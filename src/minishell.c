@@ -55,6 +55,11 @@ void	ft_loop(char **env, t_data **info, t_data **export)
 			continue ;
 		}
 		add_history(line);
+		if (ft_isquoteclose(line))
+		{
+			free(line);
+			continue ;
+		}
 		args = ft_split(line, ' ');
 
 
@@ -145,30 +150,3 @@ void	ft_initstruct(t_mini *complex)
 	complex->tmpin = 0;
 	complex->tmpout = 0;
 }
-
-/* int	ft_isquoteclose(char **str)
-{
-	int	i;
-	int	isdquote;
-	int	issquote;
-
-	i = 0;
-	isdquote = 0;
-	issquote = 0;
-	while (str[i])
-	{
-		if ((str[i] == '\'' || str[i] == '\"') && !isdquote && !issquote)
-		{
-			if (str[i] == '\'')
-				issquote = 1;
-			else
-
-		}
-
-
-		i++;
-	}
-	if (isdquote || issquote)
-		return (1);
-	return (0);
-} */

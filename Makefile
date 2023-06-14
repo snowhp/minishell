@@ -7,7 +7,7 @@ SRCS =  src/minishell.c \
 		src/builtins/env.c \
 		src/builtins/unset.c \
 		src/builtins/echo.c
-		
+
 OBJS = $(SRCS:.c=.o)
 
 NAME = minishell
@@ -27,7 +27,7 @@ $(NAME): $(OBJS) $(LIBFT_LIB)
 	$(CC) $(FLAGS) -c $< -o $@
 
 debug: $(OBJS) $(LIBFT_LIB)
-	$(CC) $(FLAGS) -g $(SRCS) $(LIBFT_LIB) -o $(NAME)
+	$(CC) $(FLAGS) -g $(SRCS) -lreadline $(LIBFT_LIB) -o $(NAME)
 
 
 $(LIBFT_LIB):
