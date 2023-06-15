@@ -6,13 +6,13 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/08 18:19:24 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:12:14 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_addenv(char **env, t_data **info)//needs fixing on order
+void	ft_start_env(char **env, t_data **info)//needs fixing on order
 {
 	t_data	*new;
 	t_data	*current;
@@ -79,15 +79,17 @@ char	*ft_find_env(t_data **info, char *find)
 void	ft_update_env(t_data **info, char *key, char *update)
 {
 	t_data	*current;
+	char	*temp;
 
 	current = *info;
 	while (current->next != NULL)
 	{
 		if (!ft_strncmp(current->key, key, ft_strlen(current->key)))
 		{
-			//printf("OLDPWD %s\n\n",current->value);
+			temp = ft_strdup(current->value);
+			free(current->value);
 			current->value = ft_strdup(update);
-			//printf("CURR_OLD_PWD %s\n\n",current->value);
+			free(temp);
 			break;
 		}
 		current = current->next;

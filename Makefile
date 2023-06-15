@@ -3,7 +3,7 @@ SRCS =  src/minishell.c \
 		src/commands/commands.c \
 		src/commands/args.c \
 		src/commands/check.c \
-		src/builtins/builtins.c \
+		src/builtins/cd.c \
 		src/builtins/env.c \
 		src/builtins/unset.c \
 		src/builtins/echo.c

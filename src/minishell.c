@@ -15,9 +15,7 @@
 int	main(int argc, char **argv, char **env)
 {
 	t_data	*info;
-	t_data	*export;
 
-	export = NULL;
 	info = NULL;
 	(void) argc;
 	(void) argv;
@@ -30,17 +28,16 @@ int	main(int argc, char **argv, char **env)
 		i++;
 	}
 	*/
-	ft_addenv(env, &export);
-	ft_addenv(env, &info);
-	ft_loop(env, &info, &export);
+	ft_start_env(env, &info);
+	ft_loop(&info);
 	return (0);
 }
 
-void	ft_loop(char **env, t_data **info, t_data **export)
+void	ft_loop(t_data **info)
 {
 	char	*line;
 	char	**args;
-	t_mini	complex;
+	//t_mini	complex;
 
 	ft_signals();
 	while (1)
@@ -64,18 +61,13 @@ void	ft_loop(char **env, t_data **info, t_data **export)
 		}
 		args = ft_split(line, ' ');
 
-
-		/*
-		For testing the recieved input while we improve parsing
-		int		i = 0;
-		while(args[i])
-		{
-			printf("|%s|\n",args[i]);
-			i++;
-		}
-		*/
-
-
+		//For testing the recieved input while we improve parsing
+		// int		i = 0;
+		// while(args[i])
+		// {
+		// 	printf("|%s|\n",args[i]);
+		// 	i++;
+		// }
 		//args = ft_args(line, env);
 		if (!ft_strncmp(args[0], "exit", ft_strlen(args[0])) && !args[1])
 		{
@@ -83,9 +75,9 @@ void	ft_loop(char **env, t_data **info, t_data **export)
 			ft_freearray(args);
 			exit(0);
 		}
-		ft_initstruct(&complex);
-		ft_parse(args, &complex);
-		ft_check_test(args, env, info, export);
+		//ft_initstruct(&complex);
+		//ft_parse(args, &complex);
+		ft_check_test(args, info);
 		ft_freearray(args);
 	}
 	free(line);

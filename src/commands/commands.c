@@ -6,27 +6,61 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/08 16:52:46 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:14:45 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_execute(char **cmd, char **env)
+int	ft_env_size(t_data **info)
 {
-	char	*path;
+	int	i;
+	t_data *current;
 
-	if (access(cmd[0], F_OK) == 0)
-		path = cmd[0];
-	else
-		path = ft_path(cmd[0], env);
-	if (!path)
+	i = 0;
+	current = *info;
+	while(current->next != NULL)
 	{
-		printf("%s :command not found\n", cmd[0]);//fix send message to std err
-		exit(0);
+		current = current->next;
+		i++;
 	}
-	if (execve(path, cmd, env) == -1)
-		exit(0);
+	return (i);
+}
+
+char	**ft_convert_env(t_data **info)
+{
+	char	**env;
+	t_data	*current;
+	int	i,j,k;
+
+	current = *info;
+	i = 0;
+	env = (char **)malloc((ft_env_size(info) + 1) * sizeof(char *));
+	while(current->next != NULL)
+	{
+		env[i] = (char *)malloc(sizeof(char) * (ft_strlen(current->key) + ft_strlen(current->value) + 2));
+		j = 0;
+		k = 0;
+		while(current->key[j])
+		{
+			env[i][k] = current->key[j];
+			k++;
+			j++;
+		}
+		env[i][k] = '=';
+		k++;
+		j = 0;
+		while(current->value[j])
+		{
+			env[i][k] = current->value[j];
+			k++;
+			j++;
+		}
+		env[i][k] = '\0';
+		i++;
+		current = current->next;
+	}
+	return (env);
 }
 
 char	*ft_path(char *cmd, char **env)
@@ -56,4 +90,23 @@ char	*ft_path(char *cmd, char **env)
 		free(paths[i]);
 	free(paths);
 	return (NULL);
+}
+
+void	ft_execute(char **cmd, t_data **info)
+{
+	char	*path;
+	char	**env;
+
+	env = ft_convert_env(info);
+	if (access(cmd[0], F_OK) == 0)
+		path = cmd[0];
+	else
+		path = ft_path(cmd[0], env);
+	if (!path)
+	{
+		printf("%s :command not found\n", cmd[0]);//fix send message to std err
+		exit(0);
+	}
+	if (execve(path, cmd, env) == -1)
+		exit(0);
 }

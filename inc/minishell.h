@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/14 14:18:11 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/15 15:14:49 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,16 @@ typedef struct s_mini
 }	t_mini;
 
 /* 	This function start the loop to listen to the input */
-void	ft_loop(char **env, t_data **info, t_data **export);
+void	ft_loop(t_data **info);
 
 /*	This function will iniciate the SIGNAL handling */
 void	ft_signals(void);
 
-/*	This function replicates the SIGINT */
-void	handle_ctrlc(int sig);
-
-/*	This function replicates the SIGABRT */
-void	handle_ctrlslash(int sig);
-
-/*	This function replicates the SIGQUIT */
-void	handle_ctrld(int sig);
-
 //Executes commands (needs more work)
-void	ft_execute(char **cmd, char **env);
-char	*ft_path(char *cmd, char **env);
+void	ft_execute(char **cmd, t_data **info);
 
 // Temp function to check if command is built in or to execute
-void	ft_check_test(char **args, char **env, t_data **info, t_data **export);
+void	ft_check_test(char **args, t_data **info);
 
 // Prints current dir
 void	ft_printcwd(void);
@@ -82,10 +72,10 @@ void	ft_changedir(char *path, t_data **info);
 void	ft_printenv(t_data **info);
 
 //Prints var to export
-void	ft_printexport(t_data **export);
+void	ft_printexport(t_data **info);
 
 //Makes copy of passed env vars and stores them in linked list
-void	ft_addenv(char **env, t_data **info);
+void	ft_start_env(char **env, t_data **info);
 
 //Finds a key and returns its value
 char	*ft_find_env(t_data **info, char *find);
@@ -94,11 +84,10 @@ char	*ft_find_env(t_data **info, char *find);
 void	ft_update_env(t_data **info, char *key, char *update);
 
 //Unset a var
-void    ft_unset(t_data **info,t_data **export, char *var);
+void    ft_unset(t_data **info, char *var);
 
 //echoes in terminal
-void    ft_echo(t_data **info, char **args);
-void    ft_echo_n(t_data **info, char *option, char **args);
+void    ft_echo(t_data **info, char *str);
 
 
 void	ft_parse(char** args, t_mini *complex);
