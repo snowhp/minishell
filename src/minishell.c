@@ -59,7 +59,7 @@ void	ft_loop(t_data **info)
 			free(line);
 			continue ;
 		}
-		args = ft_split(line, ' ');
+		args = ft_splitargs(line);
 
 		//For testing the recieved input while we improve parsing
 		// int		i = 0;

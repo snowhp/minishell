@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/15 15:14:49 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/17 12:37:19 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,11 @@ void    ft_echo(t_data **info, char *str);
 
 
 void	ft_parse(char** args, t_mini *complex);
+
+/* This function is specific for split the arguments of a command line,
+	handling special characters like pipes (|), quotes (' "), redirects (> >>
+	<< <)*/
+char	**ft_splitargs(char *str);
 
 /* Check if a double quotes and quotes are closed, ignoring the content inside including all types of quotes */
 int	ft_isquoteclose(char *str);
