@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/17 12:37:19 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/18 21:53:23 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ typedef struct s_simplecommand
 
 typedef struct s_mini
 {
-	t_simplecommand *simplecommands;
+	t_simplecommand simplecommands[100];
 	int	nbcmd;
-	int	tmpin;
-	int	tmpout;
 	int	stdin;
 	int	stdout;
 }	t_mini;
@@ -89,7 +87,6 @@ void    ft_unset(t_data **info, char *var);
 //echoes in terminal
 void    ft_echo(t_data **info, char *str);
 
-
 void	ft_parse(char** args, t_mini *complex);
 
 /* This function is specific for split the arguments of a command line,
@@ -99,7 +96,7 @@ char	**ft_splitargs(char *str);
 
 /* Check if a double quotes and quotes are closed, ignoring the content inside including all types of quotes */
 int	ft_isquoteclose(char *str);
-void	ft_initstruct(t_mini *complex);
+void	ft_initstruct(t_mini *complex, char **args);
 /* Needs fixing
 char	**ft_args(char *arg, char **env);
 void	ft_initmini(s_mini *struct);
