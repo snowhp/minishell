@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:45:55 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/18 21:58:10 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/19 12:25:55 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,6 @@ void	ft_loop(t_data **info)
 
 void	ft_parse(char** args, t_mini *complex)
 {
-	int	outfile;
-	int	infile;
 	int 	cmds;
 	int	x;
 
@@ -111,27 +109,32 @@ void	ft_parse(char** args, t_mini *complex)
 	{
 		if (!ft_strncmp(*args, ">", ft_strlen(*args)))// look for the char
 		{
-			if (outfile)
-				close (outfile);
-			outfile = open(*args++, O_CREAT | O_RDWR | O_TRUNC, 0664);
-			if (outfile == -1)
+			if (complex->simplecommands[cmds].output)
+				close (complex->simplecommands[cmds].output);
+			complex->simplecommands[cmds].output = open(*args++, O_CREAT | O_RDWR | O_TRUNC, 0664);
+			if (complex->simplecommands[cmds].output == -1)
 				ft_printf("%s: %s\n", strerror(errno), *args);
+			args++;
 		}
 		if (!ft_strncmp(*args, "<", ft_strlen(*args)))// look for the char
 		{
-			if (infile)
-				close (infile);
-			infile = open(++*args, O_RDONLY, 0444);
-			if (infile == -1)
+			if (complex->simplecommands[cmds].input)
+				close (complex->simplecommands[cmds].input);
+			complex->simplecommands[cmds].input = open(++*args, O_RDONLY, 0444);
+			if (complex->simplecommands[cmds].input == -1)
 				ft_printf("%s: %s\n", strerror(errno), *args);
+			args++;
 		}
-		if(!ft_strncmp(*args, "|", ft_strlen(*args)))
+		if (!ft_strncmp(*args, "|", ft_strlen(*args)))
 		{
-			cmds++;
 			complex->simplecommands[cmds].arguments[++x] = 0;
+			cmds++;
+			args++;
 			x = 0;
-			outfile = 0;
-			infile = 0;
+			if (complex->simplecommands[cmds].input)
+				close (complex->simplecommands[cmds].input);
+			complex->simplecommands[cmds].input = complex->simplecommands[cmds].output;
+			complex->simplecommands[cmds].output = 1;
 		}
 		complex->simplecommands[cmds].arguments[x++] = *args;
 		/* else if (!ft_strncmp(args[i], "<<", ft_strlen(args[i])))

@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/18 21:53:23 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/18 22:02:50 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_data
 
 typedef struct s_simplecommand
 {
-	char	**arguments;
+	char	*arguments[50];
 	int	output;
 	int	input;
 }	t_simplecommand;
