@@ -2,6 +2,7 @@ SRCS =  src/minishell.c \
 		src/signals/signals.c \
 		src/commands/commands.c \
 		src/commands/args.c \
+		src/commands/execute.c \
 		src/commands/check.c \
 		src/commands/ft_splitargs.c \
 		src/builtins/cd.c \

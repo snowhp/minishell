@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/15 15:14:45 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/19 23:11:09 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ char	**ft_convert_env(t_data **info)
 	env = (char **)malloc((ft_env_size(info) + 1) * sizeof(char *));
 	while(current->next != NULL)
 	{
+		if (!current->value)
+			current = current->next; //FIX error on ft_strlen of this value when its null
 		env[i] = (char *)malloc(sizeof(char) * (ft_strlen(current->key) + ft_strlen(current->value) + 2));
 		j = 0;
 		k = 0;

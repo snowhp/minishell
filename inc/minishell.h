@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/19 14:18:11 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/19 22:45:09 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int	ft_parse(char** args, t_mini *complex);
 
 /* This function will execute the commands that are already parsed and redirected */
 void	ft_runcommands(t_mini *complex, t_data **info);
+void ft_executecommand(t_simplecommand *command, t_data **info);
 
 /* This function is specific for split the arguments of a command line,
 	handling special characters like pipes (|), quotes (' "), redirects (> >>
