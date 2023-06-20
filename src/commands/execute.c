@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/19 23:29:36 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/20 13:44:37 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 	{
 		dup2(fdin, 0);
 		close(fdin);
-		if(cmds <= complex->nbcmd - 1)
+		if(cmds == complex->nbcmd)
 		{
 			if(complex->simplecommands[cmds].output == 1)
 				fdout = dup(tmpout);
@@ -53,11 +53,9 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 			ft_executecommand(&complex->simplecommands[cmds], info);
 			exit (0);
 		}
+		wait(NULL);
 		dup2(tmpin, 0);
 		dup2(tmpout, 1);
-		close(tmpin);
-		close(tmpout);
-		waitpid(pid, NULL, WNOHANG);
 		/* if(cmds <= complex->nbcmd - 1)
 		{
 
@@ -182,7 +180,9 @@ int	ft_parse(char** args, t_mini *complex)
 void	ft_initstruct(t_mini *complex, char **args)
 {
 	int x;
+	int i;
 
+	i = 0;
 	x = 0;
 	complex->nbcmd = 0;
 	while(*args)
@@ -191,8 +191,11 @@ void	ft_initstruct(t_mini *complex, char **args)
 			complex->nbcmd++;
 		args++;
 	}
-	while (!complex->simplecommands[x].output)
+	while (x <= 100)
 	{
+		i = 0;
+		while(complex->simplecommands[x].arguments[i])
+			complex->simplecommands[x].arguments[i++] = 0;
 		complex->simplecommands[x].output = 1;
 		complex->simplecommands[x++].input = 0;
 	}
