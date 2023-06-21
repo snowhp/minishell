@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:45:55 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/19 22:55:26 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:47:08 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	ft_loop(t_data **info)
 		ft_initstruct(&complex, args);
 		if (ft_parse(args, &complex))
 			printf("ERROR ON PARSING"); // if the program enters this condition we need to free and wait for prompt again
+		//ft_expand(&complex, info);
 		ft_runcommands(&complex, info);
 		//ft_check_test(args, info);
 		ft_freearray(args);

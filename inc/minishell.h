@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/19 22:45:09 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/21 14:44:47 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,14 @@ char	**ft_splitargs(char *str);
 
 /* Check if a double quotes and quotes are closed, ignoring the content inside including all types of quotes */
 int	ft_isquoteclose(char *str);
+
+/* This function will receive a string free it and return a new one removing the surrending quotes */
+char *ft_removequotes(char *str);
+/* This function will return a str replacing all its VARs and free the original str */
+char *ft_replacevar(char *str, t_data **info);
+void	ft_expand(t_mini *complex, t_data **info);
+
+/* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);
 /* Needs fixing
 char	**ft_args(char *arg, char **env);
