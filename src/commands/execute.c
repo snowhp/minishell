@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/21 12:12:25 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:47:15 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 	cmds = 0;
 	tmpin = dup(STDIN_FILENO);//Save stdinput
 	tmpout = dup(STDOUT_FILENO);//Save stdoutput
-	fdin = dup(tmpin);
+	fdin = dup(complex->simplecommands[cmds].input);// Use input of the first command
 
-	while(cmds <= complex->nbcmd)
+	while (cmds <= complex->nbcmd)
 	{
 		dup2(fdin, 0);//fdin will take stdin
 		close(fdin);
@@ -35,8 +35,8 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 		{
 			if(complex->simplecommands[cmds].output == 1)
 				fdout = dup(tmpout);//Default output
-			/* else
-				fdout = dup(complex->simplecommands[cmds].output);//Last command output to a file */
+			else
+				fdout = dup(complex->simplecommands[cmds].output);//Last command output to a file
 		}
 		else
 		{
