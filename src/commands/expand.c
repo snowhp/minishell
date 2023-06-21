@@ -74,25 +74,21 @@ char *ft_removequotes(char *str)
 
 char *ft_replacevar(char *str, t_data **info)
 {
-	//char	*result;
-	//char	*var;
-	int	i;
-	int	size;
-	(void) info;
+	char	*temp;
+	char	*value;
+	size_t	i;
+	size_t	j;
+	size_t	k;
+	size_t	f;
 
-	size = 0;
 	i = 0;
 	while(str[i])
 	{
 		if (str[i] == '$' && str[i + 1])
-		{
-			if (str)
 			break;
-		}
-		size++;
 		i++;
 	}
-	if ((size_t)i == ft_strlen(str))//If no $ followed by anything is found
+	if (i == ft_strlen(str))//If no $ followed by anything is found
 		return (str);
 	i = 0;
 	while (str[i])
@@ -100,9 +96,40 @@ char *ft_replacevar(char *str, t_data **info)
 		if (str[i] == '$')
 		{
 			i++;
+			j = i;
+			while(str[i] != ' ')
+				i++;
+			temp = (char *)malloc(sizeof(char) * (i - j + 1));
+			value = ft_find_env(info, temp);
+			free(temp);
+			break ;
 		}
 		i++;
 	}
-	return 0;
+	f = i - j;
+	j = 0;
+	i = 0;
+	k = 0;
+	temp = (char *)malloc(sizeof(char) * ft_strlen(str) + ft_strlen(value) + 1);
+	while(str[i])
+	{
+		if (str[i] == '$')
+		{
+			while(value[k])
+			{
+				temp[j] = value[k];
+				j++;
+				k++;
+			}
+			i += f;
+		}
+		temp[j] = str[i];
+		j++;
+		i++;
+	}
+	temp[j] = '\0';
+	free(str);
+	free(value);
+	return (temp);
 }
 
