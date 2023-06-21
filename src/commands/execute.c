@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/20 13:44:37 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/21 12:12:25 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,18 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 	cmds = 0;
 	tmpin = dup(STDIN_FILENO);//Save stdinput
 	tmpout = dup(STDOUT_FILENO);//Save stdoutput
-	if (!complex->simplecommands[cmds].input)
-		fdin = dup(tmpin);
+	fdin = dup(tmpin);
 
 	while(cmds <= complex->nbcmd)
 	{
-		dup2(fdin, 0);
+		dup2(fdin, 0);//fdin will take stdin
 		close(fdin);
-		if(cmds == complex->nbcmd)
+		if(cmds == complex->nbcmd)/*Last command */
 		{
 			if(complex->simplecommands[cmds].output == 1)
-				fdout = dup(tmpout);
+				fdout = dup(tmpout);//Default output
+			/* else
+				fdout = dup(complex->simplecommands[cmds].output);//Last command output to a file */
 		}
 		else
 		{
@@ -49,49 +50,11 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 
 		pid = fork();
 		if (pid == 0)
-		{
 			ft_executecommand(&complex->simplecommands[cmds], info);
-			exit (0);
-		}
-		wait(NULL);
+		else
+			wait(NULL);
 		dup2(tmpin, 0);
 		dup2(tmpout, 1);
-		/* if(cmds <= complex->nbcmd - 1)
-		{
-
-			pid = fork();
-			if (pid == 0)
-			{
-				close(pipefd[0]);
-				if (complex->simplecommands->input != STDIN_FILENO)
-					dup2(complex->simplecommands->input, STDIN_FILENO);
-				dup2(pipefd[1], STDOUT_FILENO);
-				ft_executecommand(&complex->simplecommands[cmds], info);
-			}
-			else
-			{
-				waitpid(pid, NULL, WNOHANG);
-				if (pid == -1)
-					ft_printf("ERROR ON FORK");
-				close(pipefd[1]);
-				if (complex->simplecommands->output != STDOUT_FILENO)
-					dup2(complex->simplecommands->output, STDOUT_FILENO);
-				dup2(pipefd[0], STDIN_FILENO);
-				if (errno)
-					exit(1);
-				else
-					ft_executecommand(&complex->simplecommands[cmds], info);
-			}
-		}
-		if (complex->simplecommands->input != STDIN_FILENO)
-			dup2(complex->simplecommands->input, 0);
-		if (complex->simplecommands->output != STDOUT_FILENO)
-			dup2(complex->simplecommands->output, 1);
-
-		dup2(tmpin, STDIN_FILENO);//Replace STDIN
-		dup2(tmpout, STDOUT_FILENO);//Replace STDOUT
-		close(tmpin);
-		close(tmpout); */
 		cmds++;
 	}
 }
@@ -191,7 +154,7 @@ void	ft_initstruct(t_mini *complex, char **args)
 			complex->nbcmd++;
 		args++;
 	}
-	while (x <= 100)
+	while (x < 100)
 	{
 		i = 0;
 		while(complex->simplecommands[x].arguments[i])
