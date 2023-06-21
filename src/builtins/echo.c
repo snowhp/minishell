@@ -16,4 +16,5 @@ void    ft_echo(t_data **info, char *str)
 {
 	(void)info;
 	(void)str;
+	printf("%s\n",str);
 }

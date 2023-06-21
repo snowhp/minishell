@@ -17,21 +17,26 @@ void	ft_expand(t_mini *complex, t_data **info)
 	int	cmds;
 	int	i;
 
-	i = 0;
 	cmds = 0;
-	while (cmds < 100)
+	while (cmds < 49)
 	{
-		while (complex->simplecommands[cmds].arguments[i])
+		i = 0;
+		while (i < 49)
 		{
-			if (complex->simplecommands[cmds].arguments[i][0] == '\'')
-				complex->simplecommands[cmds].arguments[i] = ft_removequotes(complex->simplecommands[cmds].arguments[i]);
-			else if (complex->simplecommands[cmds].arguments[i][0] == '"')
+			if (complex->simplecommands[cmds].arguments[i] != NULL)
 			{
-				complex->simplecommands[cmds].arguments[i] = ft_removequotes(complex->simplecommands[cmds].arguments[i]);
-				complex->simplecommands[cmds].arguments[i] = ft_replacevar(complex->simplecommands[cmds].arguments[i], info);
+				if (complex->simplecommands[cmds].arguments[i][0] == '\'')
+					complex->simplecommands[cmds].arguments[i] = ft_removequotes(complex->simplecommands[cmds].arguments[i]);
+				else if (complex->simplecommands[cmds].arguments[i][0] == '"')
+				{
+					complex->simplecommands[cmds].arguments[i] = ft_removequotes(complex->simplecommands[cmds].arguments[i]);
+					complex->simplecommands[cmds].arguments[i] = ft_replacevar(complex->simplecommands[cmds].arguments[i], info);
+				}
+				else
+					complex->simplecommands[cmds].arguments[i] = ft_replacevar(complex->simplecommands[cmds].arguments[i], info);
+				
+
 			}
-			else
-				complex->simplecommands[cmds].arguments[i] = ft_replacevar(complex->simplecommands[cmds].arguments[i], info);
 			i++;
 		}
 		cmds++;
@@ -97,16 +102,26 @@ char *ft_replacevar(char *str, t_data **info)
 		{
 			i++;
 			j = i;
-			while(str[i] != ' ')
+			while(str[i] != ' ' && str[i] != '\0')
 				i++;
-			temp = (char *)malloc(sizeof(char) * (i - j + 1));
+			f = i - j;
+			temp = (char *)malloc(sizeof(char) * (f + 1));
+			i = 0;
+			k = 0;
+			while(i < f)
+			{
+				temp[k] = str[j];
+				j++;
+				k++;
+				i++;
+			}
+			temp[k] = '\0';
 			value = ft_find_env(info, temp);
 			free(temp);
 			break ;
 		}
 		i++;
 	}
-	f = i - j;
 	j = 0;
 	i = 0;
 	k = 0;
