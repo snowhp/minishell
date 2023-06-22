@@ -63,7 +63,7 @@ void ft_executecommand(t_simplecommand *command, t_data **info)
 {
 	if (!ft_strncmp(command->arguments[0], "echo", ft_strlen("echo")))
 	{
-		ft_echo(info, command->arguments[1]);
+		ft_echo(info, command->arguments);
 		exit(0);
 	}
 	else if (!ft_strncmp(command->arguments[0], "cd", ft_strlen("cd")))
@@ -137,7 +137,7 @@ int	ft_parse(char** args, t_mini *complex)
 			if (cmds > 0)
 				complex->simplecommands[cmds].input = complex->simplecommands[cmds - 1].output;
 		}
-		complex->simplecommands[cmds].arguments[x++] = *args;
+		complex->simplecommands[cmds].arguments[x++] = ft_strdup(*args);
 		/* else if (!ft_strncmp(args[i], "<<", ft_strlen(args[i])))
 		{
 			infile = open(args[++i], O_RDONLY, 0444);

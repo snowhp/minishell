@@ -85,7 +85,7 @@ void	ft_update_env(t_data **info, char *key, char *update);
 void    ft_unset(t_data **info, char *var);
 
 //echoes in terminal
-void    ft_echo(t_data **info, char *str);
+void    ft_echo(t_data **info, char **args);
 
 /* This function will read the command line and parse the arguments to each simplecommand redirecting the output*/
 int	ft_parse(char** args, t_mini *complex);

@@ -18,10 +18,10 @@ void	ft_expand(t_mini *complex, t_data **info)
 	int	i;
 
 	cmds = 0;
-	while (cmds < 49)
+	while (cmds < 3)
 	{
 		i = 0;
-		while (i < 49)
+		while (i < 5)
 		{
 			if (complex->simplecommands[cmds].arguments[i] != NULL)
 			{
@@ -122,6 +122,12 @@ char *ft_replacevar(char *str, t_data **info)
 		}
 		i++;
 	}
+	if (!value)
+	{
+		free(str);
+		free(value);
+		return(ft_strdup(""));
+	}
 	j = 0;
 	i = 0;
 	k = 0;
@@ -130,6 +136,7 @@ char *ft_replacevar(char *str, t_data **info)
 	{
 		if (str[i] == '$')
 		{
+			i++;
 			while(value[k])
 			{
 				temp[j] = value[k];
@@ -138,6 +145,8 @@ char *ft_replacevar(char *str, t_data **info)
 			}
 			i += f;
 		}
+		if (!str[i])
+			break;
 		temp[j] = str[i];
 		j++;
 		i++;
