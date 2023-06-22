@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtins.c                                         :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:43:35 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/15 15:07:27 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/22 17:57:16 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,5 @@ void	ft_changedir(char *path, t_data **info)
 		}
 		printf("%s\n", currentdir);
 		ft_update_env(info, "OLDPWD", old_dir);
-	}
-}
-
-void	ft_printexport(t_data **export)
-{
-	t_data *current;
-
-	current = *export;
-	while (current->next != NULL)
-	{
-		if (current->key)
-		{
-			printf("declare -x ");
-			printf("%s",current->key);
-		}
-		printf("=");
-		if (current->value)
-		{
-			printf("\"%s\"",current->value);
-		}
-		printf("\n");
-		current = current->next;
 	}
 }

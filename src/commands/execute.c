@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/21 12:47:15 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:02:24 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,11 @@ void ft_executecommand(t_simplecommand *command, t_data **info)
 	else if (!ft_strncmp(command->arguments[0], "export", ft_strlen("export")) && command->arguments[1] == 0)//incomplete
 	{
 		ft_printexport(info);
+		exit(0);
+	}
+	else if (!ft_strncmp(command->arguments[0], "export", ft_strlen("export")) && command->arguments[1] != 0)//incomplete
+	{
+		ft_doexport(info, command->arguments);
 		exit(0);
 	}
 	else if (!ft_strncmp(command->arguments[0], "unset", ft_strlen("unset")))

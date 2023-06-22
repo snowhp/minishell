@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/21 14:44:47 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/22 18:02:01 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,9 @@ void	ft_printenv(t_data **info);
 
 //Prints var to export
 void	ft_printexport(t_data **info);
+
+//Export vars to env
+void    ft_doexport(t_data **export, char **args);
 
 //Makes copy of passed env vars and stores them in linked list
 void	ft_start_env(char **env, t_data **info);
