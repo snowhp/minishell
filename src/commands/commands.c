@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/21 12:30:07 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/23 19:21:24 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,10 @@ void	ft_execute(char **cmd, t_data **info)
 	char	**env;
 
 	env = ft_convert_env(info);
-	/* Check why access is working for ls when should work only for /usr/bin/ls */
-	//printf("VALUE %i\n", access(cmd[0], F_OK));
-	/* if (access(cmd[0], F_OK) == 0)
+	if (access(cmd[0], F_OK) == 0)
 		path = cmd[0];
-	else */
-	path = ft_path(cmd[0], env);
+	else
+		path = ft_path(cmd[0], env);
 	if (!path)
 	{
 		printf("%s :command not found\n", cmd[0]);//fix send message to std err
