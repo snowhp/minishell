@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/23 17:25:13 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/23 19:22:09 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,20 @@ int	ft_parse(char** args, t_mini *complex)
 	/* Probably we need to control if after a pipe */
 	while (*args)
 	{
-		if (!ft_strncmp(*args, ">", ft_strlen(*args)))// what will happen if nothing appears after > TEST
+		if (!ft_strncmp(*args, ">>", 3))// what will happen if nothing appears after > TEST
+		{
+			if (complex->simplecommands[cmds].output != 1)
+				close (complex->simplecommands[cmds].output);
+			args++;
+			complex->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_APPEND, 0664);
+			if (complex->simplecommands[cmds].output == -1)
+				ft_printf("%s: %s\n", strerror(errno), *args);
+			if (*(args + 1))
+				args++;
+			else
+				break ;
+		}
+		else if (!ft_strncmp(*args, ">", 2))// what will happen if nothing appears after > TEST
 		{
 			if (complex->simplecommands[cmds].output != 1)
 				close (complex->simplecommands[cmds].output);
@@ -106,7 +119,7 @@ int	ft_parse(char** args, t_mini *complex)
 			else
 				break ;
 		}
-		if (!ft_strncmp(*args, "<", ft_strlen(*args)))// look for the char
+		else if (!ft_strncmp(*args, "<", 2))// look for the char
 		{
 			if (complex->simplecommands[cmds].input != 0)
 				close (complex->simplecommands[cmds].input);
@@ -119,7 +132,11 @@ int	ft_parse(char** args, t_mini *complex)
 			else
 				break ;
 		}
-		if (!ft_strncmp(*args, "|", ft_strlen(*args)))
+		/* else if (!ft_strncmp(args[i], "<<", ft_strlen(args[i])))
+		{
+
+		} */
+		else if (!ft_strncmp(*args, "|", 2))
 		{
 			cmds++;
 			args++;
@@ -128,18 +145,6 @@ int	ft_parse(char** args, t_mini *complex)
 				complex->simplecommands[cmds].input = complex->simplecommands[cmds - 1].output;
 		}
 		complex->simplecommands[cmds].arguments[x++] = ft_strdup(*args);
-		/* else if (!ft_strncmp(args[i], "<<", ft_strlen(args[i])))
-		{
-			infile = open(args[++i], O_RDONLY, 0444);
-			if (infile == -1)
-				ft_printf("%s: %s\n", strerror(errno), args[1]);
-		}
-		else if (!ft_strncmp(args[i], ">>", ft_strlen(args[i])))
-		{
-			infile = open(args[++i], O_RDONLY, 0444);
-			if (infile == -1)
-				ft_printf("%s: %s\n", strerror(errno), args[1]);
-		} */
 		args++;
 	}
 	return (0);
