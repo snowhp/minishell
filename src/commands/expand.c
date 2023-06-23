@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/21 23:04:00 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/23 08:54:29 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	ft_expand(t_mini *complex, t_data **info)
 	int	i;
 
 	cmds = 0;
-	while (cmds < 3)
+	while (cmds < 75)
 	{
 		i = 0;
-		while (i < 5)
+		while (i < 50)
 		{
-			if (complex->simplecommands[cmds].arguments[i] != NULL)
+			if (complex->simplecommands[cmds].arguments[i])
 			{
 				if (complex->simplecommands[cmds].arguments[i][0] == '\'')
 					complex->simplecommands[cmds].arguments[i] = ft_removequotes(complex->simplecommands[cmds].arguments[i]);
@@ -87,6 +87,7 @@ char *ft_replacevar(char *str, t_data **info)
 	size_t	f;
 
 	i = 0;
+	value = NULL;
 	while(str[i])
 	{
 		if (str[i] == '$' && str[i + 1])
@@ -102,7 +103,7 @@ char *ft_replacevar(char *str, t_data **info)
 		{
 			i++;
 			j = i;
-			while(str[i] != ' ' && str[i] != '\0')
+			while(str[i] != ' ' && str[i] != '\0' && str[i] != '\'')
 				i++;
 			f = i - j;
 			temp = (char *)malloc(sizeof(char) * (f + 1));
@@ -116,18 +117,15 @@ char *ft_replacevar(char *str, t_data **info)
 				i++;
 			}
 			temp[k] = '\0';
-			value = ft_find_env(info, temp);
+			if (ft_find_env(info, temp))
+				value = ft_strdup(ft_find_env(info, temp));
 			free(temp);
 			break ;
 		}
 		i++;
 	}
 	if (!value)
-	{
-		free(str);
-		free(value);
-		return(ft_strdup(""));
-	}
+		value = ft_strdup("");
 	j = 0;
 	i = 0;
 	k = 0;
@@ -153,7 +151,7 @@ char *ft_replacevar(char *str, t_data **info)
 	}
 	temp[j] = '\0';
 	free(str);
-	free(value);
+	if(value)
+		free(value);
 	return (temp);
 }
-
