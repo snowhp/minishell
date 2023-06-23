@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/22 18:02:24 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:25:13 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 
 		pid = fork();
 		if (pid == 0)
+		{
 			ft_executecommand(&complex->simplecommands[cmds], info);
+			exit (0);
+		}
 		else
 			wait(NULL);
 		dup2(tmpin, 0);
@@ -62,37 +65,19 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 void ft_executecommand(t_simplecommand *command, t_data **info)
 {
 	if (!ft_strncmp(command->arguments[0], "echo", ft_strlen("echo")))
-	{
-		ft_echo(info, command->arguments);
-		exit(0);
-	}
+			ft_echo(info, command->arguments);
 	else if (!ft_strncmp(command->arguments[0], "cd", ft_strlen("cd")))
 		ft_changedir(command->arguments[1], info);
 	else if (!ft_strncmp(command->arguments[0], "pwd", ft_strlen("pwd")) && command->arguments[1] == 0)
-	{
-		ft_printcwd();
-		exit(0);
-	}
+			ft_printcwd();
 	else if (!ft_strncmp(command->arguments[0], "export", ft_strlen("export")) && command->arguments[1] == 0)//incomplete
-	{
-		ft_printexport(info);
-		exit(0);
-	}
+			ft_printexport(info);
 	else if (!ft_strncmp(command->arguments[0], "export", ft_strlen("export")) && command->arguments[1] != 0)//incomplete
-	{
-		ft_doexport(info, command->arguments);
-		exit(0);
-	}
+			ft_doexport(info, command->arguments);
 	else if (!ft_strncmp(command->arguments[0], "unset", ft_strlen("unset")))
-	{
-		ft_unset(info, command->arguments[1]);
-		exit(0);
-	}
+			ft_unset(info, command->arguments[1]);
 	else if (!ft_strncmp(command->arguments[0], "env", ft_strlen("env")) && command->arguments[1] == 0)
-	{
-		ft_printenv(info);
-		exit(0);
-	}
+			ft_printenv(info);
 	else
 		ft_execute(command->arguments, info);
 }
