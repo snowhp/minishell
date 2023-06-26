@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/23 19:22:09 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/26 11:22:51 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,13 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 		dup2(tmpout, 1);
 		cmds++;
 	}
+	close(tmpin);
+	close(tmpout);
 }
 
 void ft_executecommand(t_simplecommand *command, t_data **info)
 {
+    printf("TEST");
 	if (!ft_strncmp(command->arguments[0], "echo", ft_strlen("echo")))
 			ft_echo(info, command->arguments);
 	else if (!ft_strncmp(command->arguments[0], "cd", ft_strlen("cd")))
@@ -86,6 +89,8 @@ int	ft_parse(char** args, t_mini *complex)
 {
 	int 	cmds;
 	int	x;
+	char	*delimiter;
+	char 	*temp;
 
 	cmds = 0;
 	x = 0;
@@ -93,7 +98,7 @@ int	ft_parse(char** args, t_mini *complex)
 	/* Probably we need to control if after a pipe */
 	while (*args)
 	{
-		if (!ft_strncmp(*args, ">>", 3))// what will happen if nothing appears after > TEST
+		if (!ft_strncmp(*args, ">>", 3))
 		{
 			if (complex->simplecommands[cmds].output != 1)
 				close (complex->simplecommands[cmds].output);
@@ -106,7 +111,7 @@ int	ft_parse(char** args, t_mini *complex)
 			else
 				break ;
 		}
-		else if (!ft_strncmp(*args, ">", 2))// what will happen if nothing appears after > TEST
+		else if (!ft_strncmp(*args, ">", 2))
 		{
 			if (complex->simplecommands[cmds].output != 1)
 				close (complex->simplecommands[cmds].output);
@@ -119,7 +124,31 @@ int	ft_parse(char** args, t_mini *complex)
 			else
 				break ;
 		}
-		else if (!ft_strncmp(*args, "<", 2))// look for the char
+		else if (!ft_strncmp(*args, "<<", 3))
+		{
+			if (complex->simplecommands[cmds].input != 0)
+				close (complex->simplecommands[cmds].input);
+			delimiter = *(args + 1);
+			args++;
+			complex->simplecommands[cmds].input = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0664);
+			while (1)
+			{
+				temp = readline("> ");
+				if (!ft_strncmp(temp, delimiter, ft_strlen(delimiter) + 1))
+					break ;
+				temp = ft_strjoin(temp, "\n");
+				write(complex->simplecommands[cmds].input, temp, ft_strlen(temp));
+				free(temp);
+			}
+			free(temp);
+			close (complex->simplecommands[cmds].input);
+			complex->simplecommands[cmds].input = open(".heredoc", O_RDONLY, 0444);
+			if (*(args + 1))
+				args++;
+			else
+				break ;
+		}
+		else if (!ft_strncmp(*args, "<", 2))
 		{
 			if (complex->simplecommands[cmds].input != 0)
 				close (complex->simplecommands[cmds].input);
@@ -132,10 +161,6 @@ int	ft_parse(char** args, t_mini *complex)
 			else
 				break ;
 		}
-		/* else if (!ft_strncmp(args[i], "<<", ft_strlen(args[i])))
-		{
-
-		} */
 		else if (!ft_strncmp(*args, "|", 2))
 		{
 			cmds++;
