@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/26 11:22:51 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:36:54 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 
 void ft_executecommand(t_simplecommand *command, t_data **info)
 {
-    printf("TEST");
 	if (!ft_strncmp(command->arguments[0], "echo", ft_strlen("echo")))
 			ft_echo(info, command->arguments);
 	else if (!ft_strncmp(command->arguments[0], "cd", ft_strlen("cd")))

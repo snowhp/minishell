@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:15 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/26 11:52:10 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/26 13:36:28 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,6 @@ char	**ft_splitargs(char *str)
 	char	**result;
 
 	wcount = ft_countargs(str);
-	ft_printf("%i\n", wcount);
 	if (!wcount)
 		return (NULL);
 	result = (char **)malloc((wcount + 1) * sizeof(char *));
