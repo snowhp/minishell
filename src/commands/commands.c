@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/23 19:21:24 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:06:55 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ void	ft_execute(char **cmd, t_data **info)
 		path = ft_path(cmd[0], env);
 	if (!path)
 	{
-		printf("%s :command not found\n", cmd[0]);//fix send message to std err
+		ft_putstr_fd(cmd[0], 2);//fix send message to std err
+		ft_putstr_fd(" :command not found\n", 2);//fix send message to std err
 		exit(0);
 	}
 	if (execve(path, cmd, env) == -1)
