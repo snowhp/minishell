@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/26 12:03:33 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:22:43 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,7 @@ typedef struct s_mini
 {
 	t_simplecommand simplecommands[100];
 	int	nbcmd;
-	int	stdin;
-	int	stdout;
+	int	exitstatus;
 }	t_mini;
 
 /* 	This function start the loop to listen to the input */

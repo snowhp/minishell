@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/26 13:36:54 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:40:36 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,19 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 		pid = fork();
 		if (pid == 0)
 		{
+			close(pipefd[0]);
 			ft_executecommand(&complex->simplecommands[cmds], info);
 			exit (0);
 		}
 		else
-			wait(NULL);
+		{
+			waitpid(pid, NULL, WNOHANG);
+			close(pipefd[1]);
+			if (pid == -1)
+				ft_printf("ERROR ON PIPE");
+			if (WIFEXITED(complex->exitstatus))
+				complex->exitstatus = WEXITSTATUS(complex->exitstatus);
+		}
 		dup2(tmpin, 0);
 		dup2(tmpout, 1);
 		cmds++;
@@ -196,6 +204,4 @@ void	ft_initstruct(t_mini *complex, char **args)
 		complex->simplecommands[x].output = 1;
 		complex->simplecommands[x++].input = 0;
 	}
-	complex->stdin = dup(STDIN_FILENO);
-	complex->stdout = dup(STDOUT_FILENO);
 }

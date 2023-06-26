@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:45:55 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/21 14:47:08 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:41:30 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **env)
 	*/
 	ft_start_env(env, &info);
 	ft_loop(&info);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	ft_loop(t_data **info)
@@ -51,9 +51,11 @@ void	ft_loop(t_data **info)
 	char	**args;
 	t_mini	complex;
 
+	complex.exitstatus = 0;
 	ft_signals();
 	while (1)
 	{
+		wait(NULL);
 		line = readline("> ");
 		if(line == NULL)
 		{
