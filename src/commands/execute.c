@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/26 14:40:36 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:59:08 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 		}
 		dup2(fdout, 1);
 		close(fdout);
-
 		pid = fork();
 		if (pid == 0)
 		{

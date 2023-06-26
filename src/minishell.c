@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 12:45:55 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/26 14:41:30 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/26 14:58:11 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ft_loop(t_data **info)
 	ft_signals();
 	while (1)
 	{
-		wait(NULL);
 		line = readline("> ");
 		if(line == NULL)
 		{
@@ -96,6 +95,7 @@ void	ft_loop(t_data **info)
 		ft_runcommands(&complex, info);
 		//ft_check_test(args, info);
 		ft_freearray(args);
+		while(wait(NULL) > 0);
 	}
 	free(line);
 	rl_clear_history();
