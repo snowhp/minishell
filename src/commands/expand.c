@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/26 13:35:21 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/27 22:53:57 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_expand(t_mini *complex, t_data **info)
 	int	cmds;
 	int	i;
 	int	hasquotes;
+	char	*formatted;
 
 	cmds = 0;
 	while (cmds < 75)
@@ -27,17 +28,17 @@ void	ft_expand(t_mini *complex, t_data **info)
 			if (complex->simplecommands[cmds].arguments[i])
 			{
 				hasquotes = ft_hasquotes(complex->simplecommands[cmds].arguments[i]);
-				/* Need to me reworked in order to replacevar in following cases: grep abc"'$HOME'"aaa'"$HOME"'*/
-				if (hasquotes == 1)
-					complex->simplecommands[cmds].arguments[i] = ft_removequotes(complex->simplecommands[cmds].arguments[i], hasquotes);
-				else if (hasquotes == 2)
+				if (hasquotes == 0)
 				{
-					complex->simplecommands[cmds].arguments[i] = ft_removequotes(complex->simplecommands[cmds].arguments[i], hasquotes);
-					complex->simplecommands[cmds].arguments[i] = ft_replacevar(complex->simplecommands[cmds].arguments[i], info);
+					formatted = ft_replacevar(complex->simplecommands[cmds].arguments[i], 0, info);
+					free(complex->simplecommands[cmds].arguments[i]);
+					complex->simplecommands[cmds].arguments[i] = ft_strdup(formatted);
+					free(formatted);
 				}
-				else
-					complex->simplecommands[cmds].arguments[i] = ft_replacevar(complex->simplecommands[cmds].arguments[i], info);
+				else if (hasquotes == 1)
+					complex->simplecommands[cmds].arguments[i] = ft_formating(complex->simplecommands[cmds].arguments[i], info);
 			}
+			hasquotes = 0;
 			i++;
 		}
 		cmds++;
@@ -54,119 +55,136 @@ int	ft_hasquotes(char *str)
 		if (str[i] == '\'')
 			return (1);
 		else if (str[i] == '\"')
-			return (2);
+			return (1);
 		i++;
 	}
 	return (0);
 }
 
-char *ft_removequotes(char *str, int hasquotes)
+char	*ft_copyquote(char *str, int a, int z)
 {
-	char *result;
-	int	i;
-	int	x;
-	int	start;
-	int	size;
+	int		i;
+	int		k;
+	int		stopper;
+	char	*formatted;
 
-	x = 0;
+	formatted = malloc(sizeof(char) * (ft_strlen(str) - 1));
 	i = 0;
-	start = 0;
-	size = 0;
-	if (ft_strlen(str) - 2 <= 0)
-		return (NULL);
-	while (str[i])
+	k = 0;
+	stopper = 0;
+	while(str[i] && i < a)
 	{
-		if (str[i] == '\'' && hasquotes == 1)
-		{
-			if (!start)
-			{
-				start = 1;
-				i++;
-				continue;
-			}
-			else if (start == 1)
-			{
-				i++;
-				start = 0;
-				hasquotes = ft_hasquotes(str+i);
-				continue;
-			}
-		}
-		if (str[i] == '"' && hasquotes == 2)
-		{
-			if (!start)
-			{
-				start = 1;
-				i++;
-				continue;
-			}
-			else if (start == 1)
-			{
-				i++;
-				start = 0;
-				hasquotes = ft_hasquotes(str+i);
-				continue;
-			}
-		}
-		size++;
+		formatted[k] = str[i];
+		k++;
 		i++;
 	}
-	result = (char *)malloc(sizeof(char) * (size + 1));
-	if (!result)
-		return (NULL);
-	i = 0;
-	hasquotes = ft_hasquotes(str+i);
-	result[size] = 0;
-	while (str[i])
+	formatted[k + 1] = '\0';
+	while(str[i])
 	{
-		if (str[i] == '\'' && hasquotes == 1)
+		if(str[i] == '\'' && stopper != 2)
 		{
-			if (!start)
-			{
-				start = 1;
-				i++;
-				continue;
-			}
-			else if (start == 1)
-			{
-				i++;
-				start = 0;
-				hasquotes = ft_hasquotes(str+i);
-				continue;
-			}
+			stopper++;
+			i++;
 		}
-		if (str[i] == '"' && hasquotes == 2)
-		{
-			if (!start)
-			{
-				start = 1;
-				i++;
-				continue;
-			}
-			else if (start == 1)
-			{
-				i++;
-				start = 0;
-				hasquotes = ft_hasquotes(str+i);
-				continue;
-			}
-		}
-		result[x++] = str[i++];
+		if (str[i] != '\'' && i < z)
+			formatted[k] = str[i];
+		else
+			formatted[k] = str[i];
+		formatted[k + 1] = '\0';
+		k++;
+		i++;
+
 	}
-	free (str);
-	return (result);
+	formatted[k] = '\0';
+	return (formatted);
 }
 
-char *ft_replacevar(char *str, t_data **info)
+char	*ft_removedoubleafter(char *str, int a, int z)
+{
+	int		i;
+	int		k;
+	char	*formatted;
+
+	formatted = malloc(sizeof(char) * (ft_strlen(str) - 1));
+	i = 0;
+	k = 0;
+	while(str[i] && i < a)
+	{
+		formatted[k] = str[i];
+		k++;
+		i++;
+	}
+	while (str[i])
+	{
+		if(str[i] == '\"' && i <= z)
+			i++;
+		else 
+		{
+			formatted[k] = str[i];
+			k++;
+			i++;
+		}
+	}
+	formatted[k] = '\0';
+	return (formatted);
+}
+
+char	*ft_formating(char *str, t_data **info)
+{
+	int		i;
+	int		k;
+	char	*formatted;
+
+	i = 0;
+	while(str[i])
+	{
+		if(str[i] == '\'' && str[i + 1])
+		{
+			k = i;
+			i++;
+			while(str[i] != '\'')
+			{
+				i++;
+			}
+			formatted = ft_copyquote(str, k, i);
+			free(str);
+			str = ft_strdup(formatted);
+			free(formatted);
+		}	
+		if(str[i] == '\"' && str[i + 1])
+		{
+			k = i;
+			i++;
+			while(str[i] != '\"')
+			{
+				if(str[i] == '$')
+				{
+					formatted = ft_replacevar(str, (size_t)i, info);
+					free(str);
+					str = ft_strdup(formatted);
+					free(formatted);
+				}
+				i++;
+			}
+			formatted = ft_removedoubleafter(str, k, i);
+			free(str);
+			str = ft_strdup(formatted);
+			free(formatted);
+		}
+		i++;
+	}
+	return (str);
+}
+
+char *ft_replacevar(char *str, size_t i, t_data **info)
 {
 	char	*temp;
 	char	*value;
-	size_t	i;
 	size_t	j;
 	size_t	k;
 	size_t	f;
+	size_t	a;
 
-	i = 0;
 	value = NULL;
 	while(str[i])
 	{
@@ -174,9 +192,9 @@ char *ft_replacevar(char *str, t_data **info)
 			break;
 		i++;
 	}
-	if (i == ft_strlen(str))//If no $ followed by anything is found
-		return (str);
-	i = 0;
+	if (i == ft_strlen(str))
+		return (ft_strdup(str));
+	a = i;
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -209,10 +227,11 @@ char *ft_replacevar(char *str, t_data **info)
 	j = 0;
 	i = 0;
 	k = 0;
+	i = 0;
 	temp = (char *)malloc(sizeof(char) * ft_strlen(str) + ft_strlen(value) + 1);
 	while(str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && i == a)
 		{
 			i++;
 			while(value[k])
@@ -230,7 +249,6 @@ char *ft_replacevar(char *str, t_data **info)
 		i++;
 	}
 	temp[j] = '\0';
-	free(str);
 	if(value)
 		free(value);
 	return (temp);
