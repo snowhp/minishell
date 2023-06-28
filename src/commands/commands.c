@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 17:06:06 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:47:42 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ char	**ft_convert_env(t_data **info)
 
 	current = *info;
 	i = 0;
-	env = (char **)malloc((ft_env_size(info) + 1) * sizeof(char *));
+	env = (char **)ft_calloc((ft_env_size(info)) + 1, sizeof(char *));
+	if (!env)
+		return (NULL);
 	while (current->next != NULL)
 	{
 		if (!current->value)
