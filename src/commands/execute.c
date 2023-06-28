@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 16:20:59 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:30:53 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,16 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 		close(fdout);
 		if (complex->nbcmd == 0)
 		{
-			ft_executecommand(&complex->simplecommands[cmds], info);
+			if (!ft_isbuiltin(&complex->simplecommands[cmds]))
+			{
+				pid = fork();
+				if (pid == 0)
+					ft_executecommand(&complex->simplecommands[cmds], info);
+				else
+					wait(NULL);
+			}
+			else
+				ft_executecommand(&complex->simplecommands[cmds], info);
 			break ;
 		}
 		pid = fork();
@@ -76,7 +85,23 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 	close(tmpout);
 }
 
-void ft_executecommand(t_simplecommand *command, t_data **info)
+int	ft_isbuiltin(t_simplecommand *command)
+{
+	if (!ft_strncmp(command->arguments[0], "echo", 5))
+		return (1);
+	else if (!ft_strncmp(command->arguments[0], "cd", 3))
+		return (1);
+	else if (!ft_strncmp(command->arguments[0], "pwd", 4) && command->arguments[1] == 0)
+		return (1);
+	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] == 0)//incomplete
+		return (1);
+	else if (!ft_strncmp(command->arguments[0], "unset", 6))
+		return (1);
+	else if (!ft_strncmp(command->arguments[0], "env", 4) && command->arguments[1] == 0)
+		return (1);
+	return 0;
+}
+void	ft_executecommand(t_simplecommand *command, t_data **info)
 {
 	if (!ft_strncmp(command->arguments[0], "echo", 5))
 			ft_echo(info, command->arguments);
