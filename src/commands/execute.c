@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 17:42:38 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:33:24 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void	ft_initstruct(t_mini *complex, char **args)
 	while (x < 100)
 	{
 		i = 0;
-		while(complex->simplecommands[x].arguments[i])
+		while (i < 50)
 			complex->simplecommands[x].arguments[i++] = 0;
 		complex->simplecommands[x].output = 1;
 		complex->simplecommands[x++].input = 0;
