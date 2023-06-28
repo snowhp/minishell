@@ -86,7 +86,10 @@ void	ft_loop(t_data **info)
 		{
 			free(line);
 			ft_freearray(args);
+			if (args[1] && (ft_itoa(args[1]) && args[1][0] == '0'))
+				exit(args[1]);
 			exit(0);
+
 		}
 		ft_initstruct(&complex, args);
 		if (ft_parse(args, &complex))

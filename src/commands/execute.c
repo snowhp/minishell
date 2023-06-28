@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 15:54:01 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:11:25 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 			close(pipefd[1]);
 			if (pid == -1)
 				ft_printf("ERROR ON PIPE");
-			if (WIFEXITED(complex->exitstatus))
-				complex->exitstatus = WEXITSTATUS(complex->exitstatus);
+			if (WIFEXITED(estatus))
+				estatus = WEXITSTATUS(complex->exitstatus);
 		}
 		dup2(tmpin, 0);
 		dup2(tmpout, 1);
