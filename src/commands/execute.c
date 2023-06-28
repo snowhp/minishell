@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 16:11:25 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:20:59 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 	int 	fdin;
 	int 	fdout;
 	int	pipefd[2];
+	int	estatus;
 
 	cmds = 0;
 	tmpin = dup(STDIN_FILENO);//Save stdinput
@@ -65,7 +66,7 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 			if (pid == -1)
 				ft_printf("ERROR ON PIPE");
 			if (WIFEXITED(estatus))
-				estatus = WEXITSTATUS(complex->exitstatus);
+				estatus = WEXITSTATUS(estatus);
 		}
 		dup2(tmpin, 0);
 		dup2(tmpout, 1);
