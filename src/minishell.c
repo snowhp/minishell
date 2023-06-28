@@ -86,8 +86,8 @@ void	ft_loop(t_data **info)
 		{
 			free(line);
 			ft_freearray(args);
-			if (args[1] && (ft_itoa(args[1]) && args[1][0] == '0'))
-				exit(args[1]);
+			if (args[1] && (ft_atoi(args[1]) && args[1][0] == '0'))
+				exit(ft_atoi(args[1]));
 			exit(0);
 
 		}
