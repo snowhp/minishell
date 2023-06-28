@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/26 14:59:08 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:54:01 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 	tmpin = dup(STDIN_FILENO);//Save stdinput
 	tmpout = dup(STDOUT_FILENO);//Save stdoutput
 	fdin = dup(complex->simplecommands[cmds].input);// Use input of the first command
-
 	while (cmds <= complex->nbcmd)
 	{
 		dup2(fdin, 0);//fdin will take stdin
@@ -47,6 +46,11 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 		}
 		dup2(fdout, 1);
 		close(fdout);
+		if (complex->nbcmd == 0)
+		{
+			ft_executecommand(&complex->simplecommands[cmds], info);
+			break ;
+		}
 		pid = fork();
 		if (pid == 0)
 		{
@@ -73,19 +77,23 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 
 void ft_executecommand(t_simplecommand *command, t_data **info)
 {
-	if (!ft_strncmp(command->arguments[0], "echo", ft_strlen("echo")))
+	if (!ft_strncmp(command->arguments[0], "echo", 5))
 			ft_echo(info, command->arguments);
-	else if (!ft_strncmp(command->arguments[0], "cd", ft_strlen("cd")))
+	else if (!ft_strncmp(command->arguments[0], "cd", 3))
+	{
 		ft_changedir(command->arguments[1], info);
-	else if (!ft_strncmp(command->arguments[0], "pwd", ft_strlen("pwd")) && command->arguments[1] == 0)
+		if (command->arguments[2])
+			printf("bash: cd: too many arguments\n");
+	}
+	else if (!ft_strncmp(command->arguments[0], "pwd", 4) && command->arguments[1] == 0)
 			ft_printcwd();
-	else if (!ft_strncmp(command->arguments[0], "export", ft_strlen("export")) && command->arguments[1] == 0)//incomplete
+	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] == 0)//incomplete
 			ft_printexport(info);
-	else if (!ft_strncmp(command->arguments[0], "export", ft_strlen("export")) && command->arguments[1] != 0)//incomplete
+	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] != 0)//incomplete
 			ft_doexport(info, command->arguments);
-	else if (!ft_strncmp(command->arguments[0], "unset", ft_strlen("unset")))
+	else if (!ft_strncmp(command->arguments[0], "unset", 6))
 			ft_unset(info, command->arguments[1]);
-	else if (!ft_strncmp(command->arguments[0], "env", ft_strlen("env")) && command->arguments[1] == 0)
+	else if (!ft_strncmp(command->arguments[0], "env", 4) && command->arguments[1] == 0)
 			ft_printenv(info);
 	else
 		ft_execute(command->arguments, info);

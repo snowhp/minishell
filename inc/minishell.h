@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/27 18:53:22 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/28 13:06:59 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,10 @@ char *ft_removequotes(char *str, int hasquotes);
 /* This function check for the first quote, returning 1 or 2 for single quote and double quote respectively, else return 0 */
 int	ft_hasquotes(char *str);
 /* This function will return a str replacing all its VARs and free the original str */
-char *ft_replacevar(char *str, size_t i, t_data **info);
+char *ft_replacevar(char *str, size_t i, t_data **info, int *pos);
 void	ft_expand(t_mini *complex, t_data **info);
+int	ft_hasquotes2(char *str);
+char *ft_removequotes(char *str, int hasquotes);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);

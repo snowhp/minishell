@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/15 15:12:14 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:46:51 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,20 @@ void	ft_start_env(char **env, t_data **info)//needs fixing on order
 	t_data	*current;
 	char	**temp;
 	int	i;
+	int	j;
 
 	i = 0;
 	while(env[i])
 	{
 		current = *info;
 		new = malloc(sizeof(t_data));
+		if(!new)
+			return ;
 		temp = ft_split(env[i], '=');
 		if (temp[0])
-			new->key = temp[0];
-		if (temp[1])
-			new->value = temp[1];
+			new->key = ft_strdup(temp[0]);
+		j = (int)ft_strlen(temp[0]) + 1;
+		new->value = ft_strdup(env[i] + j);
 		new->next = NULL;
 		if (*info == NULL)
 		{
@@ -43,6 +46,7 @@ void	ft_start_env(char **env, t_data **info)//needs fixing on order
 		}
 		i++;
 	}
+	free(temp);
 }
 
 void	ft_printenv(t_data **info)
@@ -50,7 +54,7 @@ void	ft_printenv(t_data **info)
 	t_data *current;
 
 	current = *info;
-	while (current->next != NULL)
+	while (current != NULL)
 	{
 		if (current->key)
 			printf("%s",current->key);
@@ -67,9 +71,9 @@ char	*ft_find_env(t_data **info, char *find)
 	t_data	*current;
 
 	current = *info;
-	while (current->next != NULL)
+	while (current != NULL)
 	{
-		if (!ft_strncmp(current->key, find, ft_strlen(current->key)))
+		if (!ft_strncmp(current->key, find, ft_strlen(find)))
 			return (current->value);
 		current = current->next;
 	}
@@ -79,17 +83,14 @@ char	*ft_find_env(t_data **info, char *find)
 void	ft_update_env(t_data **info, char *key, char *update)
 {
 	t_data	*current;
-	char	*temp;
 
 	current = *info;
-	while (current->next != NULL)
+	while (current != NULL)
 	{
 		if (!ft_strncmp(current->key, key, ft_strlen(current->key)))
 		{
-			temp = ft_strdup(current->value);
 			free(current->value);
 			current->value = ft_strdup(update);
-			free(temp);
 			break;
 		}
 		current = current->next;

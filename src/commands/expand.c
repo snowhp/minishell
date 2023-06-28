@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/27 22:53:57 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/28 15:52:09 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_expand(t_mini *complex, t_data **info)
 				hasquotes = ft_hasquotes(complex->simplecommands[cmds].arguments[i]);
 				if (hasquotes == 0)
 				{
-					formatted = ft_replacevar(complex->simplecommands[cmds].arguments[i], 0, info);
+					formatted = ft_replacevar(complex->simplecommands[cmds].arguments[i], 0, info, NULL);
 					free(complex->simplecommands[cmds].arguments[i]);
 					complex->simplecommands[cmds].arguments[i] = ft_strdup(formatted);
 					free(formatted);
@@ -65,35 +65,27 @@ char	*ft_copyquote(char *str, int a, int z)
 {
 	int		i;
 	int		k;
-	int		stopper;
 	char	*formatted;
 
 	formatted = malloc(sizeof(char) * (ft_strlen(str) - 1));
 	i = 0;
 	k = 0;
-	stopper = 0;
 	while(str[i] && i < a)
 	{
 		formatted[k] = str[i];
 		k++;
 		i++;
 	}
-	formatted[k + 1] = '\0';
-	while(str[i])
+	while (str[i])
 	{
-		if(str[i] == '\'' && stopper != 2)
+		if(str[i] == '\'' && i <= z)
+			i++;
+		else
 		{
-			stopper++;
+			formatted[k] = str[i];
+			k++;
 			i++;
 		}
-		if (str[i] != '\'' && i < z)
-			formatted[k] = str[i];
-		else
-			formatted[k] = str[i];
-		formatted[k + 1] = '\0';
-		k++;
-		i++;
-
 	}
 	formatted[k] = '\0';
 	return (formatted);
@@ -118,7 +110,7 @@ char	*ft_removedoubleafter(char *str, int a, int z)
 	{
 		if(str[i] == '\"' && i <= z)
 			i++;
-		else 
+		else
 		{
 			formatted[k] = str[i];
 			k++;
@@ -132,51 +124,63 @@ char	*ft_removedoubleafter(char *str, int a, int z)
 char	*ft_formating(char *str, t_data **info)
 {
 	int		i;
-	int		k;
+	int		j;
+	int		pos;
 	char	*formatted;
 
 	i = 0;
+	pos = 0;
 	while(str[i])
 	{
 		if(str[i] == '\'' && str[i + 1])
 		{
-			k = i;
 			i++;
 			while(str[i] != '\'')
 			{
 				i++;
 			}
-			formatted = ft_copyquote(str, k, i);
+			j = i;
+			/* formatted = ft_copyquote(str, k, i);
 			free(str);
 			str = ft_strdup(formatted);
-			free(formatted);
-		}	
+			free(formatted); */
+			i = j;
+		}
 		if(str[i] == '\"' && str[i + 1])
 		{
-			k = i;
 			i++;
 			while(str[i] != '\"')
 			{
 				if(str[i] == '$')
 				{
-					formatted = ft_replacevar(str, (size_t)i, info);
+					formatted = ft_replacevar(str, (size_t)i, info, &pos);
 					free(str);
 					str = ft_strdup(formatted);
 					free(formatted);
+					i = i - 1 + pos;
 				}
 				i++;
 			}
-			formatted = ft_removedoubleafter(str, k, i);
+			/* formatted = ft_removedoubleafter(str, k, i);
+			free(str);
+			str = ft_strdup(formatted);
+			free(formatted); */
+		}
+		if(str[i] == '$')
+		{
+			formatted = ft_replacevar(str, (size_t)i, info, &pos);
 			free(str);
 			str = ft_strdup(formatted);
 			free(formatted);
+			i = i - 1 + pos;
 		}
 		i++;
 	}
+	str = ft_removequotes(str, ft_hasquotes2(str));
 	return (str);
 }
 
-char *ft_replacevar(char *str, size_t i, t_data **info)
+char *ft_replacevar(char *str, size_t i, t_data **info, int *pos)
 {
 	char	*temp;
 	char	*value;
@@ -199,9 +203,15 @@ char *ft_replacevar(char *str, size_t i, t_data **info)
 	{
 		if (str[i] == '$')
 		{
+			if (str[i + 1] == '?')
+			{
+				value = ft_strdup("0");
+				f = 1;
+				break ;
+			}
 			i++;
 			j = i;
-			while(str[i] != ' ' && str[i] != '\0' && str[i] != '\'')
+			while(str[i] != ' ' && str[i] != '\0' && str[i] != '\'' && str[i] !='\"' && str[i] != '$')
 				i++;
 			f = i - j;
 			temp = (char *)malloc(sizeof(char) * (f + 1));
@@ -250,6 +260,128 @@ char *ft_replacevar(char *str, size_t i, t_data **info)
 	}
 	temp[j] = '\0';
 	if(value)
+	{
+		if (pos)
+			*pos = (int)ft_strlen(value);
 		free(value);
+	}
+	else
+	{
+		if (pos)
+			*pos = 0;
+	}
 	return (temp);
+}
+
+char *ft_removequotes(char *str, int hasquotes)
+{
+	char *result;
+	int	i;
+	int	x;
+	int	start;
+	int	size;
+
+	x = 0;
+	i = 0;
+	start = 0;
+	size = 0;
+	if (ft_strlen(str) - 2 <= 0)
+		return (NULL);
+	while (str[i])
+	{
+		if (str[i] == '\'' && hasquotes == 1)
+		{
+			if (!start)
+			{
+				start = 1;
+				i++;
+				continue;
+			}
+			else if (start == 1)
+			{
+				i++;
+				start = 0;
+				hasquotes = ft_hasquotes2(str+i);
+				continue;
+			}
+		}
+		if (str[i] == '"' && hasquotes == 2)
+		{
+			if (!start)
+			{
+				start = 1;
+				i++;
+				continue;
+			}
+			else if (start == 1)
+			{
+				i++;
+				start = 0;
+				hasquotes = ft_hasquotes2(str+i);
+				continue;
+			}
+		}
+		size++;
+		i++;
+	}
+	result = (char *)malloc(sizeof(char) * (size + 1));
+	if (!result)
+		return (NULL);
+	i = 0;
+	hasquotes = ft_hasquotes2(str+i);
+	result[size] = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' && hasquotes == 1)
+		{
+			if (!start)
+			{
+				start = 1;
+				i++;
+				continue;
+			}
+			else if (start == 1)
+			{
+				i++;
+				start = 0;
+				hasquotes = ft_hasquotes2(str+i);
+				continue;
+			}
+		}
+		if (str[i] == '"' && hasquotes == 2)
+		{
+			if (!start)
+			{
+				start = 1;
+				i++;
+				continue;
+			}
+			else if (start == 1)
+			{
+				i++;
+				start = 0;
+				hasquotes = ft_hasquotes2(str+i);
+				continue;
+			}
+		}
+		result[x++] = str[i++];
+	}
+	free (str);
+	return (result);
+}
+
+int	ft_hasquotes2(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'')
+			return (1);
+		else if (str[i] == '\"')
+			return (2);
+		i++;
+	}
+	return (0);
 }
