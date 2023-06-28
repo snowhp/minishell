@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 16:30:53 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:49:10 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,22 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 	int 	fdin;
 	int 	fdout;
 	int	pipefd[2];
-	int	estatus;
+	int	g_estatus;
 
 	cmds = 0;
-	tmpin = dup(STDIN_FILENO);//Save stdinput
-	tmpout = dup(STDOUT_FILENO);//Save stdoutput
-	fdin = dup(complex->simplecommands[cmds].input);// Use input of the first command
+	tmpin = dup(STDIN_FILENO);
+	tmpout = dup(STDOUT_FILENO);
+	fdin = dup(complex->simplecommands[cmds].input);
 	while (cmds <= complex->nbcmd)
 	{
-		dup2(fdin, 0);//fdin will take stdin
+		dup2(fdin, 0);
 		close(fdin);
-		if(cmds == complex->nbcmd)/*Last command */
+		if(cmds == complex->nbcmd)
 		{
 			if(complex->simplecommands[cmds].output == 1)
-				fdout = dup(tmpout);//Default output
+				fdout = dup(tmpout);
 			else
-				fdout = dup(complex->simplecommands[cmds].output);//Last command output to a file
+				fdout = dup(complex->simplecommands[cmds].output);
 		}
 		else
 		{
@@ -74,8 +74,8 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 			close(pipefd[1]);
 			if (pid == -1)
 				ft_printf("ERROR ON PIPE");
-			if (WIFEXITED(estatus))
-				estatus = WEXITSTATUS(estatus);
+			if (WIFEXITED(g_estatus))
+				g_estatus = WEXITSTATUS(g_estatus);
 		}
 		dup2(tmpin, 0);
 		dup2(tmpout, 1);
@@ -93,7 +93,7 @@ int	ft_isbuiltin(t_simplecommand *command)
 		return (1);
 	else if (!ft_strncmp(command->arguments[0], "pwd", 4) && command->arguments[1] == 0)
 		return (1);
-	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] == 0)//incomplete
+	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] == 0)
 		return (1);
 	else if (!ft_strncmp(command->arguments[0], "unset", 6))
 		return (1);
@@ -113,9 +113,9 @@ void	ft_executecommand(t_simplecommand *command, t_data **info)
 	}
 	else if (!ft_strncmp(command->arguments[0], "pwd", 4) && command->arguments[1] == 0)
 			ft_printcwd();
-	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] == 0)//incomplete
+	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] == 0)
 			ft_printexport(info);
-	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] != 0)//incomplete
+	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] != 0)
 			ft_doexport(info, command->arguments);
 	else if (!ft_strncmp(command->arguments[0], "unset", 6))
 			ft_unset(info, command->arguments[1]);
@@ -125,7 +125,7 @@ void	ft_executecommand(t_simplecommand *command, t_data **info)
 		ft_execute(command->arguments, info);
 }
 
-int	ft_parse(char** args, t_mini *complex)
+void	ft_parse(char** args, t_mini *complex)
 {
 	int 	cmds;
 	int	x;
@@ -134,8 +134,6 @@ int	ft_parse(char** args, t_mini *complex)
 
 	cmds = 0;
 	x = 0;
-	/* We need to know the numbers of commands previously to allocate enough memory*/
-	/* Probably we need to control if after a pipe */
 	while (*args)
 	{
 		if (!ft_strncmp(*args, ">>", 3))
@@ -212,7 +210,6 @@ int	ft_parse(char** args, t_mini *complex)
 		complex->simplecommands[cmds].arguments[x++] = ft_strdup(*args);
 		args++;
 	}
-	return (0);
 }
 
 void	ft_initstruct(t_mini *complex, char **args)

@@ -31,15 +31,6 @@ int	main(int argc, char **argv, char **env)
 	info = NULL;
 	(void) argc;
 	(void) argv;
-	/*	For testing env on WSL2, it is diferent from normal linux
-		causes segfault
-	int i = 0;
-	while(env[i])
-	{
-		printf("%s\n",env[i]);
-		i++;
-	}
-	*/
 	ft_start_env(env, &info);
 	ft_loop(&info);
 	return (EXIT_SUCCESS);
@@ -50,7 +41,7 @@ void	ft_loop(t_data **info)
 	char	*line;
 	char	**args;
 	t_mini	complex;
-	int	estatus;
+	int	g_estatus;
 
 	complex.exitstatus = 0;
 	ft_signals();
@@ -74,34 +65,23 @@ void	ft_loop(t_data **info)
 			continue ;
 		}
 		args = ft_splitargs(line);
-
-		//For testing the recieved input while we improve parsing
-		// int		i = 0;
-		// while(args[i])
-		// {
-		// 	printf("|%s|\n",args[i]);
-		// 	i++;
-		// }
-		//args = ft_args(line, env);
 		if (!ft_strncmp(args[0], "exit", ft_strlen(args[0])))
 		{
 			free(line);
 			if (args[1] && ((ft_atoi(args[1])) || (args[1][0] == '0' && !args[1][1])))
 			{
-				estatus = ft_atoi(args[1]);
+				g_estatus = ft_atoi(args[1]);
 				ft_freearray(args);
-				exit(estatus);
+				exit(g_estatus);
 			}
 			ft_freearray(args);
 			exit(0);
 
 		}
 		ft_initstruct(&complex, args);
-		if (ft_parse(args, &complex))
-			printf("ERROR ON PARSING"); // if the program enters this condition we need to free and wait for prompt again
+		ft_parse(args, &complex);
 		ft_expand(&complex, info);
 		ft_runcommands(&complex, info);
-		//ft_check_test(args, info);
 		ft_freearray(args);
 		while(wait(NULL) > 0);
 	}

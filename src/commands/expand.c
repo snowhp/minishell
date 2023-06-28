@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 15:52:09 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:51:06 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,6 @@ char	*ft_formating(char *str, t_data **info)
 				i++;
 			}
 			j = i;
-			/* formatted = ft_copyquote(str, k, i);
-			free(str);
-			str = ft_strdup(formatted);
-			free(formatted); */
 			i = j;
 		}
 		if(str[i] == '\"' && str[i + 1])
@@ -161,10 +157,6 @@ char	*ft_formating(char *str, t_data **info)
 				}
 				i++;
 			}
-			/* formatted = ft_removedoubleafter(str, k, i);
-			free(str);
-			str = ft_strdup(formatted);
-			free(formatted); */
 		}
 		if(str[i] == '$')
 		{
