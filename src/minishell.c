@@ -50,6 +50,7 @@ void	ft_loop(t_data **info)
 	char	*line;
 	char	**args;
 	t_mini	complex;
+	int	estatus;
 
 	complex.exitstatus = 0;
 	ft_signals();
@@ -82,12 +83,16 @@ void	ft_loop(t_data **info)
 		// 	i++;
 		// }
 		//args = ft_args(line, env);
-		if (!ft_strncmp(args[0], "exit", ft_strlen(args[0])) && !args[1])
+		if (!ft_strncmp(args[0], "exit", ft_strlen(args[0])))
 		{
 			free(line);
+			if (args[1] && ((ft_atoi(args[1])) || (args[1][0] == '0' && !args[1][1])))
+			{
+				estatus = ft_atoi(args[1]);
+				ft_freearray(args);
+				exit(estatus);
+			}
 			ft_freearray(args);
-			if (args[1] && (ft_atoi(args[1]) && args[1][0] == '0'))
-				exit(ft_atoi(args[1]));
 			exit(0);
 
 		}

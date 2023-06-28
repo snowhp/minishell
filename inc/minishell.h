@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 16:18:59 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:29:06 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ char *ft_replacevar(char *str, size_t i, t_data **info, int *pos);
 void	ft_expand(t_mini *complex, t_data **info);
 int	ft_hasquotes2(char *str);
 char *ft_removequotes(char *str, int hasquotes);
+int	ft_isbuiltin(t_simplecommand *command);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);
