@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 21:47:42 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 21:59:38 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_env_size(t_data **info)
 
 	i = 0;
 	current = *info;
-	while (current->next != NULL)
+	while (current != NULL)
 	{
 		current = current->next;
 		i++;
@@ -35,14 +35,14 @@ char	**ft_convert_env(t_data **info)
 
 	current = *info;
 	i = 0;
-	env = (char **)ft_calloc((ft_env_size(info)) + 1, sizeof(char *));
+	env = (char **)ft_calloc((ft_env_size(info)), sizeof(char *));
 	if (!env)
 		return (NULL);
-	while (current->next != NULL)
+	while (current->next != NULL)//Loop condition is correct?
 	{
 		if (!current->value)
 			current = current->next; //FIX error on ft_strlen of this value when its null
-		env[i] = (char *)malloc(sizeof(char) * (ft_strlen(current->key) + ft_strlen(current->value) + 2));
+		env[i] = (char *)malloc(sizeof(char) * (ft_strlen(current->key) + ft_strlen(current->value) + 2));//Missing allocation verification
 		j = 0;
 		k = 0;
 		while (current->key[j])
