@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:41:39 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/28 16:49:49 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 16:54:43 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,17 @@ int	ft_isquoteclose(char *str)
 	if (isdquote || issquote)
 		return (1);
 	return (0);
+}
+
+int	ft_isallspaces(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i++] != ' ')
+			return (0);
+	}
+	return (1);
 }

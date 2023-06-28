@@ -53,15 +53,11 @@ void	ft_loop(t_data **info)
 			free(line);
 			exit(0);
 		}
-		if (!line[0])
-		{
-			printf("\n");
-			continue ;
-		}
 		add_history(line);
-		if (ft_isquoteclose(line))
+		if (ft_isquoteclose(line) || ft_isallspaces(line) || !line[0])
 		{
-			free(line);
+			if (line)
+				free(line);
 			continue ;
 		}
 		args = ft_splitargs(line);
