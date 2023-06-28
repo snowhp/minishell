@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 16:54:34 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:00:13 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_update_env(t_data **info, char *key, char *update);
 void	ft_unset(t_data **info, char *var);
 
 //echoes in terminal
-void	ft_echo(t_data **info, char **args);
+void	ft_echo(char **args);
 
 /* This function will read the command line and parse the arguments to each
 simplecommand redirecting the output*/

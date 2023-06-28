@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 16:50:04 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:06:06 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	ft_env_size(t_data **info)
 {
-	int	i;
-	t_data *current;
+	int		i;
+	t_data	*current;
 
 	i = 0;
 	current = *info;
-	while(current->next != NULL)
+	while (current->next != NULL)
 	{
 		current = current->next;
 		i++;
@@ -36,14 +36,14 @@ char	**ft_convert_env(t_data **info)
 	current = *info;
 	i = 0;
 	env = (char **)malloc((ft_env_size(info) + 1) * sizeof(char *));
-	while(current->next != NULL)
+	while (current->next != NULL)
 	{
 		if (!current->value)
 			current = current->next; //FIX error on ft_strlen of this value when its null
 		env[i] = (char *)malloc(sizeof(char) * (ft_strlen(current->key) + ft_strlen(current->value) + 2));
 		j = 0;
 		k = 0;
-		while(current->key[j])
+		while (current->key[j])
 		{
 			env[i][k] = current->key[j];
 			k++;
@@ -52,7 +52,7 @@ char	**ft_convert_env(t_data **info)
 		env[i][k] = '=';
 		k++;
 		j = 0;
-		while(current->value[j])
+		while (current->value[j])
 		{
 			env[i][k] = current->value[j];
 			k++;

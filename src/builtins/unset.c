@@ -6,27 +6,27 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:07:18 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/28 14:39:36 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:01:39 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void    ft_remove_node(t_data **info, char *key)
+void	ft_remove_node(t_data **info, char *key)
 {
-    t_data  *current;
-    t_data  *temp;
+	t_data	*current;
+	t_data	*temp;
 
-    current = *info;
-    while(ft_strncmp(current->next->key, key, ft_strlen(current->next->key)))
-        current = current->next;
-    temp = current;
-    current = current->next;
-    temp->next = current->next;
+	current = *info;
+	while (ft_strncmp(current->next->key, key, ft_strlen(current->next->key)))
+		current = current->next;
+	temp = current;
+	current = current->next;
+	temp->next = current->next;
 	free(current);
 }
 
-void    ft_unset(t_data **info, char *var)
+void	ft_unset(t_data **info, char *var)
 {
 	t_data	*current;
 
@@ -35,8 +35,8 @@ void    ft_unset(t_data **info, char *var)
 	{
 		if (!ft_strncmp(current->key, var, ft_strlen(current->key)))
 		{
-            ft_remove_node(info, var);
-			break;
+			ft_remove_node(info, var);
+			break ;
 		}
 		current = current->next;
 	}

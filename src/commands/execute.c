@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 16:49:10 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/28 17:42:38 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	ft_isbuiltin(t_simplecommand *command)
 void	ft_executecommand(t_simplecommand *command, t_data **info)
 {
 	if (!ft_strncmp(command->arguments[0], "echo", 5))
-			ft_echo(info, command->arguments);
+			ft_echo(command->arguments);
 	else if (!ft_strncmp(command->arguments[0], "cd", 3))
 	{
 		ft_changedir(command->arguments[1], info);
