@@ -31,7 +31,7 @@ void	ft_loop(t_data **info)
 	t_mini	complex;
 	int	g_estatus;
 
-	complex.exitstatus = 0;
+	g_estatus = 0;
 	ft_signals();
 	while (1)
 	{
