@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/29 14:03:11 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:37:26 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	ft_isbuiltin(t_simplecommand *command)
 		return (1);
 	else if (!ft_strncmp(command->arguments[0], "pwd", 4) && command->arguments[1] == 0)
 		return (1);
-	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] == 0)
+	else if (!ft_strncmp(command->arguments[0], "export", 7))
 		return (1);
 	else if (!ft_strncmp(command->arguments[0], "unset", 6))
 		return (1);

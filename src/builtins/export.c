@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:52:19 by tiago             #+#    #+#             */
-/*   Updated: 2023/06/28 17:04:05 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:31:49 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,11 @@ void	ft_add_env(t_data **info, char *key, char *value)
 
 void	ft_doexport(t_data **export, char **args)
 {
-	int		i;
 	char	*key;
 	char	**temp;
 
-	i = 0;
-	temp = ft_split(args[1], '=');//if there is something after split add to env else need to do something else because of fucking quotes
-	while (args[i])
-	{
-		printf("|%s|", args[i]);
-		i++;
-	}
-	i = 0;
-	printf("\n\n");
-	while (temp[i])
-	{
-		printf("|%s|\n", temp[i]);
-		i++;
-	}
+	temp = ft_split(args[1], '=');
 	key = ft_find_env(export, temp[0]);
-	printf("Key is |%s|\n", key);
 	if (!key)
 		ft_add_env(export, ft_strdup(temp[0]), ft_strdup(args[1] + (int)ft_strlen(temp[0]) + 1));
 	if (key)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 21:59:38 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/29 16:42:00 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	**ft_convert_env(t_data **info)
 	env = (char **)ft_calloc((ft_env_size(info)), sizeof(char *));
 	if (!env)
 		return (NULL);
-	while (current->next != NULL)//Loop condition is correct?
+	while (current != NULL)//Loop condition is correct?
 	{
 		if (!current->value)
 			current = current->next; //FIX error on ft_strlen of this value when its null
