@@ -6,37 +6,34 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 21:33:24 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/29 14:03:11 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_runcommands(t_mini *complex, t_data **info)
+void	ft_runcommands(t_mini *c, t_data **info)
 {
 	int	pid;
 	int	cmds;
-	int	tmpin;
-	int	tmpout;
 	int 	fdin;
 	int 	fdout;
 	int	pipefd[2];
-	int	g_estatus;
 
 	cmds = 0;
-	tmpin = dup(STDIN_FILENO);
-	tmpout = dup(STDOUT_FILENO);
-	fdin = dup(complex->simplecommands[cmds].input);
-	while (cmds <= complex->nbcmd)
+	c->stdin = dup(STDIN_FILENO);
+	c->stdout = dup(STDOUT_FILENO);
+	fdin = dup(c->simplecommands[cmds].input);
+	while (cmds <= c->nbcmd)
 	{
 		dup2(fdin, 0);
 		close(fdin);
-		if(cmds == complex->nbcmd)
+		if(cmds == c->nbcmd)
 		{
-			if(complex->simplecommands[cmds].output == 1)
-				fdout = dup(tmpout);
+			if(c->simplecommands[cmds].output == 1)
+				fdout = dup(c->stdout);
 			else
-				fdout = dup(complex->simplecommands[cmds].output);
+				fdout = dup(c->simplecommands[cmds].output);
 		}
 		else
 		{
@@ -47,25 +44,25 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 		}
 		dup2(fdout, 1);
 		close(fdout);
-		if (complex->nbcmd == 0)
+		if (c->nbcmd == 0)
 		{
-			if (!ft_isbuiltin(&complex->simplecommands[cmds]))
+			if (!ft_isbuiltin(&c->simplecommands[cmds]))
 			{
 				pid = fork();
 				if (pid == 0)
-					ft_executecommand(&complex->simplecommands[cmds], info);
+					ft_executecommand(&c->simplecommands[cmds], info);
 				else
 					wait(NULL);
 			}
 			else
-				ft_executecommand(&complex->simplecommands[cmds], info);
+				ft_executecommand(&c->simplecommands[cmds], info);
 			break ;
 		}
 		pid = fork();
 		if (pid == 0)
 		{
 			close(pipefd[0]);
-			ft_executecommand(&complex->simplecommands[cmds], info);
+			ft_executecommand(&c->simplecommands[cmds], info);
 			exit (0);
 		}
 		else
@@ -77,12 +74,12 @@ void	ft_runcommands(t_mini *complex, t_data **info)
 			if (WIFEXITED(g_estatus))
 				g_estatus = WEXITSTATUS(g_estatus);
 		}
-		dup2(tmpin, 0);
-		dup2(tmpout, 1);
+		dup2(c->stdin, 0);
+		dup2(c->stdout, 1);
 		cmds++;
 	}
-	close(tmpin);
-	close(tmpout);
+	close(c->stdin);
+	close(c->stdout);
 }
 
 int	ft_isbuiltin(t_simplecommand *command)

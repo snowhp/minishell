@@ -12,6 +12,8 @@
 
 #include "../inc/minishell.h"
 
+int	g_estatus = 0;
+
 int	main(int argc, char **argv, char **env)
 {
 	t_data	*info;
@@ -29,9 +31,7 @@ void	ft_loop(t_data **info)
 	char	*line;
 	char	**args;
 	t_mini	complex;
-	int	g_estatus;
 
-	g_estatus = 0;
 	ft_signals();
 	while (1)
 	{

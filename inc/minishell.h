@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/28 17:00:13 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/29 14:01:56 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ typedef struct s_mini
 	t_simplecommand	simplecommands[100];
 	int				nbcmd;
 	int				exitstatus;
+	int				stdout;
+	int				stdin;
 }	t_mini;
 
 extern int	g_estatus;
@@ -99,7 +101,7 @@ void	ft_parse(char **args, t_mini *complex);
 
 /* This function will execute the commands that are already parsed and
 redirected */
-void	ft_runcommands(t_mini *complex, t_data **info);
+void	ft_runcommands(t_mini *c, t_data **info);
 void	ft_executecommand(t_simplecommand *command, t_data **info);
 
 /* This function is specific for split the arguments of a command line,
