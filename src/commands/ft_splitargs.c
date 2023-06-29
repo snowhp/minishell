@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitargs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:15 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/29 17:00:35 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:47:00 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-# include <stdbool.h>
-# include "../../libft/libft.h"
+#include "../../inc/minishell.h"
 
 int	ft_skipquotes(char *str)
 {
