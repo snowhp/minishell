@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:47:30 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/28 17:00:49 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:38:12 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_echo(char **args)
 			else
 				break ;
 		}
-		if (i == ft_strlen(args[k]))
+		if (i == ft_strlen(args[k]) && args[k][0])
 			newline++;
 		else
 			stop = 1;
@@ -48,7 +48,8 @@ void	ft_echo(char **args)
 	{
 		if (args[i][0] == '\0')
 			i++;
-		printf("%s ", args[i]);
+		if (args[i])
+			printf("%s ", args[i]);
 		i++;
 	}
 	if (newline == 0)

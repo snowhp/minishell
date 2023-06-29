@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/29 14:01:56 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:02:07 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct s_data
 {
 	char			*key;
 	char			*value;
+	char			**env;
 	struct s_data	*next;
 }	t_data;
 
@@ -52,6 +53,7 @@ typedef struct s_mini
 extern int	g_estatus;
 
 char	*ft_formating(char *str, t_data **info);
+char	**ft_convert_env(t_data **info);
 
 /* 	This function start the loop to listen to the input */
 void	ft_loop(t_data **info);

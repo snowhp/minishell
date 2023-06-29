@@ -35,6 +35,7 @@ void	ft_loop(t_data **info)
 	ft_signals();
 	while (1)
 	{
+		(*info)->env = ft_convert_env(info);
 		line = readline("> ");
 		if(line == NULL)
 		{

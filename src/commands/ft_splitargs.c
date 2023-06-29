@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitargs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:15 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/26 13:36:28 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:00:35 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,18 +143,3 @@ char	**ft_splitargs(char *str)
 	result[i] = NULL;
 	return (result);
 }
-
-/* int	main(int argc, char **argv)
-{
-	char **result;
-
-	result = ft_splitargs(argv[1]);
-	int i = 0;
-	while(result[i])
-	{
-		printf("%s\n", result[i]);
-		free(result[i++]);
-	}
-	free(result);
-} */
-

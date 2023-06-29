@@ -6,66 +6,11 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/29 16:42:00 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/06/29 17:13:15 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	ft_env_size(t_data **info)
-{
-	int		i;
-	t_data	*current;
-
-	i = 0;
-	current = *info;
-	while (current != NULL)
-	{
-		current = current->next;
-		i++;
-	}
-	return (i);
-}
-
-char	**ft_convert_env(t_data **info)
-{
-	char	**env;
-	t_data	*current;
-	int	i,j,k;
-
-	current = *info;
-	i = 0;
-	env = (char **)ft_calloc((ft_env_size(info)), sizeof(char *));
-	if (!env)
-		return (NULL);
-	while (current != NULL)//Loop condition is correct?
-	{
-		if (!current->value)
-			current = current->next; //FIX error on ft_strlen of this value when its null
-		env[i] = (char *)malloc(sizeof(char) * (ft_strlen(current->key) + ft_strlen(current->value) + 2));//Missing allocation verification
-		j = 0;
-		k = 0;
-		while (current->key[j])
-		{
-			env[i][k] = current->key[j];
-			k++;
-			j++;
-		}
-		env[i][k] = '=';
-		k++;
-		j = 0;
-		while (current->value[j])
-		{
-			env[i][k] = current->value[j];
-			k++;
-			j++;
-		}
-		env[i][k] = '\0';
-		i++;
-		current = current->next;
-	}
-	return (env);
-}
 
 char	*ft_path(char *cmd, char **env)
 {
@@ -99,19 +44,16 @@ char	*ft_path(char *cmd, char **env)
 void	ft_execute(char **cmd, t_data **info)
 {
 	char	*path;
-	char	**env;
-
-	env = ft_convert_env(info);
 	if (access(cmd[0], F_OK) == 0)
 		path = cmd[0];
 	else
-		path = ft_path(cmd[0], env);
+		path = ft_path(cmd[0], (*info)->env);
 	if (!path)
 	{
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd(" :command not found\n", 2);
 		exit(errno);
 	}
-	if (execve(path, cmd, env) == -1)
+	if (execve(path, cmd, (*info)->env) == -1)
 		exit(errno);
 }
