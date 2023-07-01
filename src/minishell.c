@@ -40,7 +40,7 @@ void	ft_loop(t_data **info)
 		if(line == NULL)
 		{
 			free(line);
-			exit(0);
+			exit(g_estatus);
 		}
 		add_history(line);
 		if (ft_isquoteclose(line) || ft_isallspaces(line) || !line[0])
@@ -60,7 +60,7 @@ void	ft_loop(t_data **info)
 				exit(g_estatus);
 			}
 			ft_freearray(args);
-			exit(0);
+			exit(g_estatus);
 
 		}
 		ft_initstruct(&complex, args);

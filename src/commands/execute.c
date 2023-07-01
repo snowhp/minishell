@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/29 16:37:26 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/01 13:55:30 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+extern int g_estatus;
 
 void	ft_runcommands(t_mini *c, t_data **info)
 {
@@ -19,6 +21,7 @@ void	ft_runcommands(t_mini *c, t_data **info)
 	int 	fdin;
 	int 	fdout;
 	int	pipefd[2];
+	int	wstatus;
 
 	cmds = 0;
 	c->stdin = dup(STDIN_FILENO);
@@ -52,7 +55,13 @@ void	ft_runcommands(t_mini *c, t_data **info)
 				if (pid == 0)
 					ft_executecommand(&c->simplecommands[cmds], info);
 				else
-					wait(NULL);
+				{
+					wait(&wstatus);
+					if (WIFEXITED(wstatus))
+						g_estatus = WEXITSTATUS(wstatus);
+					if (WIFSIGNALED(wstatus))
+						g_estatus = 128 + WEXITSTATUS(wstatus);
+				}
 			}
 			else
 				ft_executecommand(&c->simplecommands[cmds], info);
@@ -67,12 +76,15 @@ void	ft_runcommands(t_mini *c, t_data **info)
 		}
 		else
 		{
-			waitpid(pid, NULL, WNOHANG);
+			waitpid(pid, &wstatus, WNOHANG);
 			close(pipefd[1]);
 			if (pid == -1)
-				ft_printf("ERROR ON PIPE");
-			if (WIFEXITED(g_estatus))
-				g_estatus = WEXITSTATUS(g_estatus);
+				ft_printf("ERROR ON FORK");
+			if (WIFEXITED(wstatus))
+				g_estatus = WEXITSTATUS(wstatus);
+
+			if (WIFSIGNALED(wstatus))
+				g_estatus = 128 + WEXITSTATUS(wstatus);
 		}
 		dup2(c->stdin, 0);
 		dup2(c->stdout, 1);
