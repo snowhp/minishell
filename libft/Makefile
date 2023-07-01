@@ -43,7 +43,7 @@ SRCS = ft_strchr.c \
                           ft_joinsplit.c \
                           ft_countchar.c \
                           ft_atol.c \
-                          ft_stderprint.c \
+                          ft_isnum.c \
                           ft_freearray.c \
 
 BNS_SRCS = ft_lstnew.c \

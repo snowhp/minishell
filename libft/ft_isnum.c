@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_stderprint.c                                    :+:      :+:    :+:   */
+/*   ft_isnum.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/26 08:47:38 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/05/26 08:54:11 by tde-sous         ###   ########.fr       */
+/*   Created: 2023/07/01 14:12:23 by tde-sous          #+#    #+#             */
+/*   Updated: 2023/07/01 14:20:35 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_stderprint(char *str)
+int	ft_isnum(char *str)
 {
-	int	i;
-
-	i = 0;
-	if (!str)
+	if (*str == '+' || *str == '-')
+		str++;
+	if (!(*str))
+		return (0);
+	while (*str)
 	{
-		write(2, "(null)", 6);
-		return ;
+		if (*str >= '0' && *str <= '9')
+			str++;
+		else
+			return (0);
 	}
-	while (str[i] != '\0')
-		write(2, &str[i++], 1);
-	return ;
+	return (1);
 }
+
+/* #include <stdio.h>
+
+int	main(int argc, char **argv)
+{
+	printf("%i\n", ft_isnum(argv[1]));
+	return (0);
+} */
