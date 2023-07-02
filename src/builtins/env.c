@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/02 15:49:49 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:28:09 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	**ft_convert_env(t_data **info)
 		i++;
 		current = current->next;
 	}
+	env[i] = 0;
 	return (env);
 }
 
@@ -115,9 +116,13 @@ void	ft_printenv(t_data **info)
 	{
 		if (current->key)
 			printf("%s", current->key);
+		else
+			printf("NAO EXISTE ERRORRRR");
 		printf("=");
 		if (current->value)
 			printf("%s", current->value);
+		else
+			printf("NAO EXISTE ERRORRRR");
 		printf("\n");
 		current = current->next;
 	}
