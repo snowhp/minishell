@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/02 19:35:40 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:52:12 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ void	ft_start_env(char **env, t_data **info)//needs fixing on order
 			current->next = new;
 		}
 		i++;
+		ft_freearray(temp);
 	}
-	ft_freearray(temp);
 }
 
 void	ft_printenv(t_data **info)

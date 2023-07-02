@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 19:43:39 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:47:46 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	ft_executecommand(t_simplecommand *cmd, t_data **info, t_mini *c, int isbui
 	else if (!ft_strncmp(cmd->arguments[0], "env", 4) && !cmd->arguments[1])
 		ft_printenv(info);
 	else if (!ft_strncmp(cmd->arguments[0], "exit", 5))
-		ft_exit(cmd->arguments, c);
+		ft_exit(cmd->arguments, c, info);
 	else if (!isbuiltin)
 		ft_execute(cmd->arguments, info);
 }
