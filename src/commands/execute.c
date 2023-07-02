@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/01 13:55:30 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 15:06:38 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	ft_runcommands(t_mini *c, t_data **info)
 		close(fdout);
 		if (c->nbcmd == 0)
 		{
-			if (!ft_isbuiltin(&c->simplecommands[cmds]))
+			if (!ft_strncmp(c->simplecommands[cmds].arguments[0], "exit", 5))
+				ft_exit(c->simplecommands[cmds].arguments);
+			else if (!ft_isbuiltin(&c->simplecommands[cmds]))
 			{
 				pid = fork();
 				if (pid == 0)

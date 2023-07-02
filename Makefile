@@ -9,6 +9,7 @@ SRCS =  src/minishell.c \
 		src/builtins/env.c \
 		src/builtins/unset.c \
 		src/builtins/echo.c \
+		src/builtins/exit.c \
 		src/builtins/export.c
 
 OBJS = $(SRCS:.c=.o)

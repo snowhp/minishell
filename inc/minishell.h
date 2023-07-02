@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/29 17:02:07 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/01 14:45:43 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ int		ft_hasquotes2(char *str);
 char	*ft_removequotes(char *str, int hasquotes);
 int		ft_isbuiltin(t_simplecommand *command);
 int		ft_isallspaces(char *str);
+void		ft_exit(char **args);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);
