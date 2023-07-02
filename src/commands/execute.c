@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 16:23:44 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:21:07 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,27 @@ void	ft_runcommands(t_mini *c, t_data **info)
 			}
 			else
 				ft_executebuiltin(&c->simplecommands[cmds], info, c);
-			break ;
-		}
-		pid = fork();
-		if (pid == 0)
-		{
-			close(pipefd[0]);
-			ft_executecommand(&c->simplecommands[cmds], info, c);
-			exit (0);
 		}
 		else
 		{
-			waitpid(pid, &wstatus, WNOHANG);
-			close(pipefd[1]);
-			if (pid == -1)
-				ft_printf("ERROR ON FORK");
-			if (WIFEXITED(wstatus))
-				g_estatus = WEXITSTATUS(wstatus);
-			if (WIFSIGNALED(wstatus))
-				g_estatus = 128 + WEXITSTATUS(wstatus);
+			pid = fork();
+			if (pid == 0)
+			{
+				close(pipefd[0]);
+				ft_executecommand(&c->simplecommands[cmds], info, c);
+				exit (0);
+			}
+			else
+			{
+				waitpid(pid, &wstatus, WNOHANG);
+				close(pipefd[1]);
+				if (pid == -1)
+					ft_printf("ERROR ON FORK");
+				if (WIFEXITED(wstatus))
+					g_estatus = WEXITSTATUS(wstatus);
+				if (WIFSIGNALED(wstatus))
+					g_estatus = 128 + WEXITSTATUS(wstatus);
+			}
 		}
 		dup2(c->stdin, 0);
 		dup2(c->stdout, 1);
