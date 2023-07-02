@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 16:08:21 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 16:25:02 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_signals(void);
 
 //Executes commands (needs more work)
 void	ft_execute(char **cmd, t_data **info);
-void	ft_executebuiltin(t_simplecommand *c, t_data **info);
+void	ft_executebuiltin(t_simplecommand *cmd, t_data **info, t_mini *c);
 
 // Temp function to check if command is built in or to execute
 void	ft_check_test(char **args, t_data **info);
@@ -107,7 +107,7 @@ void	ft_parse(char **args, t_mini *c);
 /* This function will execute the commands that are already parsed and
 redirected */
 void	ft_runcommands(t_mini *c, t_data **info);
-void	ft_executecommand(t_simplecommand *c, t_data **info);
+void	ft_executecommand(t_simplecommand *cmd, t_data **info, t_mini *c);
 
 /* This function is specific for split the arguments of a command line,
 	handling special characters like pipes (|), quotes (' "), redirects (> >>
@@ -132,7 +132,7 @@ int		ft_hasquotes2(char *str);
 char	*ft_removequotes(char *str, int hasquotes);
 int		ft_isbuiltin(t_simplecommand *c);
 int		ft_isallspaces(char *str);
-void	ft_exit(char **args);
+void	ft_exit(char **args, t_mini *c);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);

@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 16:09:21 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 16:23:44 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,11 @@ void	ft_runcommands(t_mini *c, t_data **info)
 		close(fdout);
 		if (c->nbcmd == 0)
 		{
-			if (!ft_strncmp(c->simplecommands[cmds].arguments[0], "exit", 5))
-				ft_exit(c->simplecommands[cmds].arguments);
-			else if (!ft_isbuiltin(&c->simplecommands[cmds]))
+			if (!ft_isbuiltin(&c->simplecommands[cmds]))
 			{
 				pid = fork();
 				if (pid == 0)
-					ft_executecommand(&c->simplecommands[cmds], info);
+					ft_executecommand(&c->simplecommands[cmds], info, c);
 				else
 				{
 					wait(&wstatus);
@@ -66,14 +64,14 @@ void	ft_runcommands(t_mini *c, t_data **info)
 				}
 			}
 			else
-				ft_executebuiltin(&c->simplecommands[cmds], info);
+				ft_executebuiltin(&c->simplecommands[cmds], info, c);
 			break ;
 		}
 		pid = fork();
 		if (pid == 0)
 		{
 			close(pipefd[0]);
-			ft_executecommand(&c->simplecommands[cmds], info);
+			ft_executecommand(&c->simplecommands[cmds], info, c);
 			exit (0);
 		}
 		else
@@ -95,67 +93,73 @@ void	ft_runcommands(t_mini *c, t_data **info)
 	close(c->stdout);
 }
 
-int	ft_isbuiltin(t_simplecommand *c)
+int	ft_isbuiltin(t_simplecommand *cmd)
 {
-	if (!ft_strncmp(c->arguments[0], "echo", 5))
+	if (!ft_strncmp(cmd->arguments[0], "echo", 5))
 		return (1);
-	else if (!ft_strncmp(c->arguments[0], "cd", 3))
+	else if (!ft_strncmp(cmd->arguments[0], "exit", 5))
 		return (1);
-	else if (!ft_strncmp(c->arguments[0], "pwd", 4))
+	else if (!ft_strncmp(cmd->arguments[0], "cd", 3))
 		return (1);
-	else if (!ft_strncmp(c->arguments[0], "export", 7))
+	else if (!ft_strncmp(cmd->arguments[0], "pwd", 4))
 		return (1);
-	else if (!ft_strncmp(c->arguments[0], "unset", 6))
+	else if (!ft_strncmp(cmd->arguments[0], "export", 7))
 		return (1);
-	else if (!ft_strncmp(c->arguments[0], "env", 4))
+	else if (!ft_strncmp(cmd->arguments[0], "unset", 6))
+		return (1);
+	else if (!ft_strncmp(cmd->arguments[0], "env", 4))
 		return (1);
 	return (0);
 }
 
-void	ft_executecommand(t_simplecommand *c, t_data **info)
+void	ft_executecommand(t_simplecommand *cmd, t_data **info, t_mini *c)
 {
-	if (!ft_strncmp(c->arguments[0], "echo", 5))
-		ft_echo(c->arguments);
-	else if (!ft_strncmp(c->arguments[0], "cd", 3))
+	if (!ft_strncmp(cmd->arguments[0], "echo", 5))
+		ft_echo(cmd->arguments);
+	else if (!ft_strncmp(cmd->arguments[0], "cd", 3))
 	{
-		ft_changedir(c->arguments[1], info);
-		if (c->arguments[2])
+		ft_changedir(cmd->arguments[1], info);
+		if (cmd->arguments[2])
 			printf("bash: cd: too many arguments\n");
 	}
-	else if (!ft_strncmp(c->arguments[0], "pwd", 4))
+	else if (!ft_strncmp(cmd->arguments[0], "pwd", 4))
 		ft_printcwd();
-	else if (!ft_strncmp(c->arguments[0], "export", 7) && c->arguments[1] == 0)
+	else if (!ft_strncmp(cmd->arguments[0], "export", 7) && !cmd->arguments[1])
 		ft_printexport(info);
-	else if (!ft_strncmp(c->arguments[0], "export", 7) && c->arguments[1] != 0)
-		ft_doexport(info, c->arguments);
-	else if (!ft_strncmp(c->arguments[0], "unset", 6))
-		ft_unset(info, c->arguments[1]);
-	else if (!ft_strncmp(c->arguments[0], "env", 4) && c->arguments[1] == 0)
+	else if (!ft_strncmp(cmd->arguments[0], "export", 7) && cmd->arguments[1])
+		ft_doexport(info, cmd->arguments);
+	else if (!ft_strncmp(cmd->arguments[0], "unset", 6))
+		ft_unset(info, cmd->arguments[1]);
+	else if (!ft_strncmp(cmd->arguments[0], "env", 4) && !cmd->arguments[1])
 		ft_printenv(info);
+	else if (!ft_strncmp(cmd->arguments[0], "exit", 5))
+		ft_exit(cmd->arguments, c);
 	else
-		ft_execute(c->arguments, info);
+		ft_execute(cmd->arguments, info);
 }
 
-void	ft_executebuiltin(t_simplecommand *c, t_data **info)
+void	ft_executebuiltin(t_simplecommand *cmd, t_data **info, t_mini *c)
 {
-	if (!ft_strncmp(c->arguments[0], "echo", 5))
-		ft_echo(c->arguments);
-	else if (!ft_strncmp(c->arguments[0], "cd", 3))
+	if (!ft_strncmp(cmd->arguments[0], "echo", 5))
+		ft_echo(cmd->arguments);
+	else if (!ft_strncmp(cmd->arguments[0], "cd", 3))
 	{
-		ft_changedir(c->arguments[1], info);
-		if (c->arguments[2])
+		ft_changedir(cmd->arguments[1], info);
+		if (cmd->arguments[2])
 			printf("bash: cd: too many arguments\n");
 	}
-	else if (!ft_strncmp(c->arguments[0], "pwd", 4) && c->arguments[1] == 0)
+	else if (!ft_strncmp(cmd->arguments[0], "pwd", 4) && !cmd->arguments[1])
 		ft_printcwd();
-	else if (!ft_strncmp(c->arguments[0], "export", 7) && c->arguments[1] == 0)
+	else if (!ft_strncmp(cmd->arguments[0], "export", 7) && !cmd->arguments[1])
 		ft_printexport(info);
-	else if (!ft_strncmp(c->arguments[0], "export", 7) && c->arguments[1] != 0)
-		ft_doexport(info, c->arguments);
-	else if (!ft_strncmp(c->arguments[0], "unset", 6))
-		ft_unset(info, c->arguments[1]);
-	else if (!ft_strncmp(c->arguments[0], "env", 4) && c->arguments[1] == 0)
+	else if (!ft_strncmp(cmd->arguments[0], "export", 7) && cmd->arguments[1])
+		ft_doexport(info, cmd->arguments);
+	else if (!ft_strncmp(cmd->arguments[0], "unset", 6))
+		ft_unset(info, cmd->arguments[1]);
+	else if (!ft_strncmp(cmd->arguments[0], "env", 4) && !cmd->arguments[1])
 		ft_printenv(info);
+	else if (!ft_strncmp(cmd->arguments[0], "exit", 5))
+		ft_exit(cmd->arguments, c);
 }
 
 void	ft_parse(char **args, t_mini *c)

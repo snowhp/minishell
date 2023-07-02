@@ -6,13 +6,13 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 14:34:14 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 15:06:49 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 16:24:54 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_exit(char **args)
+void	ft_exit(char **args, t_mini *c)
 {
 	if (args[1] && !ft_isnum(args[1]))
 	{
@@ -25,10 +25,9 @@ void	ft_exit(char **args)
 	else
 	{
 		if (args[1] && ((ft_atoi(args[1])) || (args[1][0] == '0' && !args[1][1])))
-		{
 			g_estatus = ft_atoi(args[1]);
-			exit(g_estatus);
-		}
+		ft_freearray(c->args);
+		free(c->line);
 		exit(g_estatus);
 	}
 }
