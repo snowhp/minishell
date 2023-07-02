@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 15:47:33 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 19:56:59 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_expand(t_mini *c, t_data **info)
 	char	*formatted;
 
 	cmds = 0;
-	while (cmds < 75)
+	while (cmds < 100)
 	{
 		i = 0;
 		while (i < 50)

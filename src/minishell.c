@@ -51,6 +51,7 @@ void	ft_loop(t_data **info)
 		ft_runcommands(&c, info);
 		ft_freearray(c.args);
 		free(c.line);
+		ft_freearray((*info)->env);
 		while (wait(NULL) > 0);
 	}
 	free(c.line);
