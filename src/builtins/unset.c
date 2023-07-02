@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:07:18 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/28 17:01:39 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 18:41:22 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,13 @@ void	ft_remove_node(t_data **info, char *key)
 	t_data	*temp;
 
 	current = *info;
-	while (ft_strncmp(current->next->key, key, ft_strlen(current->next->key)))
+	if (!ft_strncmp(current->key, key, ft_strlen(current->key) + 1))
+	{
+		*info = (*info)->next;
+		free(current);
+		return ;
+	}
+	while (ft_strncmp(current->next->key, key, ft_strlen(current->next->key) + 1))
 		current = current->next;
 	temp = current;
 	current = current->next;
