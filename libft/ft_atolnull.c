@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atol.c                                          :+:      :+:    :+:   */
+/*   ft_atolnull.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:01:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/04/25 22:47:58 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 21:41:23 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 long	ft_atolnull(const char *nptr)
 {
@@ -29,7 +31,7 @@ long	ft_atolnull(const char *nptr)
 		i++;
 	}
 	if (!(nptr[i] >= '0' && nptr[i] <= '9'))
-		return (NULL);
+		return (0);
 	while (nptr[i] >= '0' && nptr[i] <= '9')
 	{
 		res = (res * 10) + (nptr[i] - '0');
