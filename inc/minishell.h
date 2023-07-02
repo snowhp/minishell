@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 15:47:59 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 16:08:21 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ typedef struct s_mini
 	int				exitstatus;
 	int				stdout;
 	int				stdin;
+	char			*line;
+	char			**args;
 }	t_mini;
 
 extern int	g_estatus;
@@ -63,6 +65,7 @@ void	ft_signals(void);
 
 //Executes commands (needs more work)
 void	ft_execute(char **cmd, t_data **info);
+void	ft_executebuiltin(t_simplecommand *c, t_data **info);
 
 // Temp function to check if command is built in or to execute
 void	ft_check_test(char **args, t_data **info);

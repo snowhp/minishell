@@ -28,35 +28,31 @@ int	main(int argc, char **argv, char **env)
 
 void	ft_loop(t_data **info)
 {
-	char	*line;
-	char	**args;
-	t_mini	complex;
+	t_mini	c;
 
 	ft_signals();
 	while (1)
 	{
 		(*info)->env = ft_convert_env(info);
-		line = readline("> ");
-		if (!line)
-		{
-			free(line);
+		c.line = readline("> ");
+		if (!c.line)
 			exit(g_estatus);
-		}
-		add_history(line);
-		if (ft_isquoteclose(line) || ft_isallspaces(line) || !line[0])
+		add_history(c.line);
+		if (ft_isquoteclose(c.line) || ft_isallspaces(c.line) || !c.line[0])
 		{
-			if (line)
-				free(line);
+			if (c.line)
+				free(c.line);
 			continue ;
 		}
-		args = ft_splitargs(line);
-		ft_initstruct(&complex, args);
-		ft_parse(args, &complex);
-		ft_expand(&complex, info);
-		ft_runcommands(&complex, info);
-		ft_freearray(args);
+		c.args = ft_splitargs(c.line);
+		ft_initstruct(&c, c.args);
+		ft_parse(c.args, &c);
+		ft_expand(&c, info);
+		ft_runcommands(&c, info);
+		ft_freearray(c.args);
+		free(c.line);
 		while (wait(NULL) > 0);
 	}
-	free(line);
+	free(c.line);
 	rl_clear_history();
 }
