@@ -6,20 +6,20 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 15:06:38 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/02 15:41:36 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern int g_estatus;
+extern int	g_estatus;
 
 void	ft_runcommands(t_mini *c, t_data **info)
 {
 	int	pid;
 	int	cmds;
-	int 	fdin;
-	int 	fdout;
+	int	fdin;
+	int	fdout;
 	int	pipefd[2];
 	int	wstatus;
 
@@ -31,9 +31,9 @@ void	ft_runcommands(t_mini *c, t_data **info)
 	{
 		dup2(fdin, 0);
 		close(fdin);
-		if(cmds == c->nbcmd)
+		if (cmds == c->nbcmd)
 		{
-			if(c->simplecommands[cmds].output == 1)
+			if (c->simplecommands[cmds].output == 1)
 				fdout = dup(c->stdout);
 			else
 				fdout = dup(c->simplecommands[cmds].output);
@@ -84,7 +84,6 @@ void	ft_runcommands(t_mini *c, t_data **info)
 				ft_printf("ERROR ON FORK");
 			if (WIFEXITED(wstatus))
 				g_estatus = WEXITSTATUS(wstatus);
-
 			if (WIFSIGNALED(wstatus))
 				g_estatus = 128 + WEXITSTATUS(wstatus);
 		}
@@ -96,52 +95,53 @@ void	ft_runcommands(t_mini *c, t_data **info)
 	close(c->stdout);
 }
 
-int	ft_isbuiltin(t_simplecommand *command)
+int	ft_isbuiltin(t_simplecommand *c)
 {
-	if (!ft_strncmp(command->arguments[0], "echo", 5))
+	if (!ft_strncmp(c->arguments[0], "echo", 5))
 		return (1);
-	else if (!ft_strncmp(command->arguments[0], "cd", 3))
+	else if (!ft_strncmp(c->arguments[0], "cd", 3))
 		return (1);
-	else if (!ft_strncmp(command->arguments[0], "pwd", 4) && command->arguments[1] == 0)
+	else if (!ft_strncmp(c->arguments[0], "pwd", 4) && c->arguments[1] == 0)
 		return (1);
-	else if (!ft_strncmp(command->arguments[0], "export", 7))
+	else if (!ft_strncmp(c->arguments[0], "export", 7))
 		return (1);
-	else if (!ft_strncmp(command->arguments[0], "unset", 6))
+	else if (!ft_strncmp(c->arguments[0], "unset", 6))
 		return (1);
-	else if (!ft_strncmp(command->arguments[0], "env", 4) && command->arguments[1] == 0)
+	else if (!ft_strncmp(c->arguments[0], "env", 4) && c->arguments[1] == 0)
 		return (1);
-	return 0;
-}
-void	ft_executecommand(t_simplecommand *command, t_data **info)
-{
-	if (!ft_strncmp(command->arguments[0], "echo", 5))
-			ft_echo(command->arguments);
-	else if (!ft_strncmp(command->arguments[0], "cd", 3))
-	{
-		ft_changedir(command->arguments[1], info);
-		if (command->arguments[2])
-			printf("bash: cd: too many arguments\n");
-	}
-	else if (!ft_strncmp(command->arguments[0], "pwd", 4) && command->arguments[1] == 0)
-			ft_printcwd();
-	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] == 0)
-			ft_printexport(info);
-	else if (!ft_strncmp(command->arguments[0], "export", 7) && command->arguments[1] != 0)
-			ft_doexport(info, command->arguments);
-	else if (!ft_strncmp(command->arguments[0], "unset", 6))
-			ft_unset(info, command->arguments[1]);
-	else if (!ft_strncmp(command->arguments[0], "env", 4) && command->arguments[1] == 0)
-			ft_printenv(info);
-	else
-		ft_execute(command->arguments, info);
+	return (0);
 }
 
-void	ft_parse(char** args, t_mini *complex)
+void	ft_executecommand(t_simplecommand *c, t_data **info)
 {
-	int 	cmds;
-	int	x;
+	if (!ft_strncmp(c->arguments[0], "echo", 5))
+		ft_echo(c->arguments);
+	else if (!ft_strncmp(c->arguments[0], "cd", 3))
+	{
+		ft_changedir(c->arguments[1], info);
+		if (c->arguments[2])
+			printf("bash: cd: too many arguments\n");
+	}
+	else if (!ft_strncmp(c->arguments[0], "pwd", 4) && c->arguments[1] == 0)
+		ft_printcwd();
+	else if (!ft_strncmp(c->arguments[0], "export", 7) && c->arguments[1] == 0)
+		ft_printexport(info);
+	else if (!ft_strncmp(c->arguments[0], "export", 7) && c->arguments[1] != 0)
+		ft_doexport(info, c->arguments);
+	else if (!ft_strncmp(c->arguments[0], "unset", 6))
+		ft_unset(info, c->arguments[1]);
+	else if (!ft_strncmp(c->arguments[0], "env", 4) && c->arguments[1] == 0)
+		ft_printenv(info);
+	else
+		ft_execute(c->arguments, info);
+}
+
+void	ft_parse(char **args, t_mini *c)
+{
+	int		cmds;
+	int		x;
 	char	*delimiter;
-	char 	*temp;
+	char	*temp;
 
 	cmds = 0;
 	x = 0;
@@ -149,11 +149,11 @@ void	ft_parse(char** args, t_mini *complex)
 	{
 		if (!ft_strncmp(*args, ">>", 3))
 		{
-			if (complex->simplecommands[cmds].output != 1)
-				close (complex->simplecommands[cmds].output);
+			if (c->simplecommands[cmds].output != 1)
+				close (c->simplecommands[cmds].output);
 			args++;
-			complex->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_APPEND, 0664);
-			if (complex->simplecommands[cmds].output == -1)
+			c->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_APPEND, 0664);
+			if (c->simplecommands[cmds].output == -1)
 				ft_printf("%s: %s\n", strerror(errno), *args);
 			if (*(args + 1))
 				args++;
@@ -162,11 +162,11 @@ void	ft_parse(char** args, t_mini *complex)
 		}
 		else if (!ft_strncmp(*args, ">", 2))
 		{
-			if (complex->simplecommands[cmds].output != 1)
-				close (complex->simplecommands[cmds].output);
+			if (c->simplecommands[cmds].output != 1)
+				close (c->simplecommands[cmds].output);
 			args++;
-			complex->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_TRUNC, 0664);
-			if (complex->simplecommands[cmds].output == -1)
+			c->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_TRUNC, 0664);
+			if (c->simplecommands[cmds].output == -1)
 				ft_printf("%s: %s\n", strerror(errno), *args);
 			if (*(args + 1))
 				args++;
@@ -175,23 +175,23 @@ void	ft_parse(char** args, t_mini *complex)
 		}
 		else if (!ft_strncmp(*args, "<<", 3))
 		{
-			if (complex->simplecommands[cmds].input != 0)
-				close (complex->simplecommands[cmds].input);
+			if (c->simplecommands[cmds].input != 0)
+				close (c->simplecommands[cmds].input);
 			delimiter = *(args + 1);
 			args++;
-			complex->simplecommands[cmds].input = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0664);
+			c->simplecommands[cmds].input = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0664);
 			while (1)
 			{
 				temp = readline("> ");
 				if (!ft_strncmp(temp, delimiter, ft_strlen(delimiter) + 1))
 					break ;
 				temp = ft_strjoin(temp, "\n");
-				write(complex->simplecommands[cmds].input, temp, ft_strlen(temp));
+				write(c->simplecommands[cmds].input, temp, ft_strlen(temp));
 				free(temp);
 			}
 			free(temp);
-			close (complex->simplecommands[cmds].input);
-			complex->simplecommands[cmds].input = open(".heredoc", O_RDONLY, 0444);
+			close (c->simplecommands[cmds].input);
+			c->simplecommands[cmds].input = open(".heredoc", O_RDONLY, 0444);
 			if (*(args + 1))
 				args++;
 			else
@@ -199,11 +199,11 @@ void	ft_parse(char** args, t_mini *complex)
 		}
 		else if (!ft_strncmp(*args, "<", 2))
 		{
-			if (complex->simplecommands[cmds].input != 0)
-				close (complex->simplecommands[cmds].input);
+			if (c->simplecommands[cmds].input != 0)
+				close (c->simplecommands[cmds].input);
 			args++;
-			complex->simplecommands[cmds].input = open(*args, O_RDONLY, 0444);
-			if (complex->simplecommands[cmds].input == -1)
+			c->simplecommands[cmds].input = open(*args, O_RDONLY, 0444);
+			if (c->simplecommands[cmds].input == -1)
 				ft_printf("%s: %s\n", strerror(errno), *args);
 			if (*(args + 1))
 				args++;
@@ -216,24 +216,24 @@ void	ft_parse(char** args, t_mini *complex)
 			args++;
 			x = 0;
 			if (cmds > 0)
-				complex->simplecommands[cmds].input = complex->simplecommands[cmds - 1].output;
+				c->simplecommands[cmds].input = c->simplecommands[cmds - 1].output;
 		}
-		complex->simplecommands[cmds].arguments[x++] = ft_strdup(*args);
+		c->simplecommands[cmds].arguments[x++] = ft_strdup(*args);
 		args++;
 	}
 }
 
 void	ft_initstruct(t_mini *complex, char **args)
 {
-	int x;
-	int i;
+	int	x;
+	int	i;
 
 	i = 0;
 	x = 0;
 	complex->nbcmd = 0;
-	while(*args)
+	while (*args)
 	{
-		if (!ft_strncmp(*args, "|",sizeof(*args)))
+		if (!ft_strncmp(*args, "|", sizeof(*args)))
 			complex->nbcmd++;
 		args++;
 	}

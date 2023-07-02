@@ -37,7 +37,7 @@ void	ft_loop(t_data **info)
 	{
 		(*info)->env = ft_convert_env(info);
 		line = readline("> ");
-		if (line == NULL)
+		if (!line)
 		{
 			free(line);
 			exit(g_estatus);
@@ -55,7 +55,7 @@ void	ft_loop(t_data **info)
 		ft_expand(&complex, info);
 		ft_runcommands(&complex, info);
 		ft_freearray(args);
-		while(wait(NULL) > 0);
+		while (wait(NULL) > 0);
 	}
 	free(line);
 	rl_clear_history();

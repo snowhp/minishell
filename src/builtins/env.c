@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/29 17:17:22 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/02 15:49:49 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,16 @@ char	**ft_convert_env(t_data **info)
 {
 	char	**env;
 	t_data	*current;
-	int	i,j,k;
+	int		i;
+	int		j;
+	int		k;
 
 	current = *info;
 	i = 0;
-	
-	env = (char **)malloc(sizeof(char*) * (ft_env_size(info) + 1));
+	env = (char **)malloc(sizeof(char *) * (ft_env_size(info) + 1));
 	if (!env)
 		return (NULL);
-	while (current != NULL)//Loop condition is correct?
+	while (current) //Loop condition is correct?
 	{
 		if (!current->value)
 			current = current->next; //FIX error on ft_strlen of this value when its null
