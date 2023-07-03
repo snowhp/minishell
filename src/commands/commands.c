@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/29 17:13:15 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 15:20:37 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_execute(char **cmd, t_data **info)
 	if (!path)
 	{
 		ft_putstr_fd(cmd[0], 2);
-		ft_putstr_fd(" :command not found\n", 2);
+		ft_putstr_fd(" : command not found\n", 2);
 		exit(errno);
 	}
 	if (execve(path, cmd, (*info)->env) == -1)
