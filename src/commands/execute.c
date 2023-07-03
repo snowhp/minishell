@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 12:27:39 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 12:36:13 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,13 @@ int	ft_parse(char **args, t_mini *c)
 			args++;
 			c->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_APPEND, 0664);
 			if (c->simplecommands[cmds].output == -1)
-				ft_printf("%s: %s\n", strerror(errno), *args);
+			{
+				ft_putstr_fd(*args, 2);
+				ft_putstr_fd(": ", 2);
+				ft_putstr_fd(strerror(errno), 2);
+				ft_putchar_fd('\n', 2);
+				return (0);
+			}
 			if (*(args + 1))
 			{
 				args++;
@@ -184,7 +190,13 @@ int	ft_parse(char **args, t_mini *c)
 			args++;
 			c->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_TRUNC, 0664);
 			if (c->simplecommands[cmds].output == -1)
-				ft_printf("%s: %s\n", strerror(errno), *args);
+			{
+				ft_putstr_fd(*args, 2);
+				ft_putstr_fd(": ", 2);
+				ft_putstr_fd(strerror(errno), 2);
+				ft_putchar_fd('\n', 2);
+				return (0);
+			}
 			if (*(args + 1))
 			{
 				args++;
@@ -237,7 +249,13 @@ int	ft_parse(char **args, t_mini *c)
 			args++;
 			c->simplecommands[cmds].input = open(*args, O_RDONLY, 0444);
 			if (c->simplecommands[cmds].input == -1)
-				ft_printf("%s: %s\n", strerror(errno), *args);
+			{
+				ft_putstr_fd(*args, 2);
+				ft_putstr_fd(": ", 2);
+				ft_putstr_fd(strerror(errno), 2);
+				ft_putchar_fd('\n', 2);
+				return (0);
+			}
 			if (*(args + 1))
 			{
 				args++;
