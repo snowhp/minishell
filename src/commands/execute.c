@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 19:47:46 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:40:09 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	ft_executecommand(t_simplecommand *cmd, t_data **info, t_mini *c, int isbui
 		ft_execute(cmd->arguments, info);
 }
 
-void	ft_parse(char **args, t_mini *c)
+int	ft_parse(char **args, t_mini *c)
 {
 	int		cmds;
 	int		x;
@@ -155,6 +155,11 @@ void	ft_parse(char **args, t_mini *c)
 		{
 			if (c->simplecommands[cmds].output != 1)
 				close (c->simplecommands[cmds].output);
+			if (!(*(args + 1)))
+			{
+				ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+				return (0);
+			}
 			args++;
 			c->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_APPEND, 0664);
 			if (c->simplecommands[cmds].output == -1)
@@ -168,6 +173,11 @@ void	ft_parse(char **args, t_mini *c)
 		{
 			if (c->simplecommands[cmds].output != 1)
 				close (c->simplecommands[cmds].output);
+			if (!(*(args + 1)))
+			{
+				ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+				return (0);
+			}
 			args++;
 			c->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_TRUNC, 0664);
 			if (c->simplecommands[cmds].output == -1)
@@ -182,6 +192,11 @@ void	ft_parse(char **args, t_mini *c)
 			if (c->simplecommands[cmds].input != 0)
 				close (c->simplecommands[cmds].input);
 			delimiter = *(args + 1);
+			if (!(*(args + 1)))
+			{
+				ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+				return (0);
+			}
 			args++;
 			c->simplecommands[cmds].input = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0664);
 			while (1)
@@ -205,6 +220,11 @@ void	ft_parse(char **args, t_mini *c)
 		{
 			if (c->simplecommands[cmds].input != 0)
 				close (c->simplecommands[cmds].input);
+			if (!(*(args + 1)))
+			{
+				ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+				return (0);
+			}
 			args++;
 			c->simplecommands[cmds].input = open(*args, O_RDONLY, 0444);
 			if (c->simplecommands[cmds].input == -1)
@@ -225,6 +245,7 @@ void	ft_parse(char **args, t_mini *c)
 		c->simplecommands[cmds].arguments[x++] = ft_strdup(*args);
 		args++;
 	}
+	return (1);
 }
 
 void	ft_initstruct(t_mini *complex, char **args)

@@ -46,9 +46,11 @@ void	ft_loop(t_data **info)
 		}
 		c.args = ft_splitargs(c.line);
 		ft_initstruct(&c, c.args);
-		ft_parse(c.args, &c);
-		ft_expand(&c, info);
-		ft_runcommands(&c, info);
+		if(ft_parse(c.args, &c))
+		{
+			ft_expand(&c, info);
+			ft_runcommands(&c, info);
+		}
 		ft_freearray(c.args);
 		free(c.line);
 		ft_freearray((*info)->env);

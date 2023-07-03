@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 19:48:05 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:38:10 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	ft_echo(char **args);
 
 /* This function will read the command line and parse the arguments to each
 simplecommand redirecting the output*/
-void	ft_parse(char **args, t_mini *c);
+int	ft_parse(char **args, t_mini *c);
 
 /* This function will execute the commands that are already parsed and
 redirected */
