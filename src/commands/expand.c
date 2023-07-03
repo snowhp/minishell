@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/02 19:56:59 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 11:44:36 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ char	*ft_replacevar(char *str, size_t i, t_data **info, int *pos)
 			}
 			i++;
 			j = i;
-			while (str[i] != ' ' && str[i] != '\0' && str[i] != '\'' && str[i] != '\"' && str[i] != '$')
+			while (ft_isalnum(str[i]))//DO better testing on echo $HOME# for example
 				i++;
 			f = i - j;
 			temp = (char *)malloc(sizeof(char) * (f + 1));
