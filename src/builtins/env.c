@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/02 19:52:12 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:16:27 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ char	*ft_find_env(t_data **info, char *find)
 	current = *info;
 	while (current != NULL)
 	{
-		if (!ft_strncmp(current->key, find, ft_strlen(find)))
+		if (!ft_strncmp(current->key, find, ft_strlen(current->key) + 1))
 			return (current->value);
 		current = current->next;
 	}

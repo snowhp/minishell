@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 15:50:38 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:20:28 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*ft_find_env(t_data **info, char *find);
 void	ft_update_env(t_data **info, char *key, char *update);
 
 //Unset a var
-void	ft_unset(t_data **info, char *var);
+void	ft_unset(t_data **info, char **args);
 
 //echoes in terminal
 void	ft_echo(char **args);

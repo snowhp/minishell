@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:07:18 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/02 18:41:22 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:23:55 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ void	ft_remove_node(t_data **info, char *key)
 	free(current);
 }
 
-void	ft_unset(t_data **info, char *var)
+void	ft_unset_loop(t_data **info, char *var)
 {
 	t_data	*current;
 
 	current = *info;
-	while (current->next != NULL)
+	while (current != NULL)
 	{
 		if (!ft_strncmp(current->key, var, ft_strlen(current->key)))
 		{
@@ -45,5 +45,17 @@ void	ft_unset(t_data **info, char *var)
 			break ;
 		}
 		current = current->next;
+	}
+}
+
+void	ft_unset(t_data **info, char **args)
+{
+	int	i;
+
+	i = 1;
+	while(args[i])
+	{
+		ft_unset_loop(info, args[i]);
+		i++;
 	}
 }

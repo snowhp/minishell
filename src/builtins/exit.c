@@ -3,14 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 14:34:14 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 15:04:20 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:32:25 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	ft_free_struct(t_mini *c)
+{
+	int	x;
+	int	i;
+
+	i = 0;
+	x = 0;
+	while (x < 100)
+	{
+		i = 0;
+		while (i < 50)
+			free(c->simplecommands[x].arguments[i++]);
+		x++;
+	}
+}
+
+void	ft_freelist(t_data **info)
+{
+	t_data	*current;
+
+	ft_freearray((*info)->env);
+	while(*info != NULL)
+	{
+		current = *info;
+		*info = (*info)->next;
+		free(current->key);
+		free(current->value);
+		free(current);
+	}
+}
 
 void	ft_exit(char **args, t_mini *c, t_data **info)
 {
@@ -29,8 +60,9 @@ void	ft_exit(char **args, t_mini *c, t_data **info)
 		ft_putstr_fd(": numeric argument required\n", 2);
 		g_estatus = 2;
 	}
+	ft_free_struct(c);
 	ft_freearray(c->args);
 	free(c->line);
-	ft_freearray((*info)->env);
+	ft_freelist(info);
 	exit(g_estatus);
 }

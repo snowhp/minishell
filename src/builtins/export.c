@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:52:19 by tiago             #+#    #+#             */
-/*   Updated: 2023/06/29 16:31:49 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 18:03:48 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,34 @@ void	ft_add_env(t_data **info, char *key, char *value)
 	current->next = new;
 }
 
-void	ft_doexport(t_data **export, char **args)
+void	ft_exportloop(t_data **export, char *args)
 {
 	char	*key;
 	char	**temp;
+	int		i;
 
-	temp = ft_split(args[1], '=');
+	i = 0;
+	temp = ft_split(args, '=');
 	key = ft_find_env(export, temp[0]);
 	if (!key)
-		ft_add_env(export, ft_strdup(temp[0]), ft_strdup(args[1] + (int)ft_strlen(temp[0]) + 1));
+		ft_add_env(export, ft_strdup(temp[0]), ft_strdup(args + (int)ft_strlen(temp[0]) + 1));
 	if (key)
-		ft_update_env(export, temp[0], ft_strdup(args[1] + (int)ft_strlen(temp[0]) + 1));
+		ft_update_env(export, temp[0], ft_strdup(args + (int)ft_strlen(temp[0]) + 1));
+	while(temp[i])
+		free(temp[i++]);
+	free(temp);
+}
+
+void	ft_doexport(t_data **export, char **args)
+{
+	int	i;
+
+	i = 1;
+	while (args[i])
+	{
+		ft_exportloop(export, args[i]);
+		i++;
+	}
 }
 
 void	ft_printexport(t_data **export)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 12:36:13 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 19:24:22 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	ft_executecommand(t_simplecommand *cmd, t_data **info, t_mini *c, int isbui
 	else if (!ft_strncmp(cmd->arguments[0], "export", 7) && cmd->arguments[1])
 		ft_doexport(info, cmd->arguments);
 	else if (!ft_strncmp(cmd->arguments[0], "unset", 6))
-		ft_unset(info, cmd->arguments[1]);
+		ft_unset(info, cmd->arguments);
 	else if (!ft_strncmp(cmd->arguments[0], "env", 4) && !cmd->arguments[1])
 		ft_printenv(info);
 	else if (!ft_strncmp(cmd->arguments[0], "exit", 5))
