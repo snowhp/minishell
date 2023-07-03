@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:52:19 by tiago             #+#    #+#             */
-/*   Updated: 2023/07/03 22:08:51 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:13:39 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,17 @@ void	ft_exportloop(t_data **export, char *args)
 
 	temp = ft_split(args, '=');
 	key = ft_find_env(export, temp[0]);
-	if(!temp[1])
+	if (!temp[1])
 	{
 		ft_freearray(temp);
 		return ;
 	}
 	if (!key)
-		ft_add_env(export, ft_strdup(temp[0]), ft_strdup(args + (int)ft_strlen(temp[0]) + 1));
+		ft_add_env(export, ft_strdup(temp[0]),
+			ft_strdup(args + (int)ft_strlen(temp[0]) + 1));
 	if (key)
-		ft_update_env(export, temp[0], ft_strdup(args + (int)ft_strlen(temp[0]) + 1));
+		ft_update_env(export, temp[0],
+			ft_strdup(args + (int)ft_strlen(temp[0]) + 1));
 	ft_freearray(temp);
 }
 

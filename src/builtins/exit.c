@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 14:34:14 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 22:22:47 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:15:21 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_free_struct(t_mini *c)
 	x = 0;
 	while (x < 100)
 	{
-		ft_freearray(c->simplecommands[x].arguments);
+		ft_freearray(c->scmd[x].arguments);
 		x++;
 	}
 }
@@ -29,7 +29,7 @@ void	ft_freelist(t_data **info)
 	t_data	*current;
 
 	ft_freearray((*info)->env);
-	while(*info != NULL)
+	while (*info != NULL)
 	{
 		current = *info;
 		*info = (*info)->next;
@@ -56,7 +56,6 @@ void	ft_exit(char **args, t_mini *c, t_data **info)
 		ft_putstr_fd(": numeric argument required\n", 2);
 		g_estatus = 2;
 	}
-	//ft_free_struct(c);
 	ft_freearray(c->args);
 	free(c->line);
 	ft_freelist(info);

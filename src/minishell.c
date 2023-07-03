@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/06/07 12:26:344 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:11:35 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,18 @@ void	ft_loop(t_data **info)
 	rl_clear_history();
 }
 
-void 	ft_freesimplecommands(t_mini *c)
+void	ft_freesimplecommands(t_mini *c)
 {
-	int	i = 0;
-	int	x = 0;
+	int	i;
+	int	x;
 
+	x = 0;
+	i = 0;
 	while (i < 500)
 	{
 		x = 0;
-		while (c->simplecommands[i].arguments[x])
-			free(c->simplecommands[i].arguments[x++]);
+		while (c->scmd[i].arguments[x])
+			free(c->scmd[i].arguments[x++]);
 		i++;
 	}
 }

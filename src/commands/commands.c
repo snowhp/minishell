@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 15:20:37 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:21:13 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ char	*ft_path(char *cmd, char **env)
 void	ft_execute(char **cmd, t_data **info)
 {
 	char	*path;
+
 	if (access(cmd[0], X_OK) == 0)
 		path = cmd[0];
 	else

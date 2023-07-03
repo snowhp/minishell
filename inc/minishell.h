@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 22:59:16 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:06:26 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_simplecommand
 
 typedef struct s_mini
 {
-	t_simplecommand	simplecommands[500];
+	t_simplecommand	scmd[500];
 	int				nbcmd;
 	int				stdout;
 	int				stdin;
@@ -101,12 +101,12 @@ void	ft_echo(char **args);
 
 /* This function will read the command line and parse the arguments to each
 simplecommand redirecting the output*/
-int	ft_parse(char **args, t_mini *c);
+int		ft_parse(char **args, t_mini *c);
 
 /* This function will execute the commands that are already parsed and
 redirected */
 void	ft_runcommands(t_mini *c, t_data **info);
-void	ft_executecommand(t_simplecommand *cmd, t_data **info, t_mini *c, int isbuiltin);
+void	ft_execcmd(t_simplecommand *cmd, t_data **info, t_mini *c, int bi);
 
 /* This function is specific for split the arguments of a command line,
 	handling special characters like pipes (|), quotes (' "), redirects (> >>
@@ -132,7 +132,7 @@ char	*ft_removequotes(char *str, int hasquotes);
 int		ft_isbuiltin(t_simplecommand *c);
 int		ft_isallspaces(char *str);
 void	ft_exit(char **args, t_mini *c, t_data **info);
-void 	ft_freesimplecommands(t_mini *c);
+void	ft_freesimplecommands(t_mini *c);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);

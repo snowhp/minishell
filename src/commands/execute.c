@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 22:59:25 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:06:26 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ void	ft_runcommands(t_mini *c, t_data **info)
 	cmds = 0;
 	c->stdin = dup(STDIN_FILENO);
 	c->stdout = dup(STDOUT_FILENO);
-	fdin = dup(c->simplecommands[cmds].input);
+	fdin = dup(c->scmd[cmds].input);
 	while (cmds <= c->nbcmd)
 	{
 		dup2(fdin, 0);
 		close(fdin);
 		if (cmds == c->nbcmd)
 		{
-			if (c->simplecommands[cmds].output == 1)
+			if (c->scmd[cmds].output == 1)
 				fdout = dup(c->stdout);
 			else
-				fdout = dup(c->simplecommands[cmds].output);
+				fdout = dup(c->scmd[cmds].output);
 		}
 		else
 		{
@@ -49,11 +49,11 @@ void	ft_runcommands(t_mini *c, t_data **info)
 		close(fdout);
 		if (c->nbcmd == 0)
 		{
-			if (!ft_isbuiltin(&c->simplecommands[cmds]))
+			if (!ft_isbuiltin(&c->scmd[cmds]))
 			{
 				pid = fork();
 				if (pid == 0)
-					ft_executecommand(&c->simplecommands[cmds], info, c, 0);
+					ft_execcmd(&c->scmd[cmds], info, c, 0);
 				else
 				{
 					wait(&wstatus);
@@ -64,7 +64,7 @@ void	ft_runcommands(t_mini *c, t_data **info)
 				}
 			}
 			else
-				ft_executecommand(&c->simplecommands[cmds], info, c, 1);
+				ft_execcmd(&c->scmd[cmds], info, c, 1);
 		}
 		else
 		{
@@ -72,7 +72,7 @@ void	ft_runcommands(t_mini *c, t_data **info)
 			if (pid == 0)
 			{
 				close(pipefd[0]);
-				ft_executecommand(&c->simplecommands[cmds], info, c, 0);
+				ft_execcmd(&c->scmd[cmds], info, c, 0);
 				exit (0);
 			}
 			else
@@ -114,7 +114,7 @@ int	ft_isbuiltin(t_simplecommand *cmd)
 	return (0);
 }
 
-void	ft_executecommand(t_simplecommand *cmd, t_data **info, t_mini *c, int isbuiltin)
+void	ft_execcmd(t_simplecommand *cmd, t_data **info, t_mini *c, int bi)
 {
 	if (!ft_strncmp(cmd->arguments[0], "echo", 5))
 		ft_echo(cmd->arguments);
@@ -136,7 +136,7 @@ void	ft_executecommand(t_simplecommand *cmd, t_data **info, t_mini *c, int isbui
 		ft_printenv(info);
 	else if (!ft_strncmp(cmd->arguments[0], "exit", 5))
 		ft_exit(cmd->arguments, c, info);
-	else if (!isbuiltin)
+	else if (!bi)
 		ft_execute(cmd->arguments, info);
 }
 
@@ -153,16 +153,16 @@ int	ft_parse(char **args, t_mini *c)
 	{
 		if (!ft_strncmp(*args, ">>", 3))
 		{
-			if (c->simplecommands[cmds].output != 1)
-				close (c->simplecommands[cmds].output);
+			if (c->scmd[cmds].output != 1)
+				close (c->scmd[cmds].output);
 			if (!(*(args + 1)))
 			{
 				ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
 				return (0);
 			}
 			args++;
-			c->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_APPEND, 0664);
-			if (c->simplecommands[cmds].output == -1)
+			c->scmd[cmds].output = open(*args, O_CREAT | O_RDWR | O_APPEND, 0664);
+			if (c->scmd[cmds].output == -1)
 			{
 				ft_putstr_fd(*args, 2);
 				ft_putstr_fd(": ", 2);
@@ -180,16 +180,16 @@ int	ft_parse(char **args, t_mini *c)
 		}
 		else if (!ft_strncmp(*args, ">", 2))
 		{
-			if (c->simplecommands[cmds].output != 1)
-				close (c->simplecommands[cmds].output);
+			if (c->scmd[cmds].output != 1)
+				close (c->scmd[cmds].output);
 			if (!(*(args + 1)))
 			{
 				ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
 				return (0);
 			}
 			args++;
-			c->simplecommands[cmds].output = open(*args, O_CREAT | O_RDWR | O_TRUNC, 0664);
-			if (c->simplecommands[cmds].output == -1)
+			c->scmd[cmds].output = open(*args, O_CREAT | O_RDWR | O_TRUNC, 0664);
+			if (c->scmd[cmds].output == -1)
 			{
 				ft_putstr_fd(*args, 2);
 				ft_putstr_fd(": ", 2);
@@ -207,8 +207,8 @@ int	ft_parse(char **args, t_mini *c)
 		}
 		else if (!ft_strncmp(*args, "<<", 3))
 		{
-			if (c->simplecommands[cmds].input != 0)
-				close (c->simplecommands[cmds].input);
+			if (c->scmd[cmds].input != 0)
+				close (c->scmd[cmds].input);
 			delimiter = *(args + 1);
 			if (!(*(args + 1)))
 			{
@@ -216,19 +216,19 @@ int	ft_parse(char **args, t_mini *c)
 				return (0);
 			}
 			args++;
-			c->simplecommands[cmds].input = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0664);
+			c->scmd[cmds].input = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0664);
 			while (1)
 			{
 				temp = readline("> ");
 				if (!ft_strncmp(temp, delimiter, ft_strlen(delimiter) + 1))
 					break ;
 				temp = ft_strjoin(temp, "\n");
-				write(c->simplecommands[cmds].input, temp, ft_strlen(temp));
+				write(c->scmd[cmds].input, temp, ft_strlen(temp));
 				free(temp);
 			}
 			free(temp);
-			close (c->simplecommands[cmds].input);
-			c->simplecommands[cmds].input = open(".heredoc", O_RDONLY, 0444);
+			close (c->scmd[cmds].input);
+			c->scmd[cmds].input = open(".heredoc", O_RDONLY, 0444);
 			if (*(args + 1))
 			{
 				args++;
@@ -239,16 +239,16 @@ int	ft_parse(char **args, t_mini *c)
 		}
 		else if (!ft_strncmp(*args, "<", 2))
 		{
-			if (c->simplecommands[cmds].input != 0)
-				close (c->simplecommands[cmds].input);
+			if (c->scmd[cmds].input != 0)
+				close (c->scmd[cmds].input);
 			if (!(*(args + 1)))
 			{
 				ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
 				return (0);
 			}
 			args++;
-			c->simplecommands[cmds].input = open(*args, O_RDONLY, 0444);
-			if (c->simplecommands[cmds].input == -1)
+			c->scmd[cmds].input = open(*args, O_RDONLY, 0444);
+			if (c->scmd[cmds].input == -1)
 			{
 				ft_putstr_fd(*args, 2);
 				ft_putstr_fd(": ", 2);
@@ -270,9 +270,9 @@ int	ft_parse(char **args, t_mini *c)
 			args++;
 			x = 0;
 			if (cmds > 0)
-				c->simplecommands[cmds].input = c->simplecommands[cmds - 1].output;
+				c->scmd[cmds].input = c->scmd[cmds - 1].output;
 		}
-		c->simplecommands[cmds].arguments[x++] = ft_strdup(*args);
+		c->scmd[cmds].arguments[x++] = ft_strdup(*args);
 		args++;
 	}
 	return (1);
@@ -298,8 +298,8 @@ void	ft_initstruct(t_mini *complex, char **args)
 	{
 		i = 0;
 		while (i < 100)
-			complex->simplecommands[x].arguments[i++] = 0;
-		complex->simplecommands[x].output = 1;
-		complex->simplecommands[x++].input = 0;
+			complex->scmd[x].arguments[i++] = 0;
+		complex->scmd[x].output = 1;
+		complex->scmd[x++].input = 0;
 	}
 }

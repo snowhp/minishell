@@ -3,10 +3,12 @@ SRCS =  src/minishell.c \
 		src/commands/commands.c \
 		src/commands/execute.c \
 		src/commands/expand.c \
+		src/commands/expand2.c \
 		src/commands/check.c \
 		src/commands/ft_splitargs.c \
 		src/builtins/cd.c \
 		src/builtins/env.c \
+		src/builtins/env2.c \
 		src/builtins/unset.c \
 		src/builtins/echo.c \
 		src/builtins/exit.c \

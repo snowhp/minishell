@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/03 22:11:04 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 23:19:44 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ char	**ft_convert_env(t_data **info)
 	env = (char **)malloc(sizeof(char *) * (ft_env_size(info) + 1));
 	if (!env)
 		return (NULL);
-	while (current) //Loop condition is correct?
+	while (current)
 	{
 		if (!current->value)
 			current = current->next; //FIX error on ft_strlen of this value when its null
-		env[i] = (char *)malloc(sizeof(char) * (ft_strlen(current->key) + ft_strlen(current->value) + 2));//Missing allocation verification
+		env[i] = (char *)malloc(sizeof(char) * (ft_strlen(current->key) + ft_strlen(current->value) + 2));
 		j = 0;
 		k = 0;
 		while (current->key[j])
@@ -121,37 +121,6 @@ void	ft_printenv(t_data **info)
 		else
 			printf("NAO EXISTE ERRORRRR");
 		printf("\n");
-		current = current->next;
-	}
-}
-
-char	*ft_find_env(t_data **info, char *find)
-{
-	t_data	*current;
-
-	current = *info;
-	while (current != NULL)
-	{
-		if (!ft_strncmp(current->key, find, ft_strlen(current->key) + 1))
-			return (current->value);
-		current = current->next;
-	}
-	return (NULL);
-}
-
-void	ft_update_env(t_data **info, char *key, char *update)
-{
-	t_data	*current;
-
-	current = *info;
-	while (current != NULL)
-	{
-		if (!ft_strncmp(current->key, key, ft_strlen(current->key)))
-		{
-			free(current->value);
-			current->value = update;
-			break ;
-		}
 		current = current->next;
 	}
 }

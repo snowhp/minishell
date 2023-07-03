@@ -1,62 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   env2.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 18:07:18 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/03 23:12:59 by tde-sous         ###   ########.fr       */
+/*   Created: 2023/07/03 23:18:50 by tde-sous          #+#    #+#             */
+/*   Updated: 2023/07/03 23:19:06 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_remove_node(t_data **info, char *key)
-{
-	t_data	*current;
-	t_data	*temp;
-
-	current = *info;
-	if (!ft_strncmp(current->key, key, ft_strlen(current->key) + 1))
-	{
-		*info = (*info)->next;
-		free(current);
-		return ;
-	}
-	while (ft_strncmp(current->next->key, key,
-			ft_strlen(current->next->key) + 1))
-		current = current->next;
-	temp = current;
-	current = current->next;
-	temp->next = current->next;
-	free(current);
-}
-
-void	ft_unset_loop(t_data **info, char *var)
+char	*ft_find_env(t_data **info, char *find)
 {
 	t_data	*current;
 
 	current = *info;
 	while (current != NULL)
 	{
-		if (!ft_strncmp(current->key, var, ft_strlen(current->key)))
+		if (!ft_strncmp(current->key, find, ft_strlen(current->key) + 1))
+			return (current->value);
+		current = current->next;
+	}
+	return (NULL);
+}
+
+void	ft_update_env(t_data **info, char *key, char *update)
+{
+	t_data	*current;
+
+	current = *info;
+	while (current != NULL)
+	{
+		if (!ft_strncmp(current->key, key, ft_strlen(current->key)))
 		{
-			ft_remove_node(info, var);
+			free(current->value);
+			current->value = update;
 			break ;
 		}
 		current = current->next;
-	}
-}
-
-void	ft_unset(t_data **info, char **args)
-{
-	int	i;
-
-	i = 1;
-	while (args[i])
-	{
-		ft_unset_loop(info, args[i]);
-		i++;
 	}
 }
