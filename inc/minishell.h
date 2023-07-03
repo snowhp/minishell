@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 11:38:10 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 15:50:38 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ typedef struct s_mini
 {
 	t_simplecommand	simplecommands[100];
 	int				nbcmd;
-	int				exitstatus;
 	int				stdout;
 	int				stdin;
 	char			*line;
