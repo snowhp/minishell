@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 11:40:09 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/03 12:27:39 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,10 @@ int	ft_parse(char **args, t_mini *c)
 			if (c->simplecommands[cmds].output == -1)
 				ft_printf("%s: %s\n", strerror(errno), *args);
 			if (*(args + 1))
+			{
 				args++;
+				continue ;
+			}
 			else
 				break ;
 		}
@@ -183,7 +186,10 @@ int	ft_parse(char **args, t_mini *c)
 			if (c->simplecommands[cmds].output == -1)
 				ft_printf("%s: %s\n", strerror(errno), *args);
 			if (*(args + 1))
+			{
 				args++;
+				continue ;
+			}
 			else
 				break ;
 		}
@@ -212,7 +218,10 @@ int	ft_parse(char **args, t_mini *c)
 			close (c->simplecommands[cmds].input);
 			c->simplecommands[cmds].input = open(".heredoc", O_RDONLY, 0444);
 			if (*(args + 1))
+			{
 				args++;
+				continue ;
+			}
 			else
 				break ;
 		}
@@ -230,7 +239,10 @@ int	ft_parse(char **args, t_mini *c)
 			if (c->simplecommands[cmds].input == -1)
 				ft_printf("%s: %s\n", strerror(errno), *args);
 			if (*(args + 1))
+			{
 				args++;
+				continue ;
+			}
 			else
 				break ;
 		}
