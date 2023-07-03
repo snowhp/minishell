@@ -54,8 +54,23 @@ void	ft_loop(t_data **info)
 		ft_freearray(c.args);
 		free(c.line);
 		ft_freearray((*info)->env);
+		ft_freesimplecommands(&c);
 		while (wait(NULL) > 0);
 	}
 	free(c.line);
 	rl_clear_history();
+}
+
+void 	ft_freesimplecommands(t_mini *c)
+{
+	int	i = 0;
+	int	x = 0;
+
+	while (i < 500)
+	{
+		x = 0;
+		while (c->simplecommands[i].arguments[x])
+			free(c->simplecommands[i].arguments[x++]);
+		i++;
+	}
 }

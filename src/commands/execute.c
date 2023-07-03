@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 22:33:07 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 22:59:25 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,10 +294,10 @@ void	ft_initstruct(t_mini *complex, char **args)
 			complex->nbcmd++;
 		a++;
 	}
-	while (x < 100)
+	while (x < 500)
 	{
 		i = 0;
-		while (i < 50)
+		while (i < 100)
 			complex->simplecommands[x].arguments[i++] = 0;
 		complex->simplecommands[x].output = 1;
 		complex->simplecommands[x++].input = 0;

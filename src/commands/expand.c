@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 19:33:22 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 22:59:33 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	ft_expand(t_mini *c, t_data **info)
 	char	*formatted;
 
 	cmds = 0;
-	while (cmds < 100)
+	while (cmds < 500)
 	{
 		i = 0;
-		while (i < 50)
+		while (i < 100)
 		{
 			if (c->simplecommands[cmds].arguments[i])
 			{

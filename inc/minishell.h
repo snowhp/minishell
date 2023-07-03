@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 22:18:23 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 22:59:16 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,14 @@ typedef struct s_data
 
 typedef struct s_simplecommand
 {
-	char	*arguments[50];
+	char	*arguments[100];
 	int		output;
 	int		input;
 }	t_simplecommand;
 
 typedef struct s_mini
 {
-	t_simplecommand	simplecommands[100];
+	t_simplecommand	simplecommands[500];
 	int				nbcmd;
 	int				stdout;
 	int				stdin;
@@ -132,6 +132,7 @@ char	*ft_removequotes(char *str, int hasquotes);
 int		ft_isbuiltin(t_simplecommand *c);
 int		ft_isallspaces(char *str);
 void	ft_exit(char **args, t_mini *c, t_data **info);
+void 	ft_freesimplecommands(t_mini *c);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);
