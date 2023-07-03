@@ -46,7 +46,7 @@ void	ft_loop(t_data **info)
 		}
 		c.args = ft_splitargs(c.line);
 		ft_initstruct(&c, c.args);
-		if(ft_parse(c.args, &c))
+		if (ft_parse(c.args, &c))
 		{
 			ft_expand(&c, info);
 			ft_runcommands(&c, info);

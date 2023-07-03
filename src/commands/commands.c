@@ -44,7 +44,7 @@ char	*ft_path(char *cmd, char **env)
 void	ft_execute(char **cmd, t_data **info)
 {
 	char	*path;
-	if (access(cmd[0], F_OK) == 0)
+	if (access(cmd[0], X_OK) == 0)
 		path = cmd[0];
 	else
 		path = ft_path(cmd[0], (*info)->env);
