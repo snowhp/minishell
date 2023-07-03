@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/03 19:16:27 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 22:11:04 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,7 @@ void	ft_start_env(char **env, t_data **info)//needs fixing on order
 		new->value = ft_strdup(env[i] + j);
 		new->next = NULL;
 		if (*info == NULL)
-		{
-			free(*info);
 			*info = new;
-		}
 		else
 		{
 			while (current->next != NULL)
@@ -152,7 +149,7 @@ void	ft_update_env(t_data **info, char *key, char *update)
 		if (!ft_strncmp(current->key, key, ft_strlen(current->key)))
 		{
 			free(current->value);
-			current->value = ft_strdup(update);
+			current->value = update;
 			break ;
 		}
 		current = current->next;

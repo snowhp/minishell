@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 19:24:22 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 22:33:07 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,15 +282,17 @@ void	ft_initstruct(t_mini *complex, char **args)
 {
 	int	x;
 	int	i;
+	int	a;
 
+	a = 0;
 	i = 0;
 	x = 0;
 	complex->nbcmd = 0;
-	while (*args)
+	while (args[a])
 	{
-		if (!ft_strncmp(*args, "|", sizeof(*args)))
+		if (!ft_strncmp(args[a], "|", sizeof(args[a])))
 			complex->nbcmd++;
-		args++;
+		a++;
 	}
 	while (x < 100)
 	{

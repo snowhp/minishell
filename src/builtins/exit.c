@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 14:34:14 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 19:32:25 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/03 22:22:47 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 void	ft_free_struct(t_mini *c)
 {
 	int	x;
-	int	i;
 
-	i = 0;
 	x = 0;
 	while (x < 100)
 	{
-		i = 0;
-		while (i < 50)
-			free(c->simplecommands[x].arguments[i++]);
+		ft_freearray(c->simplecommands[x].arguments);
 		x++;
 	}
 }
@@ -60,7 +56,7 @@ void	ft_exit(char **args, t_mini *c, t_data **info)
 		ft_putstr_fd(": numeric argument required\n", 2);
 		g_estatus = 2;
 	}
-	ft_free_struct(c);
+	//ft_free_struct(c);
 	ft_freearray(c->args);
 	free(c->line);
 	ft_freelist(info);
