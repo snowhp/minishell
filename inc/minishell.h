@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 23:06:26 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/04 13:31:51 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	ft_echo(char **args);
 
 /* This function will read the command line and parse the arguments to each
 simplecommand redirecting the output*/
-int		ft_parse(char **args, t_mini *c);
+int		ft_parse(char **args, t_mini *c, t_data **info);
 
 /* This function will execute the commands that are already parsed and
 redirected */

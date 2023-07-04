@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 12:48:19 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/04 13:31:18 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_loop(t_data **info)
 		}
 		c.args = ft_splitargs(c.line);
 		ft_initstruct(&c, c.args);
-		if (ft_parse(c.args, &c))
+		if (ft_parse(c.args, &c, info))
 		{
 			ft_expand(&c, info);
 			ft_runcommands(&c, info);

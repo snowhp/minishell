@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 12:54:03 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/04 13:35:16 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,13 @@ void	ft_execcmd(t_simplecommand *cmd, t_data **info, t_mini *c, int bi)
 		ft_execute(cmd->arguments, info);
 }
 
-int	ft_parse(char **args, t_mini *c)
+int	ft_parse(char **args, t_mini *c, t_data **info)
 {
 	int		cmds;
 	int		x;
 	char	*delimiter;
 	char	*temp;
+	char	*formatted;
 
 	cmds = 0;
 	x = 0;
@@ -161,6 +162,12 @@ int	ft_parse(char **args, t_mini *c)
 				return (0);
 			}
 			args++;
+
+			formatted = ft_replacevar(*args, 0, info, NULL);
+			free(*args);
+			*args = ft_strdup(formatted);
+			free(formatted);
+
 			c->scmd[cmds].output = open(*args, O_CREAT | O_RDWR | O_APPEND, 0664);
 			if (c->scmd[cmds].output == -1)
 			{
@@ -188,6 +195,12 @@ int	ft_parse(char **args, t_mini *c)
 				return (0);
 			}
 			args++;
+
+			formatted = ft_replacevar(*args, 0, info, NULL);
+			free(*args);
+			*args = ft_strdup(formatted);
+			free(formatted);
+
 			c->scmd[cmds].output = open(*args, O_CREAT | O_RDWR | O_TRUNC, 0664);
 			if (c->scmd[cmds].output == -1)
 			{
@@ -253,6 +266,10 @@ int	ft_parse(char **args, t_mini *c)
 				return (0);
 			}
 			args++;
+			formatted = ft_replacevar(*args, 0, info, NULL);
+			free(*args);
+			*args = ft_strdup(formatted);
+			free(formatted);
 			c->scmd[cmds].input = open(*args, O_RDONLY, 0444);
 			if (c->scmd[cmds].input == -1)
 			{
