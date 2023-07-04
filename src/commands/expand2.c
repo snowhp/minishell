@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 23:16:08 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 23:18:15 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/04 13:25:35 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	*ft_replacevar(char *str, size_t i, t_data **info, int *pos)
 		{
 			if (str[i + 1] == '?')
 			{
-				value = ft_strdup(ft_itoa(g_estatus));
-				f = ft_strlen(ft_itoa(g_estatus));
+				value = ft_itoa(g_estatus);
+				f = 1;
 				break ;
 			}
 			i++;

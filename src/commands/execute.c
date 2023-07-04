@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 23:06:26 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/04 12:54:03 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,12 @@ int	ft_parse(char **args, t_mini *c)
 			while (1)
 			{
 				temp = readline("> ");
+				if(!temp)
+				{
+					close (c->scmd[cmds].input);
+					printf("\n");
+					return (0);
+				}
 				if (!ft_strncmp(temp, delimiter, ft_strlen(delimiter) + 1))
 					break ;
 				temp = ft_strjoin(temp, "\n");
