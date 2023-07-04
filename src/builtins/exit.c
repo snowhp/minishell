@@ -3,26 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 14:34:14 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 23:15:21 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:49:37 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	ft_free_struct(t_mini *c)
-{
-	int	x;
-
-	x = 0;
-	while (x < 100)
-	{
-		ft_freearray(c->scmd[x].arguments);
-		x++;
-	}
-}
 
 void	ft_freelist(t_data **info)
 {

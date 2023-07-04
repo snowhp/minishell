@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:52:19 by tiago             #+#    #+#             */
-/*   Updated: 2023/07/03 23:13:39 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/04 11:40:39 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,24 @@ void	ft_add_env(t_data **info, char *key, char *value)
 	current->next = new;
 }
 
+int	ft_checkvalid(char *str1, char *str2)
+{
+	int	i;
+
+	i = 0;
+	while(str1[i])
+	{
+		if (!ft_isalnum(str1[i]))
+		{
+			printf("export: `%s", str1);
+			printf("=%s': not a valid identifier\n", str2);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 void	ft_exportloop(t_data **export, char *args)
 {
 	char	*key;
@@ -37,6 +55,11 @@ void	ft_exportloop(t_data **export, char *args)
 	temp = ft_split(args, '=');
 	key = ft_find_env(export, temp[0]);
 	if (!temp[1])
+	{
+		ft_freearray(temp);
+		return ;
+	}
+	if (!ft_checkvalid(temp[0], temp[1]))
 	{
 		ft_freearray(temp);
 		return ;

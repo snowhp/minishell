@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 18:11:54 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 15:11:22 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/04 12:14:55 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,8 @@ void	handle_ctrlslash(int sig)
 	(void) sig;
 }
 
-void	handle_ctrld(int sig)
-{
-	(void) sig;
-	write(1, "TEST\n", 5);
-}
-
 void	ft_signals(void)
 {
 	signal(SIGINT, &handle_ctrlc);
-	signal(SIGABRT, &handle_ctrlslash);
-	signal(SIGQUIT, &handle_ctrld);// This is the signal for CTRL + '\'
+	signal(SIGQUIT, SIG_IGN);
 }
