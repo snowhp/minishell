@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 13:35:16 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:37:14 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	ft_runcommands(t_mini *c, t_data **info)
 	int	pipefd[2];
 	int	wstatus;
 
+
+	signal(SIGINT, &handle_ctrlc_fork);
+	signal(SIGQUIT, SIG_IGN);
 	cmds = 0;
 	c->stdin = dup(STDIN_FILENO);
 	c->stdout = dup(STDOUT_FILENO);

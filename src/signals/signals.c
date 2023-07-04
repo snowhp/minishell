@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 18:11:54 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 12:14:55 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:33:20 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ void	handle_ctrlc(int sig)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	g_estatus = 130;
+}
+
+void	handle_ctrlc_fork(int sig)
+{
+	(void) sig;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
 	g_estatus = 130;
 }
 

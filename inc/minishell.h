@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 13:59:41 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:30:33 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		ft_parse(char **args, t_mini *c, t_data **info);
 redirected */
 void	ft_runcommands(t_mini *c, t_data **info);
 void	ft_execcmd(t_simplecommand *cmd, t_data **info, t_mini *c, int bi);
-
+void	handle_ctrlc_fork(int sig);
 /* This function is specific for split the arguments of a command line,
 	handling special characters like pipes (|), quotes (' "), redirects (> >>
 	<< <)*/

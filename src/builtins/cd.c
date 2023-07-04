@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:43:35 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/04 11:14:48 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:28:43 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_changedir(char *path, t_data **info)
 	else if (!path)
 		chdir(ft_find_env(info, "HOME"));
 	old_dir = currentdir;
-	ft_update_env(info, "OLDPWD", currentdir);
+	ft_update_env(info, "OLDPWD", ft_strdup(currentdir));
 	getcwd(currentdir, sizeof(currentdir));
-	printf("%s\n", currentdir);
+	ft_update_env(info, "PWD", ft_strdup(currentdir));
 }

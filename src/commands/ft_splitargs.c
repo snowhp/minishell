@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitargs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:15 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 12:18:41 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:18:53 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,22 @@ int	ft_countargs(char *str)
 	i = 0;
 	while (str[i])
 	{
-		while ((str[i] && str[i] == ' ') || (str[i] && str[i] == '\t'))
+		while (str[i] && str[i] == ' ')
 			i++;
 		if (!str[i])
 			break ;
 		++count;
-		if (str[i] == '\'' || str[i] == '"')
-			i += ft_skipquotes(str + i);
-		else if (ft_checkspecial(str + i))
+		if (ft_checkspecial(str + i))
 			i += ft_checkspecial(str + i);
 		else
 		{
-			while (str[i] && str[i] != ' ' && !ft_checkspecial(str + i)
-				&& str[i] != '\'' && str[i] != '"' && str[i] != '\t')
-				i++;
+			while (str[i] && str[i] != ' ' && !ft_checkspecial(str + i))
+			{
+				if (str[i] == '\'' || str[i] == '\"')
+					i += ft_skipquotes(str + i);
+				else
+					i++;
+			}
 			if (!str[i])
 				break ;
 		}
@@ -94,15 +96,17 @@ static char	*ft_word(char *str)
 	char	*res;
 
 	l = 0;
-	if (str[l] == '\'' || str[l] == '"')
-		l += ft_skipquotes(str + l);
-	else if (ft_checkspecial(str + l))
+	if (ft_checkspecial(str + l))
 		l += ft_checkspecial(str + l);
 	else
 	{
-		while (str[l] && str[l] != ' ' && !ft_checkspecial(str + l)
-			&& str[l] != '\'' && str[l] != '"' && str[l] != '\t')
-			l++;
+		while (str[l] && str[l] != ' ' && !ft_checkspecial(str + l))
+		{
+			if (str[l] == '\'' || str[l] == '\"')
+				l += ft_skipquotes(str + l);
+			else
+				l++;
+		}
 	}
 	res = (char *)malloc(sizeof(char) * (l + 1));
 	if (!res)
@@ -129,7 +133,7 @@ char	**ft_splitargs(char *str)
 	i = 0;
 	while (i < wcount)
 	{
-		while ((*str != '\0' && *str == ' ') || (*str != '\0' && *str == '\t'))
+		while (*str != '\0' && *str == ' ')
 			str++;
 		result[i] = ft_word(str);
 		str += ft_strlen(result[i++]);
@@ -137,20 +141,3 @@ char	**ft_splitargs(char *str)
 	result[i] = NULL;
 	return (result);
 }
-
-/* # include <stdio.h>
-
-int	main(int argc, char **argv)
-{
-	char **result;
-	int	i;
-
-	i = 0;
-	result = ft_splitargs(argv[1]);
-	while (result[i])
-	{
-		printf("|%s|", result[i]);
-		free(result[i++]);
-	}
-	free(result);
-} */

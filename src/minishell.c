@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 14:06:44 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/04 15:02:10 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	ft_loop(t_data **info)
 {
 	t_mini	c;
 
-	ft_signals();
 	while (1)
 	{
+		ft_signals();
 		(*info)->env = ft_convert_env(info);
 		c.line = readline("> ");
 		if (!c.line)
@@ -124,6 +124,8 @@ int	ft_checkline(char *str)
 				return (0);
 			}
 		}
+		if(!str[i] + 1)
+			break ;
 		i++;
 	}
 	return (1);
