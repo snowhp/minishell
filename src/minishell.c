@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 13:31:18 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:06:44 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_loop(t_data **info)
 		}
 		c.args = ft_splitargs(c.line);
 		ft_initstruct(&c, c.args);
-		if (ft_parse(c.args, &c, info))
+		if (ft_checkline(c.line) && ft_parse(c.args, &c, info))
 		{
 			ft_expand(&c, info);
 			ft_runcommands(&c, info);
@@ -59,6 +59,74 @@ void	ft_loop(t_data **info)
 	}
 	free(c.line);
 	rl_clear_history();
+}
+
+int	ft_checkline(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		while (str[i] == ' ' || str[i] == '\t')
+			i++;
+		if (str[i] == '\'' || str[i] == '\"')
+			i += ft_skipquotes(str + i);
+		if (str[i] == '>')
+		{
+			i++;
+			if (str[i] == '>')
+				i++;
+			if (str[i] == '<')
+			{
+				ft_putstr_fd("syntax error near unexpected token `<'\n", 2);
+				return (0);
+			}
+			if (str[i] == '>' || str[i] == '<')
+			{
+				ft_putstr_fd("syntax error near unexpected token `", 2);
+				ft_putchar_fd(str[i], 2);
+				ft_putstr_fd("'\n", 2);
+				return (0);
+			}
+		}
+		if (str[i] == '<')
+		{
+			i++;
+			if (str[i] == '<')
+				i++;
+			if (str[i] == '>')
+			{
+				ft_putstr_fd("syntax error near unexpected token `<'\n", 2);
+				return (0);
+			}
+			if (str[i] == '<' || str[i] == '>')
+			{
+				ft_putstr_fd("syntax error near unexpected token `", 2);
+				ft_putchar_fd(str[i], 2);
+				ft_putstr_fd("'\n", 2);
+				return (0);
+			}
+		}
+		if (str[i] == '|')
+		{
+			if (!str[i])
+			{
+				ft_putstr_fd("syntax error near unexpected token after `|'\n", 2);
+				return (0);
+			}
+			i++;
+			while (str[i] == ' ' || str[i] == '\t')
+				i++;
+			if (!str[i])
+			{
+				ft_putstr_fd("syntax error near unexpected token after `|'\n", 2);
+				return (0);
+			}
+		}
+		i++;
+	}
+	return (1);
 }
 
 void	ft_freesimplecommands(t_mini *c)
