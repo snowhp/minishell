@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:47:30 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/04 14:58:59 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/05 20:53:42 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,33 @@ void	ft_echo(char **args)
 	int		k;
 	int		newline;
 	int		stop;
+	int		starts;
 
 	k = 1;
 	newline = 0;
 	stop = 0;
 	while (args[k])
 	{
+		starts = 0;
 		if (stop == 1)
 			break ;
 		i = 0;
-		if (args[k][0] == '-')
-			i++;
 		while (args[k][i])
 		{
-			if (args[k][i] == 'n')
+			if (args[k][i] == '-')
+			{
+				i++;
+				starts = 1;
+			}
+			else if (args[k][i] == 'n')
 				i++;
 			else
 				break ;
 		}
-		if (i == ft_strlen(args[k]) && args[k][0])
+		if (i == ft_strlen(args[k]) && args[k][0] && starts == 1)
+		{
 			newline++;
+		}
 		else
 			stop = 1;// Cant we just break here?
 		k++;

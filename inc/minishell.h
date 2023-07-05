@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 14:30:33 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:48:32 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <fcntl.h>
 # include <errno.h>
 # include <stdbool.h>
+# include <termios.h>
 # include "../libft/libft.h"
 
 typedef struct s_data

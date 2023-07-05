@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 18:11:54 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/05 15:38:30 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:59:53 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,10 @@ void	handle_ctrlc_fork(int sig)
 void	handle_ctrlslash(int sig)
 {
 	(void) sig;
-	g_estatus = 130;
 }
 
 void	ft_signals(void)
 {
 	signal(SIGINT, &handle_ctrlc);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, &handle_ctrlslash);
 }

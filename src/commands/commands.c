@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:57:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 23:21:13 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/05 21:19:58 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,13 @@ char	*ft_path(char *cmd, char **env)
 
 	i = 0;
 	while (ft_strnstr(env[i], "PATH", 4) == 0)
+	{
 		i++;
+		if (!env[i])
+			break ;
+	}
+	if (!env[i])
+		return (NULL);
 	paths = ft_split(env[i] + 5, ':');
 	i = 0;
 	while (paths[i])

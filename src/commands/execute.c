@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 14:37:14 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:44:11 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	ft_runcommands(t_mini *c, t_data **info)
 
 
 	signal(SIGINT, &handle_ctrlc_fork);
-	signal(SIGQUIT, SIG_IGN);
 	cmds = 0;
 	c->stdin = dup(STDIN_FILENO);
 	c->stdout = dup(STDOUT_FILENO);

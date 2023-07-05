@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/05 15:41:04 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:50:20 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,21 @@ int	main(int argc, char **argv, char **env)
 void	ft_loop(t_data **info)
 {
 	t_mini	c;
+	struct	termios	term;
 
 	while (1)
 	{
 		ft_signals();
+		tcgetattr(fileno(stdin), &term);
+		term.c_cc[VQUIT] = _POSIX_VDISABLE;
+		tcsetattr(fileno(stdin), TCSANOW, &term);
 		(*info)->env = ft_convert_env(info);
 		c.line = readline("> ");
 		if (!c.line)
+		{
+			g_estatus = 0;
 			exit(g_estatus);
+		}
 		add_history(c.line);
 		if (ft_isquoteclose(c.line) || ft_isallspaces(c.line) || !c.line[0])
 		{
