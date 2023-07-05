@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitargs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:15 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 15:18:53 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/05 18:50:02 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	ft_countargs(char *str)
 	i = 0;
 	while (str[i])
 	{
-		while (str[i] && str[i] == ' ')
+		while (str[i] == '\t' || str[i] == ' ')
 			i++;
 		if (!str[i])
 			break ;
@@ -75,7 +75,7 @@ int	ft_countargs(char *str)
 			i += ft_checkspecial(str + i);
 		else
 		{
-			while (str[i] && str[i] != ' ' && !ft_checkspecial(str + i))
+			while (str[i] && str[i] != ' ' && str[i] != '\t' && !ft_checkspecial(str + i))
 			{
 				if (str[i] == '\'' || str[i] == '\"')
 					i += ft_skipquotes(str + i);
@@ -100,7 +100,7 @@ static char	*ft_word(char *str)
 		l += ft_checkspecial(str + l);
 	else
 	{
-		while (str[l] && str[l] != ' ' && !ft_checkspecial(str + l))
+		while (str[l] && str[l] != ' ' && str[l] != '\t' && !ft_checkspecial(str + l))
 		{
 			if (str[l] == '\'' || str[l] == '\"')
 				l += ft_skipquotes(str + l);
@@ -133,7 +133,7 @@ char	**ft_splitargs(char *str)
 	i = 0;
 	while (i < wcount)
 	{
-		while (*str != '\0' && *str == ' ')
+		while (*str == '\t' || *str == ' ')
 			str++;
 		result[i] = ft_word(str);
 		str += ft_strlen(result[i++]);
@@ -141,3 +141,17 @@ char	**ft_splitargs(char *str)
 	result[i] = NULL;
 	return (result);
 }
+
+/* #include <stdio.h>
+
+int	main(int argc, char **argv)
+{
+	char **r;
+
+	r = ft_splitargs(argv[1]);
+	while(*r)
+	{
+		printf("|%s|\n", *r);
+		r++;
+	}
+} */
