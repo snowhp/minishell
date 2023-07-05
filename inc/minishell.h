@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/05 19:48:32 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:53:08 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ void	ft_exit(char **args, t_mini *c, t_data **info);
 void	ft_freesimplecommands(t_mini *c);
 int		ft_skipquotes(char *str);
 int		ft_checkline(char *str);
+void	ft_countstring(int *i, char *str);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);

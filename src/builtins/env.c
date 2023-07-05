@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/03 23:19:44 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:02:22 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_start_env(char **env, t_data **info)//needs fixing on order
 	while (env[i])
 	{
 		current = *info;
-		new = malloc(sizeof(t_data));
+		new = ft_calloc(1, sizeof(t_data));
 		if (!new)
 			return ;
 		temp = ft_split(env[i], '=');

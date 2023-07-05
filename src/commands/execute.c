@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/05 19:44:11 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:45:59 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_runcommands(t_mini *c, t_data **info)
 	int	fdout;
 	int	pipefd[2];
 	int	wstatus;
-
 
 	signal(SIGINT, &handle_ctrlc_fork);
 	cmds = 0;
@@ -164,12 +163,10 @@ int	ft_parse(char **args, t_mini *c, t_data **info)
 				return (0);
 			}
 			args++;
-
 			formatted = ft_replacevar(*args, 0, info, NULL);
 			free(*args);
 			*args = ft_strdup(formatted);
 			free(formatted);
-
 			c->scmd[cmds].output = open(*args, O_CREAT | O_RDWR | O_APPEND, 0664);
 			if (c->scmd[cmds].output == -1)
 			{
@@ -197,12 +194,10 @@ int	ft_parse(char **args, t_mini *c, t_data **info)
 				return (0);
 			}
 			args++;
-
 			formatted = ft_replacevar(*args, 0, info, NULL);
 			free(*args);
 			*args = ft_strdup(formatted);
 			free(formatted);
-
 			c->scmd[cmds].output = open(*args, O_CREAT | O_RDWR | O_TRUNC, 0664);
 			if (c->scmd[cmds].output == -1)
 			{
@@ -235,7 +230,7 @@ int	ft_parse(char **args, t_mini *c, t_data **info)
 			while (1)
 			{
 				temp = readline("> ");
-				if(!temp)
+				if (!temp)
 				{
 					close (c->scmd[cmds].input);
 					printf("\n");

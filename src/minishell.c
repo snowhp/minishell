@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/05 19:50:20 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:41:42 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	main(int argc, char **argv, char **env)
 
 void	ft_loop(t_data **info)
 {
-	t_mini	c;
-	struct	termios	term;
+	t_mini			c;
+	struct termios	term;
 
 	while (1)
 	{
@@ -63,7 +63,11 @@ void	ft_loop(t_data **info)
 		free(c.line);
 		ft_freearray((*info)->env);
 		ft_freesimplecommands(&c);
-		while (wait(NULL) > 0);
+		while (1)
+		{
+			if (wait(NULL) <= 0)
+				break ;
+		}
 	}
 	free(c.line);
 	rl_clear_history();
@@ -132,7 +136,7 @@ int	ft_checkline(char *str)
 				return (0);
 			}
 		}
-		if(!str[i] + 1)
+		if (!str[i] + 1)
 			break ;
 		i++;
 	}

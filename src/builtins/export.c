@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:52:19 by tiago             #+#    #+#             */
-/*   Updated: 2023/07/04 11:40:39 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/05 23:33:12 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_checkvalid(char *str1, char *str2)
 	int	i;
 
 	i = 0;
-	while(str1[i])
+	while (str1[i])
 	{
 		if (!ft_isalnum(str1[i]))
 		{
