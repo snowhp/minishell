@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:41:39 by ttavares          #+#    #+#             */
-/*   Updated: 2023/06/28 16:54:43 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:27:23 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ int	ft_isallspaces(char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i++] != ' ')
+		if (str[i] != 32 && str[i] != 9)
 			return (0);
+		i++;
 	}
 	return (1);
 }
