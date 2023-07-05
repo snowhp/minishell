@@ -35,6 +35,9 @@ $(NAME): $(OBJS) $(LIBFT_LIB)
 debug: $(OBJS) $(LIBFT_LIB)
 	$(CC) $(FLAGS) -g $(SRCS) libft/*.c -lreadline -o $(NAME)
 
+sanitize: $(OBJS) $(LIBFT_LIB)
+	$(CC) $(FLAGS) -g -fsanitize=address $(SRCS) libft/*.c -lreadline -o $(NAME)
+
 
 $(LIBFT_LIB):
 	cd $(LIBFT_DIR) && $(MAKE)
