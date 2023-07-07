@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 23:16:08 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 13:25:35 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/07 16:25:11 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char	*ft_removequotes(char *str, int hasquotes)
 	start = 0;
 	size = 0;
 	if (ft_strlen(str) - 2 <= 0)
-		return (NULL);
+		return (ft_strdup(""));
 	while (str[i])
 	{
 		if (str[i] == '\'' && hasquotes == 1)

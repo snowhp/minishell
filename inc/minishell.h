@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 12:43:26 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 16:13:42 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_mini
 	int				nbcmd;
 	int				stdout;
 	int				stdin;
+	int				x;
 	char			*line;
 	char			**args;
 }	t_mini;
@@ -144,7 +145,15 @@ void	ft_preparerun(int *cmds, t_mini *c, int *fdin);
 void	ft_closefds(t_mini *c);
 void	ft_executecmd(t_mini *c, int *pipefd, t_data **info, int cmds);
 void	ft_executeonecmd(t_mini *c, int *pipefd, t_data **info, int cmds);
-int	ft_isbuiltin(t_simplecommand *cmd);
+void	ft_countargsaux(int *i, char *str);
+int		ft_isbuiltin(t_simplecommand *cmd);
+int		ft_checkspecial(char *str);
+int		ft_skipquotes(char *str);
+int		ft_handleoutappend(char ***args, t_mini *c, int cmds, t_data **info);
+int		ft_handleout(char ***args, t_mini *c, int cmds, t_data **info);
+int		ft_handleheredocaux(char ***args, t_mini *c, int cmds);
+int		ft_handleheredoc(char ***args, t_mini *c, int cmds);
+int		ft_handleinput(char ***args, t_mini *c, int cmds, t_data **info);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);

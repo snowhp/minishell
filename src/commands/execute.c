@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 12:12:11 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 16:06:12 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	ft_initstruct(t_mini *complex, char **args)
 	i = 0;
 	x = 0;
 	complex->nbcmd = 0;
+	complex->x = 0;
 	while (args[a])
 	{
 		if (!ft_strncmp(args[a], "|", sizeof(args[a])))

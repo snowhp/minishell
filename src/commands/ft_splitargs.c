@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 14:22:15 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/05 18:50:02 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 14:47:17 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ int	ft_skipquotes(char *str)
 		return (0);
 	if (str[i] == '\'')
 		issquote = 1;
-	if (str[i] == '"')
+	if (str[i++] == '"')
 		isdquote = 1;
-	i++;
 	if (issquote)
 	{
 		while (str[i] != '\'')
@@ -74,17 +73,9 @@ int	ft_countargs(char *str)
 		if (ft_checkspecial(str + i))
 			i += ft_checkspecial(str + i);
 		else
-		{
-			while (str[i] && str[i] != ' ' && str[i] != '\t' && !ft_checkspecial(str + i))
-			{
-				if (str[i] == '\'' || str[i] == '\"')
-					i += ft_skipquotes(str + i);
-				else
-					i++;
-			}
-			if (!str[i])
-				break ;
-		}
+			ft_countargsaux(&i, str);
+		if (!str[i])
+			break ;
 	}
 	return (count);
 }
@@ -99,15 +90,7 @@ static char	*ft_word(char *str)
 	if (ft_checkspecial(str + l))
 		l += ft_checkspecial(str + l);
 	else
-	{
-		while (str[l] && str[l] != ' ' && str[l] != '\t' && !ft_checkspecial(str + l))
-		{
-			if (str[l] == '\'' || str[l] == '\"')
-				l += ft_skipquotes(str + l);
-			else
-				l++;
-		}
-	}
+		ft_countargsaux(&l, str);
 	res = (char *)malloc(sizeof(char) * (l + 1));
 	if (!res)
 		return (NULL);

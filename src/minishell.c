@@ -83,8 +83,11 @@ int	ft_checkline(char *str)
 		while (str[i] == ' ' || str[i] == '\t')
 			i++;
 		if (str[i] == '\'' || str[i] == '\"')
+        {
 			i += ft_skipquotes(str + i);
-		if (str[i] == '>')
+            continue ;
+        }
+        if (str[i] == '>')
 		{
 			i++;
 			if (str[i] == '>')
