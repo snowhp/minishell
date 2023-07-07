@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@42.porto.com>           +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 21:22:48 by tde-sous          #+#    #+#             */
-/*   Updated: 2022/11/23 16:16:38 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:11:54 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	ft_s1trim(char const *s1, char const *set)
 
 	i = 0;
 	while (s1[i])
-	{	
+	{
 		a = 0;
 		while (set[a])
 		{
@@ -39,7 +39,7 @@ static int	ft_s2trim(char const *s1, char const *set, int e, int i)
 	int	a;
 
 	while (e > 0 && i < e)
-	{	
+	{
 		a = 0;
 		while (set[a])
 		{

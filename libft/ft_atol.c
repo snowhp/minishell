@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 16:01:00 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/04/24 16:01:02 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:12:33 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ long	ft_atol(const char *nptr)
 	res = 0;
 	while (nptr[i] == ' ' || nptr[i] == '\n' || nptr[i] == '\t'
 		|| nptr[i] == '\v' || nptr[i] == '\f' || nptr[i] == '\r')
-	i++;
+		i++;
 	if (nptr[i] == '+' || nptr[i] == '-')
 	{
 		if (nptr[i] == '-')
-		sign *= -1;
+			sign *= -1;
 		i++;
 	}
 	while (nptr[i] >= '0' && nptr[i] <= '9')

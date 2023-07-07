@@ -3,21 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/03 23:16:33 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 16:58:28 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+void	ft_expand_loop(t_mini *c, t_data **info, int cmds, int i)
+{
+	int		hasquotes;
+	char	*formatted;
+
+	hasquotes = ft_hasquotes(c->scmd[cmds].arguments[i]);
+	if (hasquotes == 0)
+	{
+		formatted = ft_replacevar(c->scmd[cmds].arguments[i], 0, info, NULL);
+		free(c->scmd[cmds].arguments[i]);
+		c->scmd[cmds].arguments[i] = ft_strdup(formatted);
+		free(formatted);
+	}
+	else if (hasquotes == 1)
+		c->scmd[cmds].arguments[i]
+			= ft_formating(c->scmd[cmds].arguments[i], info);
+}
+
 void	ft_expand(t_mini *c, t_data **info)
 {
 	int		cmds;
 	int		i;
-	int		hasquotes;
-	char	*formatted;
 
 	cmds = 0;
 	while (cmds < 500)
@@ -26,19 +42,7 @@ void	ft_expand(t_mini *c, t_data **info)
 		while (i < 100)
 		{
 			if (c->scmd[cmds].arguments[i])
-			{
-				hasquotes = ft_hasquotes(c->scmd[cmds].arguments[i]);
-				if (hasquotes == 0)
-				{
-					formatted = ft_replacevar(c->scmd[cmds].arguments[i], 0, info, NULL);
-					free(c->scmd[cmds].arguments[i]);
-					c->scmd[cmds].arguments[i] = ft_strdup(formatted);
-					free(formatted);
-				}
-				else if (hasquotes == 1)
-					c->scmd[cmds].arguments[i] = ft_formating(c->scmd[cmds].arguments[i], info);
-			}
-			hasquotes = 0;
+				ft_expand_loop(c, info, cmds, i);
 			i++;
 		}
 		cmds++;
@@ -61,64 +65,26 @@ int	ft_hasquotes(char *str)
 	return (0);
 }
 
-char	*ft_copyquote(char *str, int a, int z)
+void	ft_formating_extra(char *str, int *i, int *j)
 {
-	int		i;
-	int		k;
-	char	*formatted;
-
-	formatted = malloc(sizeof(char) * (ft_strlen(str) - 1));
-	i = 0;
-	k = 0;
-	while (str[i] && i < a)
+	(*i)++;
+	while (str[*i] != '\'')
 	{
-		formatted[k] = str[i];
-		k++;
-		i++;
+		(*i)++;
 	}
-	while (str[i])
-	{
-		if (str[i] == '\'' && i <= z)
-			i++;
-		else
-		{
-			formatted[k] = str[i];
-			k++;
-			i++;
-		}
-	}
-	formatted[k] = '\0';
-	return (formatted);
+	*j = *i;
+	*i = *j;
 }
 
-char	*ft_removedoubleafter(char *str, int a, int z)
+void	ft_formating_ext(char **str, t_data **info, int *i, int *pos)
 {
-	int		i;
-	int		k;
 	char	*formatted;
 
-	formatted = malloc(sizeof(char) * (ft_strlen(str) - 1));
-	i = 0;
-	k = 0;
-	while (str[i] && i < a)
-	{
-		formatted[k] = str[i];
-		k++;
-		i++;
-	}
-	while (str[i])
-	{
-		if (str[i] == '\"' && i <= z)
-			i++;
-		else
-		{
-			formatted[k] = str[i];
-			k++;
-			i++;
-		}
-	}
-	formatted[k] = '\0';
-	return (formatted);
+	formatted = ft_replacevar(*str, (size_t)(*i), info, pos);
+	free(*str);
+	*str = ft_strdup(formatted);
+	free(formatted);
+	*i = *i - 1 + *pos;
 }
 
 char	*ft_formating(char *str, t_data **info)
@@ -126,48 +92,26 @@ char	*ft_formating(char *str, t_data **info)
 	int		i;
 	int		j;
 	int		pos;
-	char	*formatted;
 
 	i = 0;
 	pos = 0;
 	while (str[i])
 	{
 		if (str[i] == '\'' && str[i + 1])
-		{
-			i++;
-			while (str[i] != '\'')
-			{
-				i++;
-			}
-			j = i;
-			i = j;
-		}
+			ft_formating_extra(str, &i, &j);
 		if (str[i] == '\"' && str[i + 1])
 		{
 			i++;
 			while (str[i] != '\"')
 			{
 				if (str[i] == '$')
-				{
-					formatted = ft_replacevar(str, (size_t)i, info, &pos);
-					free(str);
-					str = ft_strdup(formatted);
-					free(formatted);
-					i = i - 1 + pos;
-				}
+					ft_formating_ext(&str, info, &i, &pos);
 				i++;
 			}
 		}
 		if (str[i] == '$')
-		{
-			formatted = ft_replacevar(str, (size_t)i, info, &pos);
-			free(str);
-			str = ft_strdup(formatted);
-			free(formatted);
-			i = i - 1 + pos;
-		}
+			ft_formating_ext(&str, info, &i, &pos);
 		i++;
 	}
-	str = ft_removequotes(str, ft_hasquotes2(str));
-	return (str);
+	return (ft_removequotes(str, ft_hasquotes2(str)));
 }

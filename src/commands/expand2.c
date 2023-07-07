@@ -3,34 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 23:16:08 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 16:25:11 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 17:09:47 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char	*ft_replacevar(char *str, size_t i, t_data **info, int *pos)
+void	ft_replacevar1(char *str, int *i)
+{
+	while (str[*i])
+	{
+		if (str[*i] == '$' && str[*i + 1])
+			break ;
+		(*i)++;
+	}
+}
+
+char	*ft_replacevar2(char *str, size_t *f, size_t i, t_data **info)
 {
 	char	*temp;
 	char	*value;
 	size_t	j;
 	size_t	k;
-	size_t	f;
-	size_t	a;
 
 	value = NULL;
-	while (str[i])
-	{
-		if (str[i] == '$' && str[i + 1])
-			break ;
-		i++;
-	}
-	if (i == ft_strlen(str))
-		return (ft_strdup(str));
-	a = i;
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -38,18 +37,18 @@ char	*ft_replacevar(char *str, size_t i, t_data **info, int *pos)
 			if (str[i + 1] == '?')
 			{
 				value = ft_itoa(g_estatus);
-				f = 1;
+				*f = 1;
 				break ;
 			}
 			i++;
 			j = i;
 			while (ft_isalnum(str[i]))
 				i++;
-			f = i - j;
-			temp = (char *)malloc(sizeof(char) * (f + 1));
+			*f = i - j;
+			temp = (char *)malloc(sizeof(char) * (*f + 1));
 			i = 0;
 			k = 0;
-			while (i < f)
+			while (i < *f)
 			{
 				temp[k] = str[j];
 				j++;
@@ -60,16 +59,23 @@ char	*ft_replacevar(char *str, size_t i, t_data **info, int *pos)
 			if (ft_find_env(info, temp))
 				value = ft_strdup(ft_find_env(info, temp));
 			free(temp);
-			break ;
+			return (value);
 		}
 		i++;
 	}
-	if (!value)
-		value = ft_strdup("");
+	return (value);
+}
+
+char	*ft_replacevar3(char *str, char *value, size_t f, size_t a)
+{
+	char	*temp;
+	size_t	i;
+	size_t	j;
+	size_t	k;
+
 	j = 0;
 	i = 0;
 	k = 0;
-	i = 0;
 	temp = (char *)malloc(sizeof(char) * ft_strlen(str) + ft_strlen(value) + 1);
 	while (str[i])
 	{
@@ -91,6 +97,25 @@ char	*ft_replacevar(char *str, size_t i, t_data **info, int *pos)
 		i++;
 	}
 	temp[j] = '\0';
+	return (temp);
+}
+
+char	*ft_replacevar(char *str, size_t i, t_data **info, int *pos)
+{
+	char	*temp;
+	char	*value;
+	size_t	f;
+	size_t	a;
+
+	f = 0;
+	value  = NULL;
+	if (i == ft_strlen(str))
+		return (ft_strdup(str));
+	a = i;
+	value = ft_replacevar2(str, &f, i, info);
+	if (!value)
+		value = ft_strdup("");
+	temp = ft_replacevar3(str, value, f, a);
 	if (value)
 	{
 		if (pos)

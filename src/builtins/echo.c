@@ -6,49 +6,59 @@
 /*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:47:30 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/05 20:53:42 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/07 11:25:46 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_echo(char **args)
+int	ft_find_n_extra(char *args, size_t *i, int *starts)
 {
-	size_t	i;
-	int		k;
-	int		newline;
-	int		stop;
-	int		starts;
+	if (args[(*i)] == '-')
+	{
+		(*i)++;
+		*starts = 1;
+	}
+	else if (args[(*i)] == 'n')
+		(*i)++;
+	else
+		return (0);
+	return (1);
+}
+
+int	ft_find_n(char **args)
+{
+	int			k;
+	int			newline;
+	size_t		i;
+	int			starts;
 
 	k = 1;
 	newline = 0;
-	stop = 0;
 	while (args[k])
 	{
 		starts = 0;
-		if (stop == 1)
-			break ;
 		i = 0;
 		while (args[k][i])
 		{
-			if (args[k][i] == '-')
-			{
-				i++;
-				starts = 1;
-			}
-			else if (args[k][i] == 'n')
-				i++;
-			else
+			if (!ft_find_n_extra(args[k], &i, &starts))
 				break ;
 		}
 		if (i == ft_strlen(args[k]) && args[k][0] && starts == 1)
-		{
 			newline++;
-		}
 		else
-			stop = 1;// Cant we just break here?
+			break ;
 		k++;
 	}
+	return (newline);
+}
+
+void	ft_echo(char **args)
+{
+	size_t	i;
+	int		newline;
+
+	newline = ft_find_n(args);
 	i = 1 + newline;
 	while (args[i])
 	{

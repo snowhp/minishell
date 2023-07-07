@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 15:42:25 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 17:21:58 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	ft_handleheredocaux(char ***args, t_mini *c, int cmds)
 {
 	if (c->scmd[cmds].input != 0)
 		close (c->scmd[cmds].input);
-
 	if (!(*((*args) + 1)))
 	{
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);

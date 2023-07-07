@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/05 19:02:22 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 12:19:43 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,81 +27,63 @@ int	ft_env_size(t_data **info)
 	return (i);
 }
 
+char	*create_env_entry(t_data *current)
+{
+	char	*entry;
+	int		entry_len;
+	int		j;
+	int		k;
+
+	if (!current->value)
+		current = current->next;
+	entry_len = ft_strlen(current->key) + ft_strlen(current->value) + 2;
+	entry = (char *)malloc(sizeof(char) * entry_len);
+	j = 0;
+	k = 0;
+	while (current->key[j])
+		entry[k++] = current->key[j++];
+	entry[k++] = '=';
+	j = 0;
+	while (current->value[j])
+		entry[k++] = current->value[j++];
+	entry[k] = '\0';
+	return (entry);
+}
+
+int	ft_env_size_norm(t_data **info)
+{
+	t_data	*current;
+	int		count;
+
+	current = *info;
+	count = 0;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	return (count);
+}
+
 char	**ft_convert_env(t_data **info)
 {
 	char	**env;
 	t_data	*current;
 	int		i;
-	int		j;
-	int		k;
 
 	current = *info;
 	i = 0;
-	env = (char **)malloc(sizeof(char *) * (ft_env_size(info) + 1));
+	env = (char **)malloc(sizeof(char *) * (ft_env_size_norm(info) + 1));
 	if (!env)
 		return (NULL);
 	while (current)
 	{
-		if (!current->value)
-			current = current->next; //FIX error on ft_strlen of this value when its null
-		env[i] = (char *)malloc(sizeof(char) * (ft_strlen(current->key) + ft_strlen(current->value) + 2));
-		j = 0;
-		k = 0;
-		while (current->key[j])
-		{
-			env[i][k] = current->key[j];
-			k++;
-			j++;
-		}
-		env[i][k] = '=';
-		k++;
-		j = 0;
-		while (current->value[j])
-		{
-			env[i][k] = current->value[j];
-			k++;
-			j++;
-		}
-		env[i][k] = '\0';
+		env[i] = create_env_entry(current);
 		i++;
 		current = current->next;
 	}
-	env[i] = 0;
+	env[i] = NULL;
 	return (env);
-}
-
-void	ft_start_env(char **env, t_data **info)//needs fixing on order
-{
-	char	**temp;
-	t_data	*new;
-	t_data	*current;
-	int		i;
-	int		j;
-
-	i = 0;
-	while (env[i])
-	{
-		current = *info;
-		new = ft_calloc(1, sizeof(t_data));
-		if (!new)
-			return ;
-		temp = ft_split(env[i], '=');
-		if (temp[0])
-			new->key = ft_strdup(temp[0]);
-		j = (int)ft_strlen(temp[0]) + 1;
-		new->value = ft_strdup(env[i] + j);
-		new->next = NULL;
-		if (*info == NULL)
-			*info = new;
-		else
-		{
-			while (current->next != NULL)
-				current = current->next;
-			current->next = new;
-		}
-		i++;
-		ft_freearray(temp);
-	}
 }
 
 void	ft_printenv(t_data **info)

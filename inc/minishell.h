@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 16:13:42 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 17:21:09 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	ft_printcwd(void);
 
 //Changes current dir ('-' not implemented yet)
 void	ft_changedir(char *path, t_data **info);
+
+char	*ft_path(char *cmd, char **env);
 
 //Prints stored env var
 void	ft_printenv(t_data **info);

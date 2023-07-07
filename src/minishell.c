@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 12:47:12 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 13:36:22 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,38 @@ int	main(int argc, char **argv, char **env)
 	return (EXIT_SUCCESS);
 }
 
+void	ft_loop_free(t_mini *c, t_data **info)
+{
+	ft_freearray(c->args);
+	free(c->line);
+	ft_freearray((*info)->env);
+	ft_freesimplecommands(c);
+	while (1)
+	{
+		if (wait(NULL) <= 0)
+			break ;
+	}
+}
+
+void	ft_loop_start(t_mini *c, t_data **info)
+{
+	ft_signals();
+	(*info)->env = ft_convert_env(info);
+	c->line = readline("> ");
+	if (!c->line)
+	{
+		g_estatus = 0;
+		exit(g_estatus);
+	}
+}
+
 void	ft_loop(t_data **info)
 {
 	t_mini			c;
-	struct termios	term;
 
 	while (1)
 	{
-		ft_signals();
-		tcgetattr(fileno(stdin), &term);
-		term.c_cc[VQUIT] = _POSIX_VDISABLE;
-		tcsetattr(fileno(stdin), TCSANOW, &term);
-		(*info)->env = ft_convert_env(info);
-		c.line = readline("> ");
-		if (!c.line)
-		{
-			g_estatus = 0;
-			exit(g_estatus);
-		}
+		ft_loop_start(&c, info);
 		add_history(c.line);
 		if (ft_isquoteclose(c.line) || ft_isallspaces(c.line) || !c.line[0])
 		{
@@ -59,89 +73,10 @@ void	ft_loop(t_data **info)
 			ft_expand(&c, info);
 			ft_runcommands(&c, info);
 		}
-		ft_freearray(c.args);
-		free(c.line);
-		ft_freearray((*info)->env);
-		ft_freesimplecommands(&c);
-		while (1)
-		{
-			if (wait(NULL) <= 0)
-				break ;
-		}
+		ft_loop_free(&c, info);
 	}
 	free(c.line);
 	rl_clear_history();
-}
-
-int	ft_checkline(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		while (str[i] == ' ' || str[i] == '\t')
-			i++;
-		if (str[i] == '\'' || str[i] == '\"')
-        {
-			i += ft_skipquotes(str + i);
-            continue ;
-        }
-        if (str[i] == '>')
-		{
-			i++;
-			if (str[i] == '>')
-				i++;
-			if (str[i] == '<')
-			{
-				ft_putstr_fd("syntax error near unexpected token `<'\n", 2);
-				return (0);
-			}
-			if (str[i] == '>' || str[i] == '<')
-			{
-				ft_putstr_fd("syntax error near unexpected token `", 2);
-				ft_putchar_fd(str[i], 2);
-				ft_putstr_fd("'\n", 2);
-				return (0);
-			}
-		}
-		if (str[i] == '<')
-		{
-			i++;
-			if (str[i] == '<')
-				i++;
-			if (str[i] == '>')
-			{
-				ft_putstr_fd("syntax error near unexpected token `<'\n", 2);
-				return (0);
-			}
-			if (str[i] == '<' || str[i] == '>')
-			{
-				ft_putstr_fd("syntax error near unexpected token `", 2);
-				ft_putchar_fd(str[i], 2);
-				ft_putstr_fd("'\n", 2);
-				return (0);
-			}
-		}
-		if (str[i] == '|')
-		{
-			if (!str[i])
-			{
-				ft_putstr_fd("syntax error near unexpected token after `|'\n", 2);
-				return (0);
-			}
-			i++;
-			while (str[i] == ' ' || str[i] == '\t')
-				i++;
-			if (!str[i])
-			{
-				ft_putstr_fd("syntax error near unexpected token after `|'\n", 2);
-				return (0);
-			}
-		}
-		i++;
-	}
-	return (1);
 }
 
 void	ft_freesimplecommands(t_mini *c)
