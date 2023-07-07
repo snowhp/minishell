@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/05 23:41:42 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 12:47:12 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,6 @@ int	ft_checkline(char *str)
 				return (0);
 			}
 		}
-		if (!str[i] + 1)
-			break ;
 		i++;
 	}
 	return (1);

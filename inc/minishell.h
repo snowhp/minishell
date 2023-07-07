@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/05 23:53:08 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/07 12:43:26 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,14 @@ void	ft_freesimplecommands(t_mini *c);
 int		ft_skipquotes(char *str);
 int		ft_checkline(char *str);
 void	ft_countstring(int *i, char *str);
+void	ft_wait(int type, int *pipefd, int pid);
+void	ft_fdoutlastcmd(int *fdout, t_mini *c, int cmds);
+void	ft_fdout(int *fdout, int *fdin, int *pipefd);
+void	ft_preparerun(int *cmds, t_mini *c, int *fdin);
+void	ft_closefds(t_mini *c);
+void	ft_executecmd(t_mini *c, int *pipefd, t_data **info, int cmds);
+void	ft_executeonecmd(t_mini *c, int *pipefd, t_data **info, int cmds);
+int	ft_isbuiltin(t_simplecommand *cmd);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);
