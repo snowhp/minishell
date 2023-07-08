@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 12:24:25 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/08 15:21:47 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:26:24 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*ft_removequotes(char *str, int hasquotes)
 	start = 0;
 	size = ft_findsizequotes(str, hasquotes);
 	if (ft_strlen(str) - 2 <= 0)
-		return (ft_strdup(""));
+		return (free(str), ft_strdup(""));
 	result = (char *)ft_calloc(sizeof(char), (size + 1));
 	if (!result)
 		return (NULL);
