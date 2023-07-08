@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/08 17:15:50 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:21:56 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,7 @@ int	ft_handleheredoc(char ***args, t_mini *c, int cmds)
 		if (!temp)
 		{
 			close (c->scmd[cmds].input);
-			printf("\n");
-			return (0);
+			return (printf("\n"), 0);
 		}
 		if (!ft_strncmp(temp, delimiter, ft_strlen(delimiter) + 1))
 			break ;
