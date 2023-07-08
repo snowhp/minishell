@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:52:19 by tiago             #+#    #+#             */
-/*   Updated: 2023/07/05 23:33:12 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/08 18:03:19 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,23 @@ void	ft_doexport(t_data **export, char **args)
 	}
 }
 
-void	ft_printexport(t_data **export)
+void	insertnode(t_data **sorted, t_data *newNode)
 {
-	t_data	*current;
+	t_data	*temp;
 
-	current = *export;
-	while (current != NULL)
+	temp = *sorted;
+	if (!(*sorted) || ft_strncmp(newNode->key, (*sorted)->key,
+			ft_strlen(newNode->key) + 1) < 0)
 	{
-		if (current->key)
-		{
-			printf("declare -x ");
-			printf("%s", current->key);
-		}
-		printf("=");
-		if (current->value)
-		{
-			printf("\"%s\"", current->value);
-		}
-		printf("\n");
-		current = current->next;
+		newNode->next = *sorted;
+		*sorted = newNode;
+	}
+	else
+	{
+		while (temp->next && ft_strncmp(newNode->key, temp->next->key,
+				ft_strlen(newNode->key)) >= 0)
+			temp = temp->next;
+		newNode->next = temp->next;
+		temp->next = newNode;
 	}
 }
