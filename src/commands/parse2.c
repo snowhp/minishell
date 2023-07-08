@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:42:03 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 16:07:38 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:05:08 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_handlepipe(int *cmds, t_mini *c)
 {
 	(*cmds)++;
 	c->x = 0;
-	if (*cmds > 0)
+	if (*cmds > 0 && c->scmd[*cmds - 1].output != 1)
 		c->scmd[*cmds].input = c->scmd[*cmds - 1].output;
 }
 

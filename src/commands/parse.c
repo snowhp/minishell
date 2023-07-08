@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 17:21:58 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/08 17:15:50 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ int	ft_handleout(char ***args, t_mini *c, int cmds, t_data **info)
 
 int	ft_handleheredocaux(char ***args, t_mini *c, int cmds)
 {
+	char	*heredoc;
+	char	*number;
+
+	number = ft_itoa(cmds);
+	heredoc = ft_strjoin(".heredoc", number);
+	free(number);
+	printf("DOC %s \n", heredoc);
 	if (c->scmd[cmds].input != 0)
 		close (c->scmd[cmds].input);
 	if (!(*((*args) + 1)))
@@ -78,13 +85,34 @@ int	ft_handleheredocaux(char ***args, t_mini *c, int cmds)
 		return (0);
 	}
 	(*args)++;
-	c->scmd[cmds].input = open(".heredoc", O_CREAT | O_RDWR | O_TRUNC, 0664);
+	c->scmd[cmds].input = open(heredoc, O_CREAT | O_RDWR | O_TRUNC, 0664);
+	if (c->scmd[cmds].input == -1)
+	{
+		free(heredoc);
+		return (0);
+	}
+	free(heredoc);
 	return (1);
+}
+
+void	ft_reopenheredoc(t_mini *c, int cmds)
+{
+	char	*heredoc;
+	char	*number;
+
+	number = ft_itoa(cmds);
+	heredoc = ft_strjoin(".heredoc", number);
+	free(number);
+	close (c->scmd[cmds].input);
+	c->scmd[cmds].input = 0;
+	c->scmd[cmds].input = open(heredoc, O_RDONLY, 0444);
+	free(heredoc);
 }
 
 int	ft_handleheredoc(char ***args, t_mini *c, int cmds)
 {
 	char	*temp;
+	char	*temp1;
 	char	*delimiter;
 
 	delimiter = *((*args) + 1);
@@ -92,7 +120,7 @@ int	ft_handleheredoc(char ***args, t_mini *c, int cmds)
 		return (0);
 	while (1)
 	{
-		temp = readline("> ");
+		temp = readline("heredoc> ");
 		if (!temp)
 		{
 			close (c->scmd[cmds].input);
@@ -101,13 +129,13 @@ int	ft_handleheredoc(char ***args, t_mini *c, int cmds)
 		}
 		if (!ft_strncmp(temp, delimiter, ft_strlen(delimiter) + 1))
 			break ;
-		temp = ft_strjoin(temp, "\n");
-		write(c->scmd[cmds].input, temp, ft_strlen(temp));
+		temp1 = ft_strjoin(temp, "\n");
+		write(c->scmd[cmds].input, temp1, ft_strlen(temp));
 		free(temp);
+		free(temp1);
 	}
 	free(temp);
-	close (c->scmd[cmds].input);
-	c->scmd[cmds].input = open(".heredoc", O_RDONLY, 0444);
+	ft_reopenheredoc(c, cmds);
 	return (1);
 }
 
