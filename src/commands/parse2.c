@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:42:03 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/08 17:05:08 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:07:34 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,34 @@ int	ft_parse(char **args, t_mini *c, t_data **info)
 			c->scmd[cmds].arguments[c->x++] = ft_strdup(*(args));
 			args++;
 		}
+	}
+	return (1);
+}
+
+int	ft_handleinput(char ***args, t_mini *c, int cmds, t_data **info)
+{
+	char	*formatted;
+
+	if (c->scmd[cmds].input != 0)
+		close (c->scmd[cmds].input);
+	if (!(*(args + 1)))
+	{
+		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+		return (0);
+	}
+	(*args)++;
+	formatted = ft_replacevar(*(*args), 0, info, NULL);
+	free(*(*args));
+	*(*args) = ft_strdup(formatted);
+	free(formatted);
+	c->scmd[cmds].input = open(*(*args), O_RDONLY, 0444);
+	if (c->scmd[cmds].input == -1)
+	{
+		ft_putstr_fd(*(*args), 2);
+		ft_putstr_fd(": ", 2);
+		ft_putstr_fd(strerror(errno), 2);
+		ft_putchar_fd('\n', 2);
+		return (0);
 	}
 	return (1);
 }
