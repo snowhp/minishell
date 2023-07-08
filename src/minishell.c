@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 13:36:22 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/08 19:29:44 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	ft_loop_free(t_mini *c, t_data **info)
 {
 	ft_freearray(c->args);
 	free(c->line);
-	ft_freearray((*info)->env);
+	if ((*info)->env)
+		ft_freearray((*info)->env);
 	ft_freesimplecommands(c);
 	while (1)
 	{

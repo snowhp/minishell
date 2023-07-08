@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 18:07:18 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/05 21:10:14 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/08 19:39:59 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	ft_free_node_parts(t_data *current)
+{
+	if (current->key)
+		free(current->key);
+	if (current->value)
+		free(current->value);
+	if (current->env)
+		ft_freearray(current->env);
+	free(current);
+}
 
 void	ft_remove_node(t_data **info, char *key)
 {
@@ -21,7 +32,7 @@ void	ft_remove_node(t_data **info, char *key)
 	if (!ft_strncmp(current->key, key, ft_strlen(current->key) + 1))
 	{
 		*info = (*info)->next;
-		free(current);
+		ft_free_node_parts(current);
 		return ;
 	}
 	while (ft_strncmp(current->next->key, key,
@@ -30,11 +41,7 @@ void	ft_remove_node(t_data **info, char *key)
 	temp = current;
 	current = current->next;
 	temp->next = current->next;
-	if (current->key)
-		free(current->key);
-	if (current->value)
-		free(current->value);
-	free(current);
+	ft_free_node_parts(current);
 }
 
 void	ft_unset_loop(t_data **info, char *var)
