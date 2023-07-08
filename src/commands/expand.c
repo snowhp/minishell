@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 16:58:28 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/08 12:24:38 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,6 @@ void	ft_expand(t_mini *c, t_data **info)
 		}
 		cmds++;
 	}
-}
-
-int	ft_hasquotes(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'')
-			return (1);
-		else if (str[i] == '\"')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-void	ft_formating_extra(char *str, int *i, int *j)
-{
-	(*i)++;
-	while (str[*i] != '\'')
-	{
-		(*i)++;
-	}
-	*j = *i;
-	*i = *j;
 }
 
 void	ft_formating_ext(char **str, t_data **info, int *i, int *pos)

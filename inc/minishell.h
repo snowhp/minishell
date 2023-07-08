@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 17:21:09 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/08 15:38:58 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,10 @@ int		ft_handleout(char ***args, t_mini *c, int cmds, t_data **info);
 int		ft_handleheredocaux(char ***args, t_mini *c, int cmds);
 int		ft_handleheredoc(char ***args, t_mini *c, int cmds);
 int		ft_handleinput(char ***args, t_mini *c, int cmds, t_data **info);
+void	ft_formating_extra(char *str, int *i, int *j);
+char	*ft_removequotes(char *str, int hasquotes);
+int		ft_findsizequotes(char *str, int hasquotes);
+int		ft_start(int *start, int *hasquotes, int *i, char *str);
 
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);

@@ -7,6 +7,7 @@ SRCS =  src/minishell.c \
 		src/commands/execute2.c \
 		src/commands/expand.c \
 		src/commands/expand2.c \
+		src/commands/expand3.c \
 		src/commands/parse.c \
 		src/commands/parse2.c \
 		src/commands/check.c \
