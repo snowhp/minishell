@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:01:32 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/08 18:03:35 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/08 19:15:40 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,17 @@ void	ft_printexport(t_data **export)
 	sortedcurrent = sorted;
 	while (sortedcurrent)
 	{
-		if (sortedcurrent->key)
-			printf("declare -x %s", sortedcurrent->key);
-		if (sortedcurrent->value)
+		if (strcmp(sortedcurrent->key, "_") != 0)
 		{
-			printf("=");
-			printf("\"%s\"", sortedcurrent->value);
-		}
+			if (sortedcurrent->key)
+				printf("declare -x %s", sortedcurrent->key);
+			if (sortedcurrent->value)
+			{
+				printf("=");
+				printf("\"%s\"", sortedcurrent->value);
+			}
 		printf("\n");
+		}
 		sortedcurrent = sortedcurrent->next;
 	}
 	ft_freelistsorted(&sorted);

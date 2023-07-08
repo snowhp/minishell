@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:52:19 by tiago             #+#    #+#             */
-/*   Updated: 2023/07/08 18:03:19 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/08 19:17:06 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,15 @@ int	ft_checkvalid(char *str1, char *str2)
 	int	i;
 
 	i = 0;
+	if (!ft_isalpha(str1[0]) && str1[0] != '_')
+	{
+		printf("export: `%s", str1);
+		printf("=%s': not a valid identifier\n", str2);
+		return (0);
+	}
 	while (str1[i])
 	{
-		if (!ft_isalnum(str1[i]))
+		if (!ft_isalnum(str1[i]) && str1[0] != '_')
 		{
 			printf("export: `%s", str1);
 			printf("=%s': not a valid identifier\n", str2);
