@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:43:35 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/04 14:28:43 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/09 21:50:54 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	ft_changedir(char *path, t_data **info)
 	if (path)
 	{
 		if (ft_strlen(path) == 1 && path[0] == '-')
+		{
+			printf("%s\n", old_dir);
 			chdir(old_dir);
+		}
 		else
 			chdir(path);
 	}
