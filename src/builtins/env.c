@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/07 12:19:43 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:57:32 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,11 @@ char	**ft_convert_env(t_data **info)
 		return (NULL);
 	while (current)
 	{
-		env[i] = create_env_entry(current);
-		i++;
+		if (current->value && ft_strncmp(current->value, "Unstarted", 10))
+		{
+			env[i] = create_env_entry(current);
+			i++;
+		}
 		current = current->next;
 	}
 	env[i] = NULL;
@@ -93,16 +96,9 @@ void	ft_printenv(t_data **info)
 	current = *info;
 	while (current != NULL)
 	{
-		if (current->key)
-			printf("%s", current->key);
-		else
-			printf("NAO EXISTE ERRORRRR");
-		printf("=");
-		if (current->value)
-			printf("%s", current->value);
-		else
-			printf("NAO EXISTE ERRORRRR");
-		printf("\n");
+		if (current->key && current->value
+			&& ft_strncmp(current->value, "Unstarted", 10))
+			printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}
 }

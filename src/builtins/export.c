@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:52:19 by tiago             #+#    #+#             */
-/*   Updated: 2023/07/08 19:17:06 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:57:49 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	ft_add_env(t_data **info, char *key, char *value)
 		return ;
 	new->key = key;
 	new->value = value;
+	new->env = NULL;
 	new->next = NULL;
 	current->next = new;
 }
@@ -62,6 +63,7 @@ void	ft_exportloop(t_data **export, char *args)
 	key = ft_find_env(export, temp[0]);
 	if (!temp[1])
 	{
+		ft_add_env(export, ft_strdup(temp[0]), ft_strdup("Unstarted"));
 		ft_freearray(temp);
 		return ;
 	}

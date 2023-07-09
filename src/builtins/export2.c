@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:01:32 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/08 19:21:16 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/09 22:57:43 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ void	ft_printexport(t_data **export)
 		{
 			if (sortedcurrent->key)
 				printf("declare -x %s", sortedcurrent->key);
-			if (sortedcurrent->value)
+			if (sortedcurrent->value && ft_strncmp(sortedcurrent->value,
+					"Unstarted", 10))
 			{
 				printf("=");
 				printf("\"%s\"", sortedcurrent->value);
