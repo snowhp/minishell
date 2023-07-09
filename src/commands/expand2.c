@@ -3,66 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   expand2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 23:16:08 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/08 15:21:36 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/09 21:48:37 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_replacevar1(char *str, int *i)
+void	ft_replacevarcopy(char *temp, char *value, size_t *j, size_t *k)
 {
-	while (str[*i])
-	{
-		if (str[*i] == '$' && str[*i + 1])
-			break ;
-		(*i)++;
-	}
-}
-
-char	*ft_replacevar2(char *str, size_t *f, size_t i, t_data **info)
-{
-	char	*temp;
-	char	*value;
-	size_t	j;
-	size_t	k;
-
-	value = NULL;
-	while (str[i])
-	{
-		if (str[i] == '$')
-		{
-			if (str[i + 1] == '?')
-			{
-				value = ft_itoa(g_estatus);
-				*f = 1;
-				break ;
-			}
-			i++;
-			j = i;
-			while (ft_isalnum(str[i]))
-				i++;
-			*f = i - j;
-			temp = (char *)ft_calloc(sizeof(char), (*f + 1));
-			i = 0;
-			k = 0;
-			while (i < *f)
-			{
-				temp[k] = str[j];
-				j++;
-				k++;
-				i++;
-			}
-			if (ft_find_env(info, temp))
-				value = ft_strdup(ft_find_env(info, temp));
-			free(temp);
-			return (value);
-		}
-		i++;
-	}
-	return (value);
+	temp[*j] = value[*k];
+	(*j)++;
+	(*k)++;
 }
 
 char	*ft_replacevar3(char *str, char *value, size_t f, size_t a)
@@ -75,27 +29,37 @@ char	*ft_replacevar3(char *str, char *value, size_t f, size_t a)
 	j = 0;
 	i = 0;
 	k = 0;
-	temp = (char *)ft_calloc(sizeof(char), ft_strlen(str) + ft_strlen(value) + 1);
+	temp = (char *)ft_calloc(sizeof(char),
+			ft_strlen(str) + ft_strlen(value) + 1);
 	while (str[i])
 	{
 		if (str[i] == '$' && i == a)
 		{
 			i++;
 			while (value[k])
-			{
-				temp[j] = value[k];
-				j++;
-				k++;
-			}
+				ft_replacevarcopy(temp, value, &j, &k);
 			i += f;
 		}
 		if (!str[i])
 			break ;
-		temp[j] = str[i];
-		j++;
-		i++;
+		ft_replacevarcopy(temp, str, &j, &i);
 	}
 	return (temp);
+}
+
+void	ft_replacevar4(char *value, int *pos)
+{
+	if (value)
+	{
+		if (pos)
+			*pos = (int)ft_strlen(value);
+		free(value);
+	}
+	else
+	{
+		if (pos)
+			*pos = 0;
+	}
 }
 
 char	*ft_replacevar(char *str, size_t i, t_data **info, int *pos)
@@ -114,45 +78,6 @@ char	*ft_replacevar(char *str, size_t i, t_data **info, int *pos)
 	if (!value)
 		value = ft_strdup("");
 	temp = ft_replacevar3(str, value, f, a);
-	if (value)
-	{
-		if (pos)
-			*pos = (int)ft_strlen(value);
-		free(value);
-	}
-	else
-	{
-		if (pos)
-			*pos = 0;
-	}
+	ft_replacevar4(value, pos);
 	return (temp);
-}
-
-int	ft_start(int *start, int *hasquotes, int *i, char *str)
-{
-	if (str[*i] == '\'' && *hasquotes == 1)
-	{
-		(*i)++;
-		if (!(*start))
-			*start = 1;
-		else if (*start == 1)
-		{
-			*start = 0;
-			*hasquotes = ft_hasquotes2(str + *i);
-		}
-		return (0);
-	}
-	else if (str[*i] == '"' && *hasquotes == 2)
-	{
-		(*i)++;
-		if (!(*start))
-			*start = 1;
-		else if (*start == 1)
-		{
-			*start = 0;
-			*hasquotes = ft_hasquotes2(str + *i);
-		}
-		return (0);
-	}
-	return (1);
 }

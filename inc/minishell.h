@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/08 19:15:12 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/09 21:39:54 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,9 @@ char	*ft_removequotes(char *str, int hasquotes);
 int		ft_findsizequotes(char *str, int hasquotes);
 int		ft_start(int *start, int *hasquotes, int *i, char *str);
 void	ft_freelistsorted(t_data **sorted);
+char	*ft_replacevar2(char *str, size_t *f, size_t i, t_data **info);
+char	*ft_replacevar5(char *str, size_t *i, size_t *j, size_t *f);
+void	ft_replacevar1(char *str, int *i);
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);
 /* Needs fixing
