@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/10 12:44:45 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:20:15 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ void	ft_runcommands(t_mini *c, t_data **info)
 	int	fdout;
 	int	pipefd[2];
 
-	if (!c->scmd[0].arguments[0])
-		return ;
 	ft_preparerun(&cmds, c, &fdin);
 	while (cmds <= c->nbcmd)
 	{

@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:09:04 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 12:10:13 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:34:21 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	ft_executeonecmd(t_mini *c, int *pipefd, t_data **info, int cmds)
 
 int	ft_isbuiltin(t_simplecommand *cmd)
 {
+	if (!cmd->arguments[0])
+		return (0);
 	if (!ft_strncmp(cmd->arguments[0], "echo", 5))
 		return (1);
 	else if (!ft_strncmp(cmd->arguments[0], "exit", 5))
@@ -93,6 +95,8 @@ int	ft_isbuiltin(t_simplecommand *cmd)
 
 void	ft_execcmd(t_simplecommand *cmd, t_data **info, t_mini *c, int bi)
 {
+	if (!cmd->arguments[0])
+		return ;
 	if (!ft_strncmp(cmd->arguments[0], "echo", 5))
 		ft_echo(cmd->arguments);
 	else if (!ft_strncmp(cmd->arguments[0], "cd", 3))
