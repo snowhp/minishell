@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:01:32 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/09 23:07:35 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:43:32 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_sortexport(t_data **export, t_data **sorted)
 		if (current->value)
 			newnode->value = ft_strdup(current->value);
 		else
-			newnode->value = ft_strdup("");
+			newnode->value = NULL;
 		newnode->next = NULL;
 		insertnode(sorted, newnode);
 		current = next;
@@ -62,8 +62,7 @@ void	ft_printexport(t_data **export)
 		{
 			if (sortedcurrent->key)
 				printf("declare -x %s", sortedcurrent->key);
-			if (sortedcurrent->value && ft_strncmp(sortedcurrent->value,
-					"Unstarted", 10))
+			if (sortedcurrent->value)
 			{
 				printf("=");
 				printf("\"%s\"", sortedcurrent->value);
@@ -73,4 +72,34 @@ void	ft_printexport(t_data **export)
 		sortedcurrent = sortedcurrent->next;
 	}
 	ft_freelistsorted(&sorted);
+}
+
+void	ft_add_env(t_data **info, char *key, char *value)
+{
+	t_data	*current;
+	t_data	*new;
+
+	current = *info;
+	while (current->next != NULL)
+		current = current->next;
+	new = malloc(sizeof(t_data));
+	if (!new)
+		return ;
+	new->key = key;
+	new->value = value;
+	new->env = NULL;
+	new->next = NULL;
+	current->next = new;
+}
+
+void	ft_doexport(t_data **export, char **args)
+{
+	int	i;
+
+	i = 1;
+	while (args[i])
+	{
+		ft_exportloop(export, args[i]);
+		i++;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:55:08 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/09 23:07:36 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:18:24 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**ft_convert_env(t_data **info)
 		return (NULL);
 	while (current)
 	{
-		if (current->value && ft_strncmp(current->value, "Unstarted", 10))
+		if (current->value)
 		{
 			env[i] = create_env_entry(current);
 			i++;
@@ -96,8 +96,7 @@ void	ft_printenv(t_data **info)
 	current = *info;
 	while (current != NULL)
 	{
-		if (current->key && current->value
-			&& ft_strncmp(current->value, "Unstarted", 10))
+		if (current->key && current->value)
 			printf("%s=%s\n", current->key, current->value);
 		current = current->next;
 	}

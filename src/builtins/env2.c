@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 23:18:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/07 12:19:48 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/10 11:35:42 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,18 @@ void	ft_start_env(char **env, t_data **info)
 		add_env_entry(env[i], info);
 		i++;
 	}
+}
+
+char	*ft_find_env_key(t_data **info, char *find)
+{
+	t_data	*current;
+
+	current = *info;
+	while (current != NULL)
+	{
+		if (!ft_strncmp(current->key, find, ft_strlen(current->key) + 1))
+			return (current->key);
+		current = current->next;
+	}
+	return (NULL);
 }

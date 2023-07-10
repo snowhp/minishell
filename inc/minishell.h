@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/09 21:39:54 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/10 12:25:50 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void	ft_fdoutlastcmd(int *fdout, t_mini *c, int cmds);
 void	ft_fdout(int *fdout, int *fdin, int *pipefd);
 void	ft_preparerun(int *cmds, t_mini *c, int *fdin);
 void	ft_closefds(t_mini *c);
+char	**ft_returnloop(char **temp);
 void	ft_executecmd(t_mini *c, int *pipefd, t_data **info, int cmds);
 void	ft_executeonecmd(t_mini *c, int *pipefd, t_data **info, int cmds);
 void	ft_countargsaux(int *i, char *str);
@@ -159,11 +160,15 @@ int		ft_handleheredoc(char ***args, t_mini *c, int cmds);
 int		ft_handleinput(char ***args, t_mini *c, int cmds, t_data **info);
 void	ft_formating_extra(char *str, int *i, int *j);
 char	*ft_removequotes(char *str, int hasquotes);
+char	*ft_find_env_key(t_data **info, char *find);
 int		ft_findsizequotes(char *str, int hasquotes);
 int		ft_start(int *start, int *hasquotes, int *i, char *str);
 void	ft_freelistsorted(t_data **sorted);
+char	*ft_find_env_key(t_data **info, char *find);
 char	*ft_replacevar2(char *str, size_t *f, size_t i, t_data **info);
 char	*ft_replacevar5(char *str, size_t *i, size_t *j, size_t *f);
+void	ft_add_env(t_data **info, char *key, char *value);
+void	ft_exportloop(t_data **export, char *args);
 void	ft_replacevar1(char *str, int *i);
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);

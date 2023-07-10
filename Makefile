@@ -21,7 +21,8 @@ SRCS =  src/minishell.c \
 		src/builtins/echo.c \
 		src/builtins/exit.c \
 		src/builtins/export.c \
-		src/builtins/export2.c
+		src/builtins/export2.c \
+		src/builtins/export3.c
 
 OBJS = $(SRCS:.c=.o)
 

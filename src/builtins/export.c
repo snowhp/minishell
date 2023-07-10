@@ -3,32 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 17:52:19 by tiago             #+#    #+#             */
-/*   Updated: 2023/07/09 23:07:33 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/10 12:25:05 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	ft_add_env(t_data **info, char *key, char *value)
-{
-	t_data	*current;
-	t_data	*new;
-
-	current = *info;
-	while (current->next != NULL)
-		current = current->next;
-	new = malloc(sizeof(t_data));
-	if (!new)
-		return ;
-	new->key = key;
-	new->value = value;
-	new->env = NULL;
-	new->next = NULL;
-	current->next = new;
-}
 
 int	ft_checkvalid(char *str1, char *str2)
 {
@@ -54,43 +36,56 @@ int	ft_checkvalid(char *str1, char *str2)
 	return (1);
 }
 
-void	ft_exportloop(t_data **export, char *args)
+int	ft_exportloopequal(char *str, int len)
 {
-	char	*key;
-	char	**temp;
+	int	i;
 
-	temp = ft_split(args, '=');
-	key = ft_find_env(export, temp[0]);
-	if (!temp[1])
-	{
-		ft_add_env(export, ft_strdup(temp[0]), ft_strdup("Unstarted"));
-		ft_freearray(temp);
-		return ;
-	}
-	if (!ft_checkvalid(temp[0], temp[1]))
-	{
-		ft_freearray(temp);
-		return ;
-	}
+	i = 0;
+	while (i < len)
+		i++;
+	if (str[i] == '=')
+		return (1);
+	return (0);
+}
+
+void	ft_exportloop_export(char *key, t_data **export,
+			char *args, char **temp)
+{
 	if (!key)
 		ft_add_env(export, ft_strdup(temp[0]),
 			ft_strdup(args + (int)ft_strlen(temp[0]) + 1));
 	if (key)
 		ft_update_env(export, temp[0],
 			ft_strdup(args + (int)ft_strlen(temp[0]) + 1));
-	ft_freearray(temp);
 }
 
-void	ft_doexport(t_data **export, char **args)
+void	ft_exportloop(t_data **export, char *args)
 {
-	int	i;
+	char	*key;
+	char	**temp;
+	char	**temp2;
 
-	i = 1;
-	while (args[i])
+	temp = ft_split(args, '=');
+	key = ft_find_env_key(export, temp[0]);
+	if (!ft_checkvalid(temp[0], temp[1]))
 	{
-		ft_exportloop(export, args[i]);
-		i++;
+		ft_freearray(temp);
+		return ;
 	}
+	if (!ft_exportloopequal(args, ft_strlen(temp[0])))
+	{
+		if (!temp[1])
+		{
+			if (!key)
+				ft_add_env(export, ft_strdup(temp[0]), NULL);
+			ft_freearray(temp);
+			return ;
+		}
+	}
+	temp2 = ft_returnloop(temp);
+	ft_freearray(temp);
+	ft_exportloop_export(key, export, args, temp2);
+	ft_freearray(temp2);
 }
 
 void	insertnode(t_data **sorted, t_data *newNode)
