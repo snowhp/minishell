@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 14:34:14 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/04 11:49:37 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/10 13:40:43 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@ void	ft_freelist(t_data **info)
 {
 	t_data	*current;
 
-	ft_freearray((*info)->env);
 	while (*info != NULL)
 	{
 		current = *info;
 		*info = (*info)->next;
 		free(current->key);
 		free(current->value);
+		if (current->env)
+			ft_freearray(current->env);
 		free(current);
 	}
 }

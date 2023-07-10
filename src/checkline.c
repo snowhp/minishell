@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checkline.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 13:36:10 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/08 15:34:35 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:01:22 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	ft_checkline_greater(char *str, int *i)
 {
 	(*i)++;
 	if (str[*i] == '>')
-		i++;
+		(*i)++;
 	if (str[*i] == '<')
 	{
 		ft_putstr_fd("syntax error near unexpected token `<'\n", 2);
@@ -67,6 +67,7 @@ int	ft_checkline_pipe(char *str, int *i)
 		ft_putstr_fd("syntax error near unexpected token after `|'\n", 2);
 		return (0);
 	}
+	(*i)--;
 	return (1);
 }
 

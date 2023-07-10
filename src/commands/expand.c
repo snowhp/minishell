@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/08 12:24:38 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:17:52 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,11 @@
 void	ft_expand_loop(t_mini *c, t_data **info, int cmds, int i)
 {
 	int		hasquotes;
-	char	*formatted;
 
 	hasquotes = ft_hasquotes(c->scmd[cmds].arguments[i]);
 	if (hasquotes == 0)
-	{
-		formatted = ft_replacevar(c->scmd[cmds].arguments[i], 0, info, NULL);
-		free(c->scmd[cmds].arguments[i]);
-		c->scmd[cmds].arguments[i] = ft_strdup(formatted);
-		free(formatted);
-	}
+		c->scmd[cmds].arguments[i]
+				= ft_formating(c->scmd[cmds].arguments[i], info);
 	else if (hasquotes == 1)
 		c->scmd[cmds].arguments[i]
 			= ft_formating(c->scmd[cmds].arguments[i], info);
