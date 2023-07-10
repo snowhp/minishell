@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/08 22:07:29 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/10 10:51:55 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	ft_handleheredocaux(char ***args, t_mini *c, int cmds)
 	number = ft_itoa(cmds);
 	heredoc = ft_strjoin(".heredoc", number);
 	free(number);
-	printf("DOC %s \n", heredoc);
 	if (c->scmd[cmds].input != 0)
 		close (c->scmd[cmds].input);
 	if (!(*((*args) + 1)))
@@ -120,7 +119,7 @@ int	ft_handleheredoc(char ***args, t_mini *c, int cmds)
 		return (0);
 	while (1)
 	{
-		temp = readline("heredoc> ");
+		temp = readline("> ");
 		if (!temp)
 		{
 			close (c->scmd[cmds].input);
@@ -129,7 +128,7 @@ int	ft_handleheredoc(char ***args, t_mini *c, int cmds)
 		if (!ft_strncmp(temp, delimiter, ft_strlen(delimiter) + 1))
 			break ;
 		temp1 = ft_strjoin(temp, "\n");
-		write(c->scmd[cmds].input, temp1, ft_strlen(temp));
+		write(c->scmd[cmds].input, temp1, ft_strlen(temp1));
 		free(temp);
 		free(temp1);
 	}
