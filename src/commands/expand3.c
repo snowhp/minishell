@@ -51,7 +51,7 @@ char	*ft_removequotes(char *str, int hasquotes)
 	i = 0;
 	start = 0;
 	size = ft_findsizequotes(str, hasquotes);
-	if (ft_strlen(str) - 2 <= 0)
+	if (ft_strlen(str) - 2 <= 0 && ft_hasquotes2(str))
 		return (free(str), ft_strdup(""));
 	result = (char *)ft_calloc(sizeof(char), (size + 1));
 	if (!result)

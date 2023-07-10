@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:33:42 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/10 14:17:52 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/10 14:19:19 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	ft_expand_loop(t_mini *c, t_data **info, int cmds, int i)
 	hasquotes = ft_hasquotes(c->scmd[cmds].arguments[i]);
 	if (hasquotes == 0)
 		c->scmd[cmds].arguments[i]
-				= ft_formating(c->scmd[cmds].arguments[i], info);
+			= ft_formating(c->scmd[cmds].arguments[i], info);
 	else if (hasquotes == 1)
 		c->scmd[cmds].arguments[i]
 			= ft_formating(c->scmd[cmds].arguments[i], info);
