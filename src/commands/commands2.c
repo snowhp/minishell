@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:34:55 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/10 11:01:50 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:03:48 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_execute(char **cmd, t_data **info)
 {
 	char	*path;
 
+	(*info)->env = ft_convert_env(info);
 	if (access(cmd[0], X_OK) == 0)
 		path = cmd[0];
 	else
@@ -33,6 +34,7 @@ void	ft_execute(char **cmd, t_data **info)
 			ft_putstr_fd(" : command not found\n", 2);
 		}
 		g_estatus = 127;
+		ft_freearray((*info)->env);
 		exit(g_estatus);
 	}
 	if (execve(path, cmd, (*info)->env) == -1)

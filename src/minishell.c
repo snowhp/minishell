@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/09 23:07:34 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/10 15:01:30 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ void	ft_loop_free(t_mini *c, t_data **info)
 	}
 }
 
-void	ft_loop_start(t_mini *c, t_data **info)
+void	ft_loop_start(t_mini *c)
 {
 	ft_signals();
-	(*info)->env = ft_convert_env(info);
 	c->line = readline("> ");
 	if (!c->line)
 	{
@@ -58,7 +57,7 @@ void	ft_loop(t_data **info)
 
 	while (1)
 	{
-		ft_loop_start(&c, info);
+		ft_loop_start(&c);
 		add_history(c.line);
 		if (ft_isquoteclose(c.line) || ft_isallspaces(c.line) || !c.line[0])
 		{
