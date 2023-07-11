@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:01:32 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/10 11:43:32 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:00:03 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,12 @@ void	ft_doexport(t_data **export, char **args)
 	i = 1;
 	while (args[i])
 	{
+		if (args[i][0] == '=')
+		{
+			printf("export: `=': not a valid identifier\n");
+			i++;
+			continue ;
+		}
 		ft_exportloop(export, args[i]);
 		i++;
 	}
