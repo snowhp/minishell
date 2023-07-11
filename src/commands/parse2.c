@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:42:03 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/11 15:47:50 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/11 16:14:38 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	ft_parse(char **args, t_mini *c, t_data **info)
 		else if (val == 2)
 		{
 			args++;
-			if (*args)
+			if (!(*args))
 				return (0);
 		}
 		else if (val == 1)
