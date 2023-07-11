@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:42:03 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/11 14:52:42 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/11 15:47:50 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_inhandle(char ***args, t_mini *c, int *cmds, t_data **info)
 	else if (!ft_strncmp(*(*args), ">", 2))
 		return (ft_handleout(args, c, *cmds, info));
 	else if (!ft_strncmp(*(*args), "<<", 3))
-		return (ft_handleheredoc(args, c, *cmds));
+		return (ft_handleheredoc(args, c, *cmds, info));
 	else if (!ft_strncmp(*(*args), "<", 2))
 		return (ft_handleinput(args, c, *cmds, info));
 	else if (!ft_strncmp(*(*args), "|", 2))
@@ -45,15 +45,15 @@ int	ft_parse(char **args, t_mini *c, t_data **info)
 	while (*args)
 	{
 		val = ft_inhandle(&args, c, &cmds, info);
-		if (!val)//error
+		if (!val)
 			return (0);
-		else if (val == 2)//pipe
+		else if (val == 2)
 		{
 			args++;
 			if (*args)
 				return (0);
 		}
-		else if (val == 1)//redirect
+		else if (val == 1)
 			args++;
 		else if (val == 3)
 		{
@@ -90,4 +90,18 @@ int	ft_handleinput(char ***args, t_mini *c, int cmds, t_data **info)
 		return (0);
 	}
 	return (1);
+}
+
+void	ft_reopenheredoc(t_mini *c, int cmds)
+{
+	char	*heredoc;
+	char	*number;
+
+	number = ft_itoa(cmds);
+	heredoc = ft_strjoin(".heredoc", number);
+	free(number);
+	close (c->scmd[cmds].input);
+	c->scmd[cmds].input = 0;
+	c->scmd[cmds].input = open(heredoc, O_RDONLY, 0444);
+	free(heredoc);
 }
