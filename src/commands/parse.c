@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/13 14:27:46 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:33:07 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_handleoutappend(char ***args, t_mini *c, int cmds, t_data **info)
 	if (!(*((*args) + 1)))
 	{
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
-		return (0);
+		return (g_estatus = 2, 0);
 	}
 	(*args)++;
 	formatted = ft_replacevar(*(*args), 0, info, NULL);
@@ -35,7 +35,7 @@ int	ft_handleoutappend(char ***args, t_mini *c, int cmds, t_data **info)
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putchar_fd('\n', 2);
-		return (0);
+		return (errno);
 	}
 	return (1);
 }
@@ -49,7 +49,7 @@ int	ft_handleout(char ***args, t_mini *c, int cmds, t_data **info)
 	if (!(*((*args) + 1)))
 	{
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
-		return (0);
+		return (g_estatus = 2, 0);
 	}
 	(*args)++;
 	formatted = ft_replacevar(*(*args), 0, info, NULL);
@@ -63,7 +63,7 @@ int	ft_handleout(char ***args, t_mini *c, int cmds, t_data **info)
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putchar_fd('\n', 2);
-		return (0);
+		return (errno);
 	}
 	return (1);
 }
@@ -81,14 +81,14 @@ int	ft_handleheredocaux(char ***args, t_mini *c, int cmds)
 	if (!(*((*args) + 1)))
 	{
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
-		return (0);
+		return (g_estatus = 2, 0);
 	}
 	(*args)++;
 	c->scmd[cmds].input = open(heredoc, O_CREAT | O_RDWR | O_TRUNC, 0664);
 	if (c->scmd[cmds].input == -1)
 	{
 		free(heredoc);
-		return (0);
+		return (errno);
 	}
 	free(heredoc);
 	return (1);

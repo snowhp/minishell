@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 13:36:10 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/13 10:54:07 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:56:56 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ int	ft_checkline_greater(char *str, int *i)
 	if (str[*i] == '<')
 	{
 		ft_putstr_fd("syntax error near unexpected token `<'\n", 2);
-		return (0);
+		return (g_estatus = 2, 0);
 	}
 	if (str[*i] == '>' || str[*i] == '<')
 	{
 		ft_putstr_fd("syntax error near unexpected token `", 2);
 		ft_putchar_fd(str[*i], 2);
 		ft_putstr_fd("'\n", 2);
-		return (0);
+		return (g_estatus = 2, 0);
 	}
 	return (1);
 }
