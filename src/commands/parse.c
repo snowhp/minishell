@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/11 15:47:56 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:27:46 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,8 @@ char	*ft_readheredoc(char **temp, t_data **info)
 	char	*formatted;
 
 	*temp = readline("> ");
+	if (!(*temp))
+		return (NULL);
 	formatted = ft_replacevar(*temp, 0, info, NULL);
 	free(*temp);
 	*temp = ft_strdup(formatted);

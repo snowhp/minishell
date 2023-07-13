@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/10 15:01:30 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/13 12:51:45 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_loop_free(t_mini *c, t_data **info)
 void	ft_loop_start(t_mini *c)
 {
 	ft_signals();
-	c->line = readline("> ");
+	c->line = readline("minishell> ");
 	if (!c->line)
 	{
 		g_estatus = 0;
