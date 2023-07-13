@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 14:34:14 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/10 13:40:43 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:35:11 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	ft_freelist(t_data **info)
 	{
 		current = *info;
 		*info = (*info)->next;
-		free(current->key);
-		free(current->value);
+		if (current->key)
+			free(current->key);
+		if (current->value)
+			free(current->value);
 		if (current->env)
 			ft_freearray(current->env);
 		free(current);
@@ -48,5 +50,6 @@ void	ft_exit(char **args, t_mini *c, t_data **info)
 	ft_freearray(c->args);
 	free(c->line);
 	ft_freelist(info);
+	ft_freesimplecommands(c);
 	exit(g_estatus);
 }

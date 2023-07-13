@@ -57,6 +57,9 @@ clean:
 	cd $(LIBFT_DIR) && $(MAKE) clean
 	$(RM) $(OBJS)
 
+valgrind:
+	valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline_supression ./minishell
+
 fclean: clean
 	cd $(LIBFT_DIR) && $(MAKE) fclean
 	$(RM) $(NAME)

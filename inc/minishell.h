@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/13 11:50:51 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:51:09 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ extern int	g_estatus;
 void	insertnode(t_data **sorted, t_data *newNode);
 char	*ft_formating(char *str, t_data **info);
 char	**ft_convert_env(t_data **info);
-
+void	ft_freelist(t_data **info);
 /* 	This function start the loop to listen to the input */
 void	ft_loop(t_data **info);
 

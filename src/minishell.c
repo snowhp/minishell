@@ -6,7 +6,7 @@
 /*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/13 12:51:45 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/13 15:58:39 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,14 @@ int	main(int argc, char **argv, char **env)
 
 void	ft_loop_free(t_mini *c, t_data **info)
 {
-	ft_freearray(c->args);
-	free(c->line);
+	if (c->args)
+		ft_freearray(c->args);
+	if (c->line)
+		free(c->line);
 	if ((*info)->env)
 		ft_freearray((*info)->env);
-	ft_freesimplecommands(c);
+	if (c)
+		ft_freesimplecommands(c);
 	while (1)
 	{
 		if (wait(NULL) <= 0)
@@ -40,12 +43,13 @@ void	ft_loop_free(t_mini *c, t_data **info)
 	}
 }
 
-void	ft_loop_start(t_mini *c)
+void	ft_loop_start(t_mini *c, t_data **info)
 {
 	ft_signals();
 	c->line = readline("minishell> ");
 	if (!c->line)
 	{
+		ft_freelist(info);
 		g_estatus = 0;
 		exit(g_estatus);
 	}
@@ -57,7 +61,7 @@ void	ft_loop(t_data **info)
 
 	while (1)
 	{
-		ft_loop_start(&c);
+		ft_loop_start(&c, info);
 		add_history(c.line);
 		if (ft_isquoteclose(c.line) || ft_isallspaces(c.line) || !c.line[0])
 		{
