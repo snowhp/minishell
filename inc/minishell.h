@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/13 15:51:09 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:17:00 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	ft_loop(t_data **info);
 void	ft_signals(void);
 
 //Executes commands (needs more work)
-void	ft_execute(char **cmd, t_data **info);
+void	ft_execute(char **cmd, t_data **info, t_mini *c);
+void	ft_loop_free(t_mini *c, t_data **info);
 void	ft_executebuiltin(t_simplecommand *cmd, t_data **info, t_mini *c);
 
 // Temp function to check if command is built in or to execute
@@ -172,6 +173,7 @@ char	*ft_replacevar5(char *str, size_t *i, size_t *j, size_t *f);
 void	ft_add_env(t_data **info, char *key, char *value);
 void	ft_exportloop(t_data **export, char *args);
 void	ft_replacevar1(char *str, int *i);
+void	ft_freebeforeexit(t_data **info, t_mini *c);
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);
 /* Needs fixing

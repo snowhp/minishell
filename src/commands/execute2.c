@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:09:04 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/10 14:34:21 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/13 23:36:17 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,5 @@ void	ft_execcmd(t_simplecommand *cmd, t_data **info, t_mini *c, int bi)
 	else if (!ft_strncmp(cmd->arguments[0], "exit", 5))
 		ft_exit(cmd->arguments, c, info);
 	else if (!bi)
-		ft_execute(cmd->arguments, info);
+		ft_execute(cmd->arguments, info, c);
 }

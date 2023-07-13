@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 14:34:14 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/13 15:35:11 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:17:19 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,5 @@ void	ft_exit(char **args, t_mini *c, t_data **info)
 		ft_putstr_fd(": numeric argument required\n", 2);
 		g_estatus = 2;
 	}
-	ft_freearray(c->args);
-	free(c->line);
-	ft_freelist(info);
-	ft_freesimplecommands(c);
-	exit(g_estatus);
+	ft_freebeforeexit(info, c);
 }
