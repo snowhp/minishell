@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand4.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 21:22:18 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/09 21:39:55 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:50:36 by ttavares         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,17 @@ char	*ft_replacevar5(char *str, size_t *i, size_t *j, size_t *f)
 	return (temp);
 }
 
+char	*ft_replacevar6(char *str)
+{
+	char	*value;
+
+	(void)str;
+	value = (char *)ft_calloc(sizeof(char), (2));
+	value[0] = '$';
+	value[1] = '\0';
+	return (value);
+}
+
 char	*ft_replacevar2(char *str, size_t *f, size_t i, t_data **info)
 {
 	char	*temp;
@@ -87,10 +98,11 @@ char	*ft_replacevar2(char *str, size_t *f, size_t i, t_data **info)
 		{
 			if (str[i + 1] == '?')
 			{
-				value = ft_itoa(g_estatus);
-				*f = 1;
+				ft_replacevar7(&value, f);
 				break ;
 			}
+			if (str[i] == '$' && !ft_isalnum(str[i + 1]))
+				value = ft_replacevar6(str);
 			temp = ft_replacevar5(str, &i, &j, f);
 			if (ft_find_env(info, temp))
 				value = ft_strdup(ft_find_env(info, temp));
