@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 15:42:03 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/11 16:14:38 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/13 11:58:20 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_handleinput(char ***args, t_mini *c, int cmds, t_data **info)
 	if (!(*((*args) + 1)))
 	{
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
-		return (0);
+		return (g_estatus = 2, 0);
 	}
 	(*args)++;
 	formatted = ft_replacevar(*(*args), 0, info, NULL);
@@ -87,7 +87,7 @@ int	ft_handleinput(char ***args, t_mini *c, int cmds, t_data **info)
 		ft_putstr_fd(": ", 2);
 		ft_putstr_fd(strerror(errno), 2);
 		ft_putchar_fd('\n', 2);
-		return (0);
+		return (errno);
 	}
 	return (1);
 }
