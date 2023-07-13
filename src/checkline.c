@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 13:36:10 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/10 14:01:22 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/13 10:04:07 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ int	ft_checkline_greater(char *str, int *i)
 {
 	(*i)++;
 	if (str[*i] == '>')
+		(*i)++;
+	while (str[*i] == ' ' || str[*i] == '\t')
 		(*i)++;
 	if (str[*i] == '<')
 	{
@@ -36,6 +38,8 @@ int	ft_checkline_lower(char *str, int *i)
 {
 	(*i)++;
 	if (str[*i] == '<')
+		(*i)++;
+	while (str[*i] == ' ' || str[*i] == '\t')
 		(*i)++;
 	if (str[*i] == '>')
 	{
