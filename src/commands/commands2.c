@@ -6,13 +6,13 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:34:55 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/10 15:03:48 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/14 23:53:07 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	ft_execute(char **cmd, t_data **info)
+void	ft_execute(char **cmd, t_data **info, t_mini *c)
 {
 	char	*path;
 
@@ -34,7 +34,7 @@ void	ft_execute(char **cmd, t_data **info)
 			ft_putstr_fd(" : command not found\n", 2);
 		}
 		g_estatus = 127;
-		ft_freearray((*info)->env);
+		ft_freebeforeexit(info, c);
 		exit(g_estatus);
 	}
 	if (execve(path, cmd, (*info)->env) == -1)
