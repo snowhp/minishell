@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttavares <ttavares@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/13 14:33:07 by ttavares         ###   ########.fr       */
+/*   Updated: 2023/07/15 00:34:18 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,29 +110,25 @@ char	*ft_readheredoc(char **temp, t_data **info)
 
 int	ft_handleheredoc(char ***args, t_mini *c, int cmds, t_data **info)
 {
-	char	*temp;
-	char	*temp1;
 	char	*delimiter;
+	int		pid;
+	int		wstatus;
 
 	delimiter = *((*args) + 1);
 	if (!ft_handleheredocaux(args, c, cmds))
 		return (0);
-	while (1)
+	pid = fork();
+	if (pid == 0)
+		ft_childheredoc(delimiter, info, c, cmds);
+	else
 	{
-		ft_readheredoc(&temp, info);
-		if (!temp)
-		{
-			close (c->scmd[cmds].input);
-			return (printf("\n"), 0);
-		}
-		if (!ft_strncmp(temp, delimiter, ft_strlen(delimiter) + 1))
-			break ;
-		temp1 = ft_strjoin(temp, "\n");
-		write(c->scmd[cmds].input, temp1, ft_strlen(temp1));
-		free(temp);
-		free(temp1);
+		wait(&wstatus);
+		if (WIFEXITED(wstatus))
+			if (WEXITSTATUS(wstatus) != 0)
+				return (0);
+		if (WIFSIGNALED(wstatus))
+			return (0);
+		ft_reopenheredoc(c, cmds);
 	}
-	free(temp);
-	ft_reopenheredoc(c, cmds);
 	return (1);
 }

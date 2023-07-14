@@ -12,6 +12,7 @@ SRCS =  src/minishell.c \
 		src/commands/expand5.c \
 		src/commands/parse.c \
 		src/commands/parse2.c \
+		src/commands/parse3.c \
 		src/commands/check.c \
 		src/commands/ft_splitargs.c \
 		src/commands/ft_splitargs2.c \
