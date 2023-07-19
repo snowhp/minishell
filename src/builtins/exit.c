@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/01 14:34:14 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/14 23:55:10 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/19 15:35:46 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	ft_exit(char **args, t_mini *c, t_data **info)
 {
 	if (args[1] && ((ft_atoi(args[1])) || (args[1][0] == '0' && !args[1][1])))
 		g_estatus = ft_atoi(args[1]);
+	else
+		g_estatus = 0;
 	if (args[2])
 	{
 		ft_putstr_fd("exit: too many arguments\n", 2);
@@ -48,6 +50,7 @@ void	ft_exit(char **args, t_mini *c, t_data **info)
 		g_estatus = 2;
 	}
 	ft_freebeforeexit(info, c);
+	exit(g_estatus);
 }
 
 void	ft_freebeforeexit(t_data **info, t_mini *c)
