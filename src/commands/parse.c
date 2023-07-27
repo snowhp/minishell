@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/27 11:48:53 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 12:53:22 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	ft_handleheredocaux(char ***args, t_mini *c, int cmds)
 	if (!(*((*args) + 1)))
 	{
 		ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+		free(heredoc);
 		return (g_estatus = 2, 0);
 	}
 	(*args)++;
@@ -121,7 +122,7 @@ int	ft_handleheredoc(char ***args, t_mini *c, int cmds, t_data **info)
 		ft_childheredoc(delimiter, info, c, cmds);
 	else
 	{
-		wait(&wstatus);
+		waitpid(pid, &wstatus, WNOHANG);
 		if (WIFEXITED(wstatus))
 			if (WEXITSTATUS(wstatus) != 0)
 				return (0);
