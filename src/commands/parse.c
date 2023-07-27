@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/27 11:47:07 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 11:48:53 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	ft_handleheredocaux(char ***args, t_mini *c, int cmds)
 	free(heredoc);
 	return (1);
 }
+
 void	ft_readheredoc(char **temp, t_data **info)
 {
 	char	*formatted;

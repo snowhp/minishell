@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:09:04 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/27 11:45:30 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 11:48:46 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	ft_executecmd(t_mini *c, int *pipefd, t_data **info, int cmds)
 	}
 	else
 		ft_wait(1, pipefd, pid);
-
 }
 
 void	ft_executeonecmd(t_mini *c, int *pipefd, t_data **info, int cmds)
