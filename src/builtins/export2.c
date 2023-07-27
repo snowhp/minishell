@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:01:32 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/11 16:00:03 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 12:15:14 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	ft_doexport(t_data **export, char **args)
 	i = 1;
 	while (args[i])
 	{
-		if (args[i][0] == '=')
+		if (!ft_isalpha(args[i][0]) && args[i][0] != '_')
 		{
-			printf("export: `=': not a valid identifier\n");
+			printf("export: `%s': not a valid identifier\n", args[i]);
 			i++;
 			continue ;
 		}
