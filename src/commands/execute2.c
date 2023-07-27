@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:09:04 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/27 11:48:46 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:46:42 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	ft_executecmd(t_mini *c, int *pipefd, t_data **info, int cmds)
 {
 	int	pid;
 
-	if (!c->scmd[cmds].arguments[0])
-		return ;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -68,6 +66,8 @@ void	ft_executeonecmd(t_mini *c, int *pipefd, t_data **info, int cmds)
 {
 	int	pid;
 
+	if (c->scmd[cmds].arguments[0] == NULL)
+		return ;
 	if (!ft_isbuiltin(&c->scmd[cmds]))
 	{
 		pid = fork();

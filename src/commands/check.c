@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 16:41:39 by ttavares          #+#    #+#             */
-/*   Updated: 2023/07/05 19:27:23 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:28:45 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,25 @@ int	ft_isallspaces(char *str)
 		i++;
 	}
 	return (1);
+}
+
+void	ft_clearheredoc(t_mini *c)
+{
+	int		i;
+	char	*number;
+	char	*heredoc;
+
+	i = 0;
+	while (i < 500)
+	{
+		number = ft_itoa(i);
+		heredoc = ft_strjoin(".heredoc", number);
+		free(number);
+		if (access(heredoc, F_OK) == 0)
+			unlink(heredoc);
+		free(heredoc);
+		i++;
+	}
+	close(c->stdin);
+	close(c->stdout);
 }

@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:28:23 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/27 11:46:49 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:29:20 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void	ft_replacevar1(char *str, int *i);
 void	ft_freebeforeexit(t_data **info, t_mini *c);
 void	ft_childheredoc(char *delimiter, t_data **info, t_mini *c, int cmds);
 int		ft_openheredoc(char *delimiter, t_data **info, t_mini *c, int cmds);
+void	ft_clearheredoc(t_mini *c);
 /* This function will initialize all variables and set all arguments to 0 */
 void	ft_initstruct(t_mini *complex, char **args);
 /* Needs fixing

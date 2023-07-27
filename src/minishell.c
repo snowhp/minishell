@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:25:50 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/15 00:23:18 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:28:50 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	ft_loop(t_data **info)
 			ft_runcommands(&c, info);
 		}
 		ft_loop_free(&c, info);
+		ft_clearheredoc(&c);
 	}
 	free(c.line);
 	rl_clear_history();

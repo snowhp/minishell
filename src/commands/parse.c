@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/07 12:44:31 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/27 12:53:22 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:08:21 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	ft_handleheredoc(char ***args, t_mini *c, int cmds, t_data **info)
 	int		pid;
 	int		wstatus;
 
+	signal(SIGINT, &handle_ctrlc_fork);
 	delimiter = *((*args) + 1);
 	if (!ft_handleheredocaux(args, c, cmds))
 		return (0);
@@ -122,7 +123,7 @@ int	ft_handleheredoc(char ***args, t_mini *c, int cmds, t_data **info)
 		ft_childheredoc(delimiter, info, c, cmds);
 	else
 	{
-		waitpid(pid, &wstatus, WNOHANG);
+		wait(&wstatus);
 		if (WIFEXITED(wstatus))
 			if (WEXITSTATUS(wstatus) != 0)
 				return (0);

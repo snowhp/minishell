@@ -6,7 +6,7 @@
 /*   By: tde-sous <tde-sous@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:54:51 by tde-sous          #+#    #+#             */
-/*   Updated: 2023/07/10 14:20:15 by tde-sous         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:29:03 by tde-sous         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	ft_runcommands(t_mini *c, t_data **info)
 	ft_preparerun(&cmds, c, &fdin);
 	while (cmds <= c->nbcmd)
 	{
+		if (c->scmd[cmds].input != 0)
+			fdin = dup(c->scmd[cmds].input);
 		dup2(fdin, 0);
 		close(fdin);
 		ft_fdoutlastcmd(&fdout, c, cmds);
@@ -39,8 +41,6 @@ void	ft_runcommands(t_mini *c, t_data **info)
 		dup2(c->stdout, 1);
 		cmds++;
 	}
-	close(c->stdin);
-	close(c->stdout);
 }
 
 void	ft_fdoutlastcmd(int *fdout, t_mini *c, int cmds)
