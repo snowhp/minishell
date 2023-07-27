@@ -51,7 +51,7 @@ void	ft_unset_loop(t_data **info, char *var)
 	current = *info;
 	while (current != NULL)
 	{
-		if (!ft_strncmp(current->key, var, ft_strlen(current->key)))
+		if (!ft_strncmp(current->key, var, ft_strlen(current->key) + 1))
 		{
 			ft_remove_node(info, var);
 			break ;
